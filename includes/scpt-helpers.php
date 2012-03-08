@@ -15,8 +15,8 @@ if (!function_exists('get_scpt_formatted_meta')) {
 	 */
 	function get_scpt_formatted_meta($key) {
 		global $known_meta, $known_custom_fields, $post;
-		if ( isset($known_meta[$post->post_type][$key]) )
-			return $known_meta[$post->post_type][$key];
+		if ( isset($known_meta[$post->ID][$key]) )
+			return $known_meta[$post->ID][$key];
 
 		$value = get_post_meta( $post->ID, $key );
 		if (!$value || !is_array($value)) return set_known_scpt_meta($key, $value);
@@ -68,7 +68,7 @@ if (!function_exists('get_scpt_formatted_meta')) {
 	 */
 	function set_known_scpt_meta($key, $value) {
 		global $known_meta, $post;
-		$known_meta[$post->post_type][$key] = $value;
+		$known_meta[$post->ID][$key] = $value;
 		return $value;
 	}
 
