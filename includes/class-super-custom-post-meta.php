@@ -121,15 +121,21 @@ class SuperCustomPostMeta {
 			$this->field_names[] = $meta_key;
 			if (!isset($field['type']))
 				$attr['fields'][$meta_key]['type'] = $field['type'] = 'text';
-			
+
+			if (isset($field['column']) && $field['column'] == true) {
+				$this->add_to_columns(
+					(isset($field['label']) ? array($meta_key => $field['label']) : $meta_key)
+				);
+			}
+
 			if ($field['type'] == 'date') $this->register_datepicker();
 			if ($field['type'] == 'wysiwyg') $attr['fields'][$meta_key]['context'] = $attr['context'];
 			if (isset($field['data']))
-				$known_custom_fields[$meta_key] = array('data' => $field['data']);
+				$known_custom_fields[$this->type][$meta_key] = array('data' => $field['data']);
 			elseif ($field['type'] == 'select' && isset($field['multiple']))
-				$known_custom_fields[$meta_key] = 'multiple_select';
+				$known_custom_fields[$this->type][$meta_key] = 'multiple_select';
 			else
-				$known_custom_fields[$meta_key] = $field['type'];
+				$known_custom_fields[$this->type][$meta_key] = $field['type'];
 		}
 
 		$this->boxes[] = $attr;
@@ -602,12 +608,13 @@ class SuperCustomPostMeta {
 	 * @author Matthew Boynes
 	 */
 	public function register_datepicker() {
-		if ($this->registered_datepicker) return true;
-		add_action( 'admin_print_styles-post-new.php', array(&$this, 'add_datepicker_css') );
-		add_action( 'admin_print_styles-post.php', array(&$this, 'add_datepicker_css') );
-		add_action( 'admin_print_scripts-post-new.php', array(&$this, 'add_datepicker_js') );
-		add_action( 'admin_print_scripts-post.php', array(&$this, 'add_datepicker_js') );
-		$this->registered_datepicker = true;
+		if (!$this->registered_datepicker) {
+			add_action( 'admin_print_styles-post-new.php', array(&$this, 'add_datepicker_css') );
+			add_action( 'admin_print_styles-post.php', array(&$this, 'add_datepicker_css') );
+			add_action( 'admin_print_scripts-post-new.php', array(&$this, 'add_datepicker_js') );
+			add_action( 'admin_print_scripts-post.php', array(&$this, 'add_datepicker_js') );
+			$this->registered_datepicker = true;
+		}
 	}
 
 

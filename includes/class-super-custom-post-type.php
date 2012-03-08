@@ -194,7 +194,7 @@ class SuperCustomPostType extends SuperCustomPostMeta {
 	}
 
 
-	function post_icon($sanitized, $class) {
+	public function post_icon($sanitized, $class) {
 		if ( $class == 'icon32-posts-'.$this->type ) {
 			$sanitized .= ' glyphicons_'.$this->icon_name;
 		}

@@ -14,22 +14,24 @@ if (!function_exists('get_scpt_formatted_meta')) {
 	 * @author Matthew Boynes
 	 */
 	function get_scpt_formatted_meta($key) {
-		global $known_custom_fields, $known_meta;
-		if ( isset($known_meta[$key]) )
-			return $known_meta[$key];
+		global $known_meta, $known_custom_fields, $post;
+		if ( isset($known_meta[$post->post_type][$key]) )
+			return $known_meta[$post->post_type][$key];
 
-		$value = get_post_meta( get_the_ID(), $key );
+		$value = get_post_meta( $post->ID, $key );
 		if (!$value || !is_array($value)) return set_known_scpt_meta($key, $value);
-		if (!is_array($known_custom_fields) || !isset($known_custom_fields[$key]) || !$known_custom_fields[$key])
+
+		
+		if ( ! $field_info = get_known_field_info($key) )
 			return set_known_scpt_meta($key, $value[0]);
 
-		if (is_array($known_custom_fields[$key])) {
-			if ($known_custom_fields[$key]['data']) {
+		if (is_array($field_info)) {
+			if ($field_info['data']) {
 				// print_r($value);die;
-				return set_known_scpt_meta($key, get_posts(array('post_type' => $known_custom_fields[$key]['data'], 'include' => $value)));
+				return set_known_scpt_meta($key, get_posts(array('post_type' => $field_info['data'], 'include' => $value)));
 			}
 		}
-		else switch ($known_custom_fields[$key]) {
+		else switch ($field_info) {
 			case 'boolean':
 			case 'checkbox':
 				if (count($value) == 1 && $value[0] == '1')
@@ -49,6 +51,13 @@ if (!function_exists('get_scpt_formatted_meta')) {
 		return set_known_scpt_meta($key, $value[0]);
 	}
 
+	function get_known_field_info($key) {
+		global $known_custom_fields, $post;
+		if (!is_array($known_custom_fields) || !isset($known_custom_fields[$post->post_type]) || !isset($known_custom_fields[$post->post_type][$key]) || !$known_custom_fields[$post->post_type][$key])
+			return false;
+		return $known_custom_fields[$post->post_type][$key];
+	}
+
 	/**
 	 * Pseudo meta caching function. Stores value in $known_meta so it doesn't have to get formatted repeatedly
 	 *
@@ -58,8 +67,8 @@ if (!function_exists('get_scpt_formatted_meta')) {
 	 * @author Matthew Boynes
 	 */
 	function set_known_scpt_meta($key, $value) {
-		global $known_meta;
-		$known_meta[$key] = $value;
+		global $known_meta, $post;
+		$known_meta[$post->post_type][$key] = $value;
 		return $value;
 	}
 
@@ -73,7 +82,7 @@ if (!function_exists('get_scpt_formatted_meta')) {
 	 * @author Matthew Boynes
 	 */
 	function the_scpt_formatted_meta($key, $sep=', ') {
-		$val = get_scpt_formatted_meta($key);
+		$val = apply_filters('scpt_plugin_formatted_meta', get_scpt_formatted_meta($key), $key);
 		if (is_array($val))
 			echo implode($sep, $val);
 		else
