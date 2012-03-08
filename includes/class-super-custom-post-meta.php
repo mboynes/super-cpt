@@ -65,6 +65,11 @@ class SuperCustomPostMeta {
 	var $field_names = array();
 
 
+	var $columns;
+
+
+	var $registered_custom_columns;
+
 	/**
 	 * Construct a new SuperCustomPostMeta object for the given post type
 	 *
@@ -545,6 +550,7 @@ class SuperCustomPostMeta {
 			'options' => true,
 			'data' => true,
 			'prompt' => true,
+			'column' => true
 		));
 	}
 
@@ -637,6 +643,61 @@ class SuperCustomPostMeta {
 	 */
 	public function is_assoc($arr) {
 		return (is_array($arr) && count(array_filter(array_keys($arr),'is_string')) == count($arr));
+	}
+
+
+
+
+	protected function register_custom_columns($columns=array()) {
+		if (!$this->registered_custom_columns) {
+			add_action( 'manage_posts_custom_column' , array(&$this, 'custom_column') );
+			add_filter( 'manage_edit-'.$this->type.'_columns', array(&$this, 'edit_columns') );
+			$this->registered_custom_columns = true;
+		}
+	}
+
+	public function add_to_columns($column) {
+		if (is_array($column)) {
+			$this->columns = $this->columns + $column;
+		}
+		else {
+			$this->columns[$column] = ScptMarkup::labelify($column);
+		}
+		$this->register_custom_columns();
+	}
+
+	public function custom_column( $column ) {
+		if ( isset($this->columns[$column]) ) {
+			add_filter('scpt_plugin_formatted_meta', array($this, 'format_meta_for_list'), 10, 2);
+			the_scpt_formatted_meta( $column );
+		}
+
+		/* If listing a taxonomy...
+		$terms = get_the_term_list( $post->ID , 'location' , '' , ',' , '' );
+		if ( is_string( $terms ) )
+			echo $terms;
+		*/
+	}
+
+	public function format_meta_for_list($data, $key) {
+		$field_info = get_known_field_info($key);
+		if (is_array($field_info)) {
+			# This is a cpt relationship
+		}
+		else {
+			switch ($field_info) {
+				case 'date':
+					return date('Y-m-d',$data);
+			}
+		}
+		return $data;
+	}
+
+	public function edit_columns($columns) {
+		return array(
+			"cb" => '<input type="checkbox" />',
+			"title" => 'Title'
+		) + $this->columns;
 	}
 
 
