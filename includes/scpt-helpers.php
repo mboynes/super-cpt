@@ -38,15 +38,21 @@ if (!function_exists('get_scpt_formatted_meta')) {
 					return set_known_scpt_meta($key, true);
 				elseif (count($value) == 1 && $value[0] == '0')
 					return set_known_scpt_meta($key, false);
+				# no break here
 			case 'checkbox':
-			case 'radio':
 			case 'multiple_select':
 				return set_known_scpt_meta($key, $value);
+				break;
+			case 'radio':
+				return set_known_scpt_meta($key, $value[0]);
+				break;
 			case 'wysiwyg':
 				return set_known_scpt_meta($key, wpautop($value[0]));
+				break;
 			case 'date':
 			case 'datetime':
 				return set_known_scpt_meta($key, strtotime($value[0]));
+				break;
 		}
 		return set_known_scpt_meta($key, $value[0]);
 	}
@@ -91,7 +97,7 @@ if (!function_exists('get_scpt_formatted_meta')) {
 }
 
 
-if (!function_exists('connect_types_to_taxes')) {
+if (!function_exists('connect_types_and_taxes')) {
 	/**
 	 * Connect post types to custom taxonomies
 	 *
