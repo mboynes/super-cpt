@@ -481,7 +481,7 @@ class SuperCustomPostMeta {
 		$posts_array = get_posts(
 			apply_filters('scpt_plugin_meta_data_connect_'.$post_type, array(
 					'numberposts' => -1,
-					'orderby' => 'title',
+					'orderby' => 'menu_order title',
 					'order' => 'ASC',
 					'post_type' => $post_type
 			))
