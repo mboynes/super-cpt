@@ -35,21 +35,21 @@ textarea.scpt-field {
 select.scpt-field {
 	width: 200px;
 }
-#side-info-column input[type="text"].scpt-field,
-#side-info-column input[type="date"].scpt-field,
-#side-info-column input[type="email"].scpt-field,
-#side-info-column input[type="url"].scpt-field,
-#side-info-column input[type="datetime"].scpt-field,
-#side-info-column input[type="color"].scpt-field,
-#side-info-column input[type="number"].scpt-field,
-#side-info-column input[type="tel"].scpt-field,
-#side-info-column input[type="time"].scpt-field,
-#side-info-column input[type="range"].scpt-field,
-#side-info-column textarea.scpt-field,
-#side-info-column select.scpt-field {
+#side-sortables input[type="text"].scpt-field,
+#side-sortables input[type="date"].scpt-field,
+#side-sortables input[type="email"].scpt-field,
+#side-sortables input[type="url"].scpt-field,
+#side-sortables input[type="datetime"].scpt-field,
+#side-sortables input[type="color"].scpt-field,
+#side-sortables input[type="number"].scpt-field,
+#side-sortables input[type="tel"].scpt-field,
+#side-sortables input[type="time"].scpt-field,
+#side-sortables input[type="range"].scpt-field,
+#side-sortables textarea.scpt-field,
+#side-sortables select.scpt-field {
 	max-width: 100%;
 }
-#side-info-column select.scpt-field {
+#side-sortables select.scpt-field {
 	width: 100%;
 }
 

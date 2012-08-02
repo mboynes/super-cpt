@@ -58,7 +58,7 @@ class SuperCPT {
 	 */
 	function admin_hooks() {
 		$scpt_admin = new ScptAdmin;
-		wp_register_style( 'supercpt.css', SCPT_PLUGIN_URL . 'css/supercpt.css', array(), '1.2' );
+		wp_register_style( 'supercpt.css', SCPT_PLUGIN_URL . 'css/supercpt.css', array(), '1.3' );
 		wp_register_script( 'supercpt.js', SCPT_PLUGIN_URL . 'js/supercpt.js', array('jquery','jquery-ui-core','jquery-ui-datepicker'), '1.0' );
 
 		add_action( 'admin_enqueue_scripts', array(&$this, 'load_js_and_css') );
