@@ -77,5 +77,6 @@ class SuperCPT {
 
 }
 $scpt_plugin = new SuperCPT;
+do_action( 'supercpt_loaded' );
 
 ?>
