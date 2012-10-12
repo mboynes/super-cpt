@@ -21,7 +21,6 @@ if (!function_exists('get_scpt_formatted_meta')) {
 		$value = get_post_meta( $post->ID, $key );
 		if (!$value || !is_array($value)) return set_known_scpt_meta($key, $value);
 
-		
 		if ( ! $field_info = get_known_field_info($key) )
 			return set_known_scpt_meta($key, $value[0]);
 
@@ -36,7 +35,7 @@ if (!function_exists('get_scpt_formatted_meta')) {
 			case 'checkbox':
 				if (count($value) == 1 && $value[0] == '1')
 					return set_known_scpt_meta($key, true);
-				elseif (count($value) == 1 && $value[0] == '0')
+				elseif ( count($value) == 1 )
 					return set_known_scpt_meta($key, false);
 				# no break here
 			case 'checkbox':

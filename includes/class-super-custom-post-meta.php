@@ -657,7 +657,7 @@ class SuperCustomPostMeta {
 
 	protected function register_custom_columns($columns=array()) {
 		if (!$this->registered_custom_columns) {
-			add_action( 'manage_posts_custom_column' , array(&$this, 'custom_column') );
+			add_action( 'manage_'.$this->type.'_posts_custom_column' , array(&$this, 'custom_column') );
 			add_filter( 'manage_edit-'.$this->type.'_columns', array(&$this, 'edit_columns') );
 			$this->registered_custom_columns = true;
 		}
@@ -694,7 +694,9 @@ class SuperCustomPostMeta {
 		else {
 			switch ($field_info) {
 				case 'date':
-					return date('Y-m-d',$data);
+					return $data ? date('Y-m-d',$data) : '';
+				case 'boolean':
+					return $data === true ? '&#10004;' : '';
 			}
 		}
 		return $data;
