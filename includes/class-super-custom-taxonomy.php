@@ -6,7 +6,7 @@
  * @author Matthew Boynes
  */
 
-class SuperCustomTaxonomy {
+class Super_Custom_Taxonomy {
 
 	/**
 	 * The tax slug, e.g. event
@@ -59,7 +59,7 @@ class SuperCustomTaxonomy {
 	/**
 	 * Initialize a Custom Post Type
 	 *
-	 * @uses ScptMarkup::labelify
+	 * @uses SCPT_Markup::labelify
 	 * @param string $name The Custom Post Type slug. Should be singular, all lowercase, letters and numbers only, dashes for spaces
 	 * @param string $singular Optional. The singular form of our tax to be used in menus, etc. If absent, $name gets converted to words
 	 * @param string $plural Optional. The plural form of our tax to be used in menus, etc. If absent, 's' is added to $singular
@@ -70,7 +70,7 @@ class SuperCustomTaxonomy {
 	function __construct($name, $singular=false, $plural=false, $acts_like = false, $register=array()) {
 		$this->name = $name;
 		if (!$singular)
-			$singular = ScptMarkup::labelify($this->name);
+			$singular = SCPT_Markup::labelify($this->name);
 		if (!$plural)
 			$plural = $singular.'s';
 		$this->singular = $singular;

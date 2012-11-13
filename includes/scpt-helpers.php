@@ -100,10 +100,10 @@ if (!function_exists('connect_types_and_taxes')) {
 	/**
 	 * Connect post types to custom taxonomies
 	 *
-	 * @uses SuperCustomPostType::connect_taxes
-	 * @uses SuperCustomTaxonomy::connect_post_types
-	 * @param array|object $types Either a SuperCustomPostType object, or an array of them
-	 * @param array|object $taxes Either a SuperCustomTaxonomy object, or an array of them
+	 * @uses Super_Custom_Post_Type::connect_taxes
+	 * @uses Super_Custom_Taxonomy::connect_post_types
+	 * @param array|object $types Either a Super_Custom_Post_Type object, or an array of them
+	 * @param array|object $taxes Either a Super_Custom_Taxonomy object, or an array of them
 	 * @return void
 	 * @author Matthew Boynes
 	 */

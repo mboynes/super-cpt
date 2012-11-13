@@ -6,7 +6,7 @@ $known_custom_fields = array();
 /**
 * Easy as pie Custom post meta
 */
-class SuperCustomPostMeta {
+class Super_Custom_Post_Meta {
 
 
 	/**
@@ -71,7 +71,7 @@ class SuperCustomPostMeta {
 	var $registered_custom_columns;
 
 	/**
-	 * Construct a new SuperCustomPostMeta object for the given post type
+	 * Construct a new Super_Custom_Post_Meta object for the given post type
 	 *
 	 * @param string $post_type The post type these boxes will apply to
 	 * @author Matthew Boynes
@@ -84,7 +84,7 @@ class SuperCustomPostMeta {
 	/**
 	 * Add custom meta box
 	 *
-	 * @uses ScptMarkup::labelify
+	 * @uses SCPT_Markup::labelify
 	 * @uses register_meta_boxes_action
 	 * @uses meta_html
 	 * @param array $attr The meta box attributes. See {@link http://codex.wordpress.org/Function_Reference/add_meta_box}
@@ -97,7 +97,7 @@ class SuperCustomPostMeta {
 		if (empty($attr) || !isset($attr['fields']) || !isset($attr['id'])) return;
 
 		if (!isset($attr['title']))
-			$attr['title'] = ScptMarkup::labelify($attr['id']);
+			$attr['title'] = SCPT_Markup::labelify($attr['id']);
 
 		$attr = array_merge(array(
 			'callback' => array(&$this, 'meta_html'),
@@ -227,14 +227,14 @@ class SuperCustomPostMeta {
 	 *
 	 * @uses parse_attributes
 	 * @uses get_external_data
-	 * @uses ScptMarkup::labelify
+	 * @uses SCPT_Markup::labelify
 	 * @param array $field The field information
 	 * @param array $post_meta The post meta from the database
 	 * @return string HTML code with a wrapped element, whatever it may be
 	 * @author Matthew Boynes
 	 */
 	public function add_field($field, $post_meta) {
-		if (!isset($field['label'])) $field['label'] = ScptMarkup::labelify($field['meta_key']);
+		if (!isset($field['label'])) $field['label'] = SCPT_Markup::labelify($field['meta_key']);
 
 		if (isset($field['data'])) $field['options'] = $this->get_external_data($field['data']);
 
@@ -258,7 +258,7 @@ class SuperCustomPostMeta {
 	/**
 	 * Add a text field to a meta box
 	 *
-	 * @uses ScptMarkup::tag
+	 * @uses SCPT_Markup::tag
 	 * @param array $field The field information
 	 * @param array $post_meta The post meta from the database
 	 * @param array $html_attributes HTML attributes to be passed to element
@@ -267,11 +267,11 @@ class SuperCustomPostMeta {
 	 */
 	public function add_text_field($field, $post_meta, $html_attributes) {
 		if ($field['label'] !== false)
-			echo ScptMarkup::tag('label', array(
+			echo SCPT_Markup::tag('label', array(
 					'for' => 'scpt_meta_'.$field['meta_key'],
 					'class' => 'scpt-meta-label scpt-meta-text label-'.$field['meta_key']
 				), $field['label']);
-		echo ScptMarkup::tag('input', array_merge(array(
+		echo SCPT_Markup::tag('input', array_merge(array(
 				'type' => $field['type'],
 				'value' => (isset( $post_meta[$field['meta_key']] ) ? $post_meta[$field['meta_key']][0] : ''),
 				'name' => $field['meta_key'],
@@ -284,7 +284,7 @@ class SuperCustomPostMeta {
 	/**
 	 * Add a textarea field to a meta box
 	 *
-	 * @uses ScptMarkup::tag
+	 * @uses SCPT_Markup::tag
 	 * @param array $field The field information
 	 * @param array $post_meta The post meta from the database
 	 * @param array $html_attributes HTML attributes to be passed to element
@@ -293,11 +293,11 @@ class SuperCustomPostMeta {
 	 */
 	public function add_textarea_field($field, $post_meta, $html_attributes) {
 		if ($field['label'] !== false)
-			echo ScptMarkup::tag('label', array(
+			echo SCPT_Markup::tag('label', array(
 					'for' => 'scpt_meta_'.$field['meta_key'],
 					'class' => 'scpt-meta-label scpt-meta-textarea label-'.$field['meta_key']
 				), $field['label']);
-		echo ScptMarkup::tag('textarea', array_merge(array(
+		echo SCPT_Markup::tag('textarea', array_merge(array(
 				'name' => $field['meta_key'],
 				'class' => 'scpt-field',
 				'id' => 'scpt_meta_'.$field['meta_key']
@@ -308,7 +308,7 @@ class SuperCustomPostMeta {
 	/**
 	 * Add a wysiwyg field to a meta box
 	 *
-	 * @uses ScptMarkup::tag
+	 * @uses SCPT_Markup::tag
 	 * @param array $field The field information
 	 * @param array $post_meta The post meta from the database
 	 * @param array $html_attributes HTML attributes to be passed to element
@@ -326,7 +326,7 @@ class SuperCustomPostMeta {
 			add_filter( 'teeny_mce_before_init', array(&$this, 'teeny_mce_before_init'), 10, 2 );
 
 		if ($field['label'] !== false)
-			echo ScptMarkup::tag('label', array(
+			echo SCPT_Markup::tag('label', array(
 					'for' => 'scpt_meta_'.$field['meta_key'],
 					'class' => 'scpt-meta-label scpt-meta-wysiwyg label-'.$field['meta_key']
 				), $field['label']);
@@ -351,7 +351,7 @@ class SuperCustomPostMeta {
 	/**
 	 * Add a checkbox field to a meta box whose values is either 1 or 0
 	 *
-	 * @uses ScptMarkup::tag
+	 * @uses SCPT_Markup::tag
 	 * @param array $field The field information
 	 * @param array $post_meta The post meta from the database
 	 * @param array $html_attributes HTML attributes to be passed to element
@@ -368,18 +368,18 @@ class SuperCustomPostMeta {
 		), $html_attributes);
 		if ($post_meta[$field['meta_key']][0] == '1') $args['checked'] = 'checked';
 		echo
-			ScptMarkup::tag('input', array('type' => 'hidden', 'name' => $field['meta_key'], 'value' => '0' )),
-			ScptMarkup::tag('label', array(
+			SCPT_Markup::tag('input', array('type' => 'hidden', 'name' => $field['meta_key'], 'value' => '0' )),
+			SCPT_Markup::tag('label', array(
 				'for' => $args['id'],
 				'class' => 'scpt-meta-label choice scpt-meta-checkbox label-'.$field['meta_key']
-			), ScptMarkup::tag('input', $args) . ' ' . $field['label']);
+			), SCPT_Markup::tag('input', $args) . ' ' . $field['label']);
 	}
 
 
 	/**
 	 * Add multiple checkbox fields to a meta box, all with the same name
 	 *
-	 * @uses ScptMarkup::tag
+	 * @uses SCPT_Markup::tag
 	 * @uses add_boolean_field
 	 * @uses prune_options
 	 * @param array $field The field information
@@ -401,7 +401,7 @@ class SuperCustomPostMeta {
 		), $html_attributes);
 
 		if ($field['label'] !== false)
-			echo ScptMarkup::tag('label', array(
+			echo SCPT_Markup::tag('label', array(
 					'class' => 'scpt-meta-label scpt-meta-checkbox label-'.$field['meta_key']
 				), $field['label']);
 		echo '<span class="scpt-option">'.implode("</span>\n<span class=\"scpt-option\">", $this->prune_options($field['options'], $field['meta_key'], $post_meta, $args, 'input')).'</span>';
@@ -411,7 +411,7 @@ class SuperCustomPostMeta {
 	/**
 	 * Add multiple radio fields to a meta box, all with the same name
 	 *
-	 * @uses ScptMarkup::tag
+	 * @uses SCPT_Markup::tag
 	 * @uses add_boolean_field
 	 * @uses prune_options
 	 * @param array $field The field information
@@ -433,7 +433,7 @@ class SuperCustomPostMeta {
 		), $html_attributes);
 
 		if ($field['label'] !== false)
-			echo ScptMarkup::tag('label', array(
+			echo SCPT_Markup::tag('label', array(
 					'class' => 'scpt-meta-label scpt-meta-radio label-'.$field['meta_key']
 				), $field['label']);
 		echo '<span class="scpt-option">'.implode("</span>\n<span class=\"scpt-option\">", $this->prune_options($field['options'], $field['meta_key'], $post_meta, $args, 'input')).'</span>';
@@ -443,7 +443,7 @@ class SuperCustomPostMeta {
 	/**
 	 * Add select field to a meta box
 	 *
-	 * @uses ScptMarkup::tag
+	 * @uses SCPT_Markup::tag
 	 * @uses add_boolean_field
 	 * @uses prune_options
 	 * @param array $field The field information
@@ -458,10 +458,10 @@ class SuperCustomPostMeta {
 			$options = '<option value="">'.(isset($field['prompt']) ? $field['prompt'] : 'Choose one').'</option>' . $options;
 
 		if ($field['label'] !== false)
-			echo ScptMarkup::tag('label', array(
+			echo SCPT_Markup::tag('label', array(
 					'class' => 'scpt-meta-label scpt-meta-select label-'.$field['meta_key']
 				), $field['label']);
-		echo ScptMarkup::tag('select', array_merge(array(
+		echo SCPT_Markup::tag('select', array_merge(array(
 				'name' => $field['meta_key'] . (isset($html_attributes['multiple']) ? '[]' : ''),
 				'class' => 'scpt-field',
 				'id' => 'scpt_meta_'.$field['meta_key']
@@ -501,7 +501,7 @@ class SuperCustomPostMeta {
 	/**
 	 * Prepare options for select elements, or prepare many checkbox or radio buttons
 	 *
-	 * @uses ScptMarkup::tag
+	 * @uses SCPT_Markup::tag
 	 * @param array $options The options as either an array of values or associative array of values => labels
 	 * @param string $meta_key The meta_key for this element
 	 * @param array $post_meta The stored post meta
@@ -526,15 +526,15 @@ class SuperCustomPostMeta {
 			if ($tag == 'input') {
 				if ( isset($post_meta[$meta_key]) && in_array($this_args['value'], $post_meta[$meta_key]) )
 					$this_args['checked'] = 'checked';
-				$html[] = ScptMarkup::tag('label', array(
+				$html[] = SCPT_Markup::tag('label', array(
 					'for' => $this_args['id'],
 					'class' => 'scpt-meta-label choice scpt-meta-'.$this_args['type'].' label-'.$meta_key
-				), ScptMarkup::tag('input', $this_args) . ' ' . $option);
+				), SCPT_Markup::tag('input', $this_args) . ' ' . $option);
 			}
 			else {
 				if ( isset($post_meta[$meta_key]) && in_array($this_args['value'], $post_meta[$meta_key]) )
 					$this_args['selected'] = 'selected';
-				$html[] = ScptMarkup::tag('option', $this_args, $option);
+				$html[] = SCPT_Markup::tag('option', $this_args, $option);
 			}
 		}
 		return apply_filters('scpt_plugin_custom_meta_'.$meta_key.'_options', $html);
@@ -668,7 +668,7 @@ class SuperCustomPostMeta {
 			$this->columns = $this->columns + $column;
 		}
 		else {
-			$this->columns[$column] = ScptMarkup::labelify($column);
+			$this->columns[$column] = SCPT_Markup::labelify($column);
 		}
 		$this->register_custom_columns();
 	}

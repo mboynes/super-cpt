@@ -4,7 +4,7 @@
 /**
 * 
 */
-class ScptMarkup {
+class SCPT_Markup {
 	function __construct() {
 		
 	}
@@ -22,7 +22,7 @@ class ScptMarkup {
 	 */
 	public static function tag($name, $attr=array(), $text=false) {
 		if ($attr)
-			$attr = ScptMarkup::attributes($attr);
+			$attr = SCPT_Markup::attributes($attr);
 		else
 			$attr = '';
 

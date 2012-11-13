@@ -5,22 +5,23 @@
 	Plugin URI: http://www.unionstreetmedia.com/
 	Description: Insanely easy and attractive custom post types, custom post meta, and custom taxonomies
 	Version: 0.1
-	Author: Matthew Boynes
-	Author URI: http://www.unionstreetmedia.com/
-*/
-/*  This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation; either version 2 of the License, or
-    (at your option) any later version.
+	Author: Matthew Boynes, Union Street Media
+	Copyright 2011-2012 Shared and distributed between Matthew Boynes and Union Street Media
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+	GNU General Public License, Free Software Foundation <http://creativecommons.org/licenses/GPL/2.0/>
+	This program is free software; you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published by
+	the Free Software Foundation; either version 2 of the License, or
+	(at your option) any later version.
 
-    You should have received a copy of the GNU General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU General Public License for more details.
+
+	You should have received a copy of the GNU General Public License
+	along with this program; if not, write to the Free Software
+	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
 if (!defined('SCPT_PLUGIN_URL'))
@@ -37,7 +38,7 @@ if ( is_admin() ) {
 	require_once SCPT_PLUGIN_DIR . '/includes/class-scpt-admin.php';
 }
 
-class SuperCPT {
+class Super_CPT {
 
 	/**
 	 * Initialize the plugin and call the appropriate hook method
@@ -52,12 +53,12 @@ class SuperCPT {
 	/**
 	 * Setup appropriate hooks for wp-admin
 	 *
-	 * @uses ScptAdmin
+	 * @uses SCPT_Admin
 	 * @return void
 	 * @author Matthew Boynes
 	 */
 	function admin_hooks() {
-		$scpt_admin = new ScptAdmin;
+		$scpt_admin = new SCPT_Admin;
 		wp_register_style( 'supercpt.css', SCPT_PLUGIN_URL . 'css/supercpt.css', array(), '1.3' );
 		wp_register_script( 'supercpt.js', SCPT_PLUGIN_URL . 'js/supercpt.js', array('jquery','jquery-ui-core','jquery-ui-datepicker'), '1.1' );
 
@@ -76,7 +77,7 @@ class SuperCPT {
 	}
 
 }
-$scpt_plugin = new SuperCPT;
+$scpt_plugin = new Super_CPT;
 do_action( 'supercpt_loaded' );
 
 ?>

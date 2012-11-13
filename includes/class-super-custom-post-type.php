@@ -6,7 +6,7 @@
  * @author Matthew Boynes
  */
 
-class SuperCustomPostType extends SuperCustomPostMeta {
+class Super_Custom_Post_Type extends Super_Custom_Post_Meta {
 
 	/**
 	 * The CPT slug, e.g. event
@@ -59,7 +59,7 @@ class SuperCustomPostType extends SuperCustomPostMeta {
 	/**
 	 * Initialize a Custom Post Type
 	 *
-	 * @uses ScptMarkup::labelify
+	 * @uses SCPT_Markup::labelify
 	 * @param string $type The Custom Post Type slug. Should be singular, all lowercase, letters and numbers only, dashes for spaces
 	 * @param string $singular Optional. The singular form of our CPT to be used in menus, etc. If absent, $type gets converted to words
 	 * @param string $plural Optional. The plural form of our CTP to be used in menus, etc. If absent, 's' is added to $singular
@@ -69,7 +69,7 @@ class SuperCustomPostType extends SuperCustomPostMeta {
 	function __construct($type, $singular=false, $plural=false, $register=array()) {
 		$this->type = $type;
 		if (!$singular)
-			$singular = ScptMarkup::labelify($this->type);
+			$singular = SCPT_Markup::labelify($this->type);
 		if (!$plural)
 			$plural = $singular.'s';
 		$this->singular = $singular;

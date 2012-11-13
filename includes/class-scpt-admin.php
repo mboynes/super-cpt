@@ -1,6 +1,6 @@
 <?php
 
-class ScptAdmin {
+class SCPT_Admin {
 
 	function __construct() {
 		# Setup WordPress hooks
