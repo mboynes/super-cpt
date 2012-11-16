@@ -1,8 +1,8 @@
 <?php
 
 
-if (!function_exists('get_scpt_formatted_meta')) {
-	$known_meta = array();
+if ( !function_exists( 'get_scpt_formatted_meta' ) ) {
+	$known_meta = array( );
 
 	/**
 	 * Get a formatted post_meta value for a given key.
@@ -13,52 +13,51 @@ if (!function_exists('get_scpt_formatted_meta')) {
 	 * @return mixed Depending on field type, will return either a string, a boolean value, or an array
 	 * @author Matthew Boynes
 	 */
-	function get_scpt_formatted_meta($key) {
+	function get_scpt_formatted_meta( $key ) {
 		global $known_meta, $known_custom_fields, $post;
-		if ( isset($known_meta[$post->ID][$key]) )
+		if ( isset( $known_meta[$post->ID][$key] ) )
 			return $known_meta[$post->ID][$key];
 
 		$value = get_post_meta( $post->ID, $key );
-		if (!$value || !is_array($value)) return set_known_scpt_meta($key, $value);
+		if ( !$value || !is_array( $value ) ) return set_known_scpt_meta( $key, $value );
 
-		if ( ! $field_info = get_known_field_info($key) )
-			return set_known_scpt_meta($key, $value[0]);
+		if ( ! $field_info = get_known_field_info( $key ) )
+			return set_known_scpt_meta( $key, $value[0] );
 
-		if (is_array($field_info)) {
-			if ($field_info['data']) {
-				// print_r($value);die;
-				return set_known_scpt_meta($key, get_posts(array('post_type' => $field_info['data'], 'include' => $value)));
+		if ( is_array( $field_info ) ) {
+			if ( $field_info['data'] ) {
+				return set_known_scpt_meta( $key, get_posts( array( 'post_type' => $field_info['data'], 'include' => $value ) ) );
 			}
 		}
-		else switch ($field_info) {
+		else switch ( $field_info ) {
 			case 'boolean':
 			case 'checkbox':
-				if (count($value) == 1 && $value[0] == '1')
-					return set_known_scpt_meta($key, true);
-				elseif ( count($value) == 1 )
-					return set_known_scpt_meta($key, false);
+				if ( 1 == count( $value ) && '1' == $value[0] )
+					return set_known_scpt_meta( $key, true );
+				elseif ( 1 == count( $value ) )
+					return set_known_scpt_meta( $key, false );
 				# no break here
 			case 'checkbox':
 			case 'multiple_select':
-				return set_known_scpt_meta($key, $value);
+				return set_known_scpt_meta( $key, $value );
 				break;
 			case 'radio':
-				return set_known_scpt_meta($key, $value[0]);
+				return set_known_scpt_meta( $key, $value[0] );
 				break;
 			case 'wysiwyg':
-				return set_known_scpt_meta($key, wpautop($value[0]));
+				return set_known_scpt_meta( $key, wpautop( $value[0] ) );
 				break;
 			case 'date':
 			case 'datetime':
-				return set_known_scpt_meta($key, strtotime($value[0]));
+				return set_known_scpt_meta( $key, strtotime( $value[0] ) );
 				break;
 		}
-		return set_known_scpt_meta($key, $value[0]);
+		return set_known_scpt_meta( $key, $value[0] );
 	}
 
-	function get_known_field_info($key) {
+	function get_known_field_info( $key ) {
 		global $known_custom_fields, $post;
-		if (!is_array($known_custom_fields) || !isset($known_custom_fields[$post->post_type]) || !isset($known_custom_fields[$post->post_type][$key]) || !$known_custom_fields[$post->post_type][$key])
+		if ( !is_array( $known_custom_fields ) || !isset( $known_custom_fields[$post->post_type] ) || !isset( $known_custom_fields[$post->post_type][$key] ) || !$known_custom_fields[$post->post_type][$key] )
 			return false;
 		return $known_custom_fields[$post->post_type][$key];
 	}
@@ -71,7 +70,7 @@ if (!function_exists('get_scpt_formatted_meta')) {
 	 * @return $value
 	 * @author Matthew Boynes
 	 */
-	function set_known_scpt_meta($key, $value) {
+	function set_known_scpt_meta( $key, $value ) {
 		global $known_meta, $post;
 		$known_meta[$post->ID][$key] = $value;
 		return $value;
@@ -86,17 +85,17 @@ if (!function_exists('get_scpt_formatted_meta')) {
 	 * @return void
 	 * @author Matthew Boynes
 	 */
-	function the_scpt_formatted_meta($key, $sep=', ') {
-		$val = apply_filters('scpt_plugin_formatted_meta', get_scpt_formatted_meta($key), $key);
-		if (is_array($val))
-			echo implode($sep, $val);
+	function the_scpt_formatted_meta( $key, $sep=', ' ) {
+		$val = apply_filters( 'scpt_plugin_formatted_meta', get_scpt_formatted_meta( $key ), $key );
+		if ( is_array( $val ) )
+			echo implode( $sep, $val );
 		else
 			echo $val;
 	}
 }
 
 
-if (!function_exists('connect_types_and_taxes')) {
+if ( !function_exists( 'connect_types_and_taxes' ) ) {
 	/**
 	 * Connect post types to custom taxonomies
 	 *
@@ -107,13 +106,13 @@ if (!function_exists('connect_types_and_taxes')) {
 	 * @return void
 	 * @author Matthew Boynes
 	 */
-	function connect_types_and_taxes($types, $taxes) {
-		if (!is_array($types)) $types = array($types);
-		if (!is_array($taxes)) $taxes = array($taxes);
-		foreach ($types as $type) {
-			foreach ($taxes as $tax) {
-				$type->connect_taxes($tax->name);
-				$tax->connect_post_types($type->type);
+	function connect_types_and_taxes( $types, $taxes ) {
+		if ( !is_array( $types ) ) $types = array( $types );
+		if ( !is_array( $taxes ) ) $taxes = array( $taxes );
+		foreach ( $types as $type ) {
+			foreach ( $taxes as $tax ) {
+				$type->connect_taxes( $tax->name );
+				$tax->connect_post_types( $type->type );
 			}
 		}
 	}

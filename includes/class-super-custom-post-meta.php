@@ -1,6 +1,6 @@
 <?php
 
-$known_custom_fields = array();
+$known_custom_fields = array( );
 
 
 /**
@@ -50,7 +50,7 @@ class Super_Custom_Post_Meta {
 
 
 	/**
-	 * HTML tag with which to wrap individual field elements (and labels, where appropriate
+	 * HTML tag with which to wrap individual field elements (and labels, where appropriate)
 	 *
 	 * @var string
 	 */
@@ -62,7 +62,7 @@ class Super_Custom_Post_Meta {
 	 *
 	 * @var array
 	 */
-	var $field_names = array();
+	var $field_names = array( );
 
 
 	var $columns;
@@ -76,7 +76,7 @@ class Super_Custom_Post_Meta {
 	 * @param string $post_type The post type these boxes will apply to
 	 * @author Matthew Boynes
 	 */
-	function __construct($post_type)
+	function __construct( $post_type )
 	{
 		$this->type = $post_type;
 	}
@@ -91,48 +91,48 @@ class Super_Custom_Post_Meta {
 	 * @return void
 	 * @author Matthew Boynes
 	 */
-	public function add_meta_box($attr = array()) {
+	public function add_meta_box( $attr = array( ) ) {
 		global $known_custom_fields;
 
-		if (empty($attr) || !isset($attr['fields']) || !isset($attr['id'])) return;
+		if ( empty( $attr ) || !isset( $attr['fields'] ) || !isset( $attr['id'] ) ) return;
 
-		if (!isset($attr['title']))
-			$attr['title'] = SCPT_Markup::labelify($attr['id']);
+		if ( !isset( $attr['title'] ) )
+			$attr['title'] = SCPT_Markup::labelify( $attr['id'] );
 
-		$attr = array_merge(array(
-			'callback' => array(&$this, 'meta_html'),
+		$attr = array_merge( array(
+			'callback' => array( &$this, 'meta_html' ),
 			'page' => $this->type,
 			'context' => 'advanced',
 			'priority' => 'default'
-		), $attr);
+		), $attr );
 
 		# Fields can optionally be numerically indexed with the individual field arrays having the 'meta_key' array index set
-		if ( !$this->is_assoc($attr['fields']) ) {
-			$new_fields = array();
-			foreach ($attr['fields'] as $field) {
+		if ( !$this->is_assoc( $attr['fields'] ) ) {
+			$new_fields = array( );
+			foreach ( $attr['fields'] as $field ) {
 				$new_fields[$field['meta_key']] = $field;
 			}
 			$attr['fields'] = $new_fields;
 		}
 
-		foreach ($attr['fields'] as $meta_key => $field) {
+		foreach ( $attr['fields'] as $meta_key => $field ) {
 			$attr['fields'][$meta_key]['meta_key'] = $meta_key;
 
 			$this->field_names[] = $meta_key;
-			if (!isset($field['type']))
+			if ( !isset( $field['type'] ) )
 				$attr['fields'][$meta_key]['type'] = $field['type'] = 'text';
 
-			if (isset($field['column']) && $field['column'] == true) {
+			if ( isset( $field['column'] ) && true == $field['column'] ) {
 				$this->add_to_columns(
-					(isset($field['label']) ? array($meta_key => $field['label']) : $meta_key)
+					( isset( $field['label'] ) ? array( $meta_key => $field['label'] ) : $meta_key )
 				);
 			}
 
-			if ($field['type'] == 'date') $this->register_datepicker();
-			if ($field['type'] == 'wysiwyg') $attr['fields'][$meta_key]['context'] = $attr['context'];
-			if (isset($field['data']))
-				$known_custom_fields[$this->type][$meta_key] = array('data' => $field['data']);
-			elseif ($field['type'] == 'select' && isset($field['multiple']))
+			if ( 'date' == $field['type'] ) $this->register_datepicker( );
+			if ( 'wysiwyg' == $field['type'] ) $attr['fields'][$meta_key]['context'] = $attr['context'];
+			if ( isset( $field['data'] ) )
+				$known_custom_fields[$this->type][$meta_key] = array( 'data' => $field['data'] );
+			elseif ( 'select' == $field['type'] && isset( $field['multiple'] ) )
 				$known_custom_fields[$this->type][$meta_key] = 'multiple_select';
 			else
 				$known_custom_fields[$this->type][$meta_key] = $field['type'];
@@ -140,7 +140,7 @@ class Super_Custom_Post_Meta {
 
 		$this->boxes[] = $attr;
 
-		$this->register_meta_boxes_action();
+		$this->register_meta_boxes_action( );
 	}
 
 
@@ -153,8 +153,8 @@ class Super_Custom_Post_Meta {
 	 * @return void
 	 * @author Matthew Boynes
 	 */
-	public function add_meta_boxes($boxes) {
-		foreach ($boxes as $box) $this->add_meta_box($box);
+	public function add_meta_boxes( $boxes ) {
+		foreach ( $boxes as $box ) $this->add_meta_box( $box );
 	}
 
 
@@ -166,10 +166,10 @@ class Super_Custom_Post_Meta {
 	 * @return void
 	 * @author Matthew Boynes
 	 */
-	public function register_meta_boxes_action() {
-		if (!$this->registered_meta_boxes_action) {
-			add_action( 'add_meta_boxes', array(&$this, 'register_meta_boxes') );
-			add_action( 'save_post', array($this, 'save_meta') );
+	public function register_meta_boxes_action( ) {
+		if ( !$this->registered_meta_boxes_action ) {
+			add_action( 'add_meta_boxes', array( &$this, 'register_meta_boxes' ) );
+			add_action( 'save_post', array( $this, 'save_meta' ) );
 			$this->registered_meta_boxes_action = true;
 		}
 	}
@@ -182,8 +182,8 @@ class Super_Custom_Post_Meta {
 	 * @return void
 	 * @author Matthew Boynes
 	 */
-	public function register_meta_boxes() {
-		foreach ($this->boxes as $box) {
+	public function register_meta_boxes( ) {
+		foreach ( $this->boxes as $box ) {
 			add_meta_box(
 				$box['id'],
 				$box['title'],
@@ -205,19 +205,19 @@ class Super_Custom_Post_Meta {
 	 * @return void
 	 * @author Matthew Boynes
 	 */
-	public function meta_html($post, $fields) {
+	public function meta_html( $post, $fields ) {
 		$fields = $fields['args'];
 		// Use nonce for verification
 		if ( ! $this->printed_nonce ) {
-			wp_nonce_field( plugin_basename( __FILE__ ), sprintf($this->nonce_key, $this->type) );
+			wp_nonce_field( plugin_basename( __FILE__ ), sprintf( $this->nonce_key, $this->type ) );
 			$this->printed_nonce = true;
 		}
 
-		$post_meta = get_post_custom($post->ID);
-		foreach ($fields as $field) {
-			// array('meta_key' => 'event_date', 'name' => 'Event Date', 'type' => 'text'),
-			// array('meta_key' => 'active', 'name' => 'Active', 'type' => 'checkbox')
-			$this->add_field($field, $post_meta);
+		$post_meta = get_post_custom( $post->ID );
+		foreach ( $fields as $field ) {
+			// array( 'meta_key' => 'event_date', 'name' => 'Event Date', 'type' => 'text' ),
+			// array( 'meta_key' => 'active', 'name' => 'Active', 'type' => 'checkbox' )
+			$this->add_field( $field, $post_meta );
 		}
 	}
 
@@ -233,20 +233,20 @@ class Super_Custom_Post_Meta {
 	 * @return string HTML code with a wrapped element, whatever it may be
 	 * @author Matthew Boynes
 	 */
-	public function add_field($field, $post_meta) {
-		if (!isset($field['label'])) $field['label'] = SCPT_Markup::labelify($field['meta_key']);
+	public function add_field( $field, $post_meta ) {
+		if ( !isset( $field['label'] ) ) $field['label'] = SCPT_Markup::labelify( $field['meta_key'] );
 
-		if (isset($field['data'])) $field['options'] = $this->get_external_data($field['data']);
+		if ( isset( $field['data'] ) ) $field['options'] = $this->get_external_data( $field['data'] );
 
-		$html_attributes = apply_filters('scpt_plugin_meta_field_addt_html_attributes', $this->parse_attributes($field));
-		$field_callback = apply_filters('scpt_plugin_meta_field_callback', array(&$this, "add_{$field['type']}_field"), $field);
+		$html_attributes = apply_filters( 'scpt_plugin_meta_field_addt_html_attributes', $this->parse_attributes( $field ) );
+		$field_callback = apply_filters( 'scpt_plugin_meta_field_callback', array( &$this, "add_{$field['type']}_field" ), $field );
 
-		echo '<',$this->field_wrapper,' class="',$field['meta_key'],'-wrap scpt-field-wrap">',"\n";
-		if ((is_array($field_callback) && method_exists($field_callback[0], $field_callback[1])) || (!is_array($field_callback) && function_exists($field_callback)))
-			call_user_func($field_callback, $field, $post_meta, $html_attributes);
+		echo '<', $this->field_wrapper, ' class="', $field['meta_key'], '-wrap scpt-field-wrap">', "\n";
+		if ( ( is_array( $field_callback ) && method_exists( $field_callback[0], $field_callback[1] ) ) || ( !is_array( $field_callback ) && function_exists( $field_callback ) ) )
+			call_user_func( $field_callback, $field, $post_meta, $html_attributes );
 		else
-			call_user_func(array(&$this, "add_text_field"), $field, $post_meta, $html_attributes);
-		echo '</',$this->field_wrapper,'>';
+			call_user_func( array( &$this, "add_text_field" ), $field, $post_meta, $html_attributes );
+		echo '</', $this->field_wrapper, '>';
 	}
 
 	/*
@@ -265,19 +265,19 @@ class Super_Custom_Post_Meta {
 	 * @return string HTML for an <input type="text" /> element
 	 * @author Matthew Boynes
 	 */
-	public function add_text_field($field, $post_meta, $html_attributes) {
-		if ($field['label'] !== false)
-			echo SCPT_Markup::tag('label', array(
-					'for' => 'scpt_meta_'.$field['meta_key'],
-					'class' => 'scpt-meta-label scpt-meta-text label-'.$field['meta_key']
-				), $field['label']);
-		echo SCPT_Markup::tag('input', array_merge(array(
+	public function add_text_field( $field, $post_meta, $html_attributes ) {
+		if ( false !== $field['label'] )
+			echo SCPT_Markup::tag( 'label', array(
+					'for' => 'scpt_meta_' . $field['meta_key'],
+					'class' => 'scpt-meta-label scpt-meta-text label-' . $field['meta_key']
+				), $field['label'] );
+		echo SCPT_Markup::tag( 'input', array_merge( array(
 				'type' => $field['type'],
-				'value' => (isset( $post_meta[$field['meta_key']] ) ? $post_meta[$field['meta_key']][0] : ''),
+				'value' => ( isset( $post_meta[$field['meta_key']] ) ? $post_meta[$field['meta_key']][0] : '' ),
 				'name' => $field['meta_key'],
 				'class' => 'scpt-field',
-				'id' => 'scpt_meta_'.$field['meta_key']
-			), $html_attributes));
+				'id' => 'scpt_meta_' . $field['meta_key']
+			), $html_attributes ) );
 	}
 
 
@@ -291,17 +291,17 @@ class Super_Custom_Post_Meta {
 	 * @return string HTML for a <textarea></textarea> element
 	 * @author Matthew Boynes
 	 */
-	public function add_textarea_field($field, $post_meta, $html_attributes) {
-		if ($field['label'] !== false)
-			echo SCPT_Markup::tag('label', array(
-					'for' => 'scpt_meta_'.$field['meta_key'],
-					'class' => 'scpt-meta-label scpt-meta-textarea label-'.$field['meta_key']
-				), $field['label']);
-		echo SCPT_Markup::tag('textarea', array_merge(array(
+	public function add_textarea_field( $field, $post_meta, $html_attributes ) {
+		if ( false !== $field['label'] )
+			echo SCPT_Markup::tag( 'label', array(
+					'for' => 'scpt_meta_' . $field['meta_key'],
+					'class' => 'scpt-meta-label scpt-meta-textarea label-' . $field['meta_key']
+				), $field['label'] );
+		echo SCPT_Markup::tag( 'textarea', array_merge( array(
 				'name' => $field['meta_key'],
 				'class' => 'scpt-field',
-				'id' => 'scpt_meta_'.$field['meta_key']
-			), $html_attributes), $post_meta[$field['meta_key']][0]);
+				'id' => 'scpt_meta_' . $field['meta_key']
+			), $html_attributes ), $post_meta[$field['meta_key']][0] );
 	}
 
 
@@ -315,21 +315,21 @@ class Super_Custom_Post_Meta {
 	 * @return string HTML for a <textarea></textarea> element
 	 * @author Matthew Boynes
 	 */
-	public function add_wysiwyg_field($field, $post_meta, $html_attributes) {
-		// $this->editors[] = 'scpt_meta_'.$field['meta_key'];
-		// return $this->add_textarea_field($field, $post_meta, $html_attributes, true);
-		$editor_settings = apply_filters('scpt_plugin_custom_meta_wysiwyg_settings', array(
-			'teeny' => ($field['context'] == 'side'),
-			'textarea_rows' => ($field['context'] == 'side' ? '15' : '10')
-		), $field);
-		if ($field['context'] == 'side')
-			add_filter( 'teeny_mce_before_init', array(&$this, 'teeny_mce_before_init'), 10, 2 );
+	public function add_wysiwyg_field( $field, $post_meta, $html_attributes ) {
+		// $this->editors[] = 'scpt_meta_' . $field['meta_key'];
+		// return $this->add_textarea_field( $field, $post_meta, $html_attributes, true );
+		$editor_settings = apply_filters( 'scpt_plugin_custom_meta_wysiwyg_settings', array(
+			'teeny' => ( 'side' == $field['context'] ),
+			'textarea_rows' => ( 'side' == $field['context'] ? '15' : '10' )
+		), $field );
+		if ( 'side' == $field['context'] )
+			add_filter( 'teeny_mce_before_init', array( &$this, 'teeny_mce_before_init' ), 10, 2 );
 
-		if ($field['label'] !== false)
-			echo SCPT_Markup::tag('label', array(
-					'for' => 'scpt_meta_'.$field['meta_key'],
-					'class' => 'scpt-meta-label scpt-meta-wysiwyg label-'.$field['meta_key']
-				), $field['label']);
+		if ( false !== $field['label'] )
+			echo SCPT_Markup::tag( 'label', array(
+					'for' => 'scpt_meta_' . $field['meta_key'],
+					'class' => 'scpt-meta-label scpt-meta-wysiwyg label-' . $field['meta_key']
+				), $field['label'] );
 		wp_editor( $post_meta[$field['meta_key']][0], $field['meta_key'], $editor_settings );
 	}
 
@@ -342,7 +342,7 @@ class Super_Custom_Post_Meta {
 	 * @return void
 	 * @author Matthew Boynes
 	 */
-	public function teeny_mce_before_init($mceInit, $editor_id) {
+	public function teeny_mce_before_init( $mceInit, $editor_id ) {
 		$mceInit['theme_advanced_buttons1'] = 'bold,italic,separator,link,unlink,separator,bullist,numlist,separator,wp_adv,fullscreen';
 		$mceInit['theme_advanced_buttons2'] = 'formatselect,justifyleft,justifycenter,justifyright,undo,redo';
 		return $mceInit;
@@ -358,21 +358,21 @@ class Super_Custom_Post_Meta {
 	 * @return string HTML for an <input type="checkbox" /> element
 	 * @author Matthew Boynes
 	 */
-	public function add_boolean_field($field, $post_meta, $html_attributes) {
-		$args = array_merge(array(
+	public function add_boolean_field( $field, $post_meta, $html_attributes ) {
+		$args = array_merge( array(
 			'type' => 'checkbox',
 			'value' => '1',
 			'name' => $field['meta_key'],
 			'class' => 'scpt-field',
-			'id' => 'scpt_meta_'.$field['meta_key']
-		), $html_attributes);
-		if ($post_meta[$field['meta_key']][0] == '1') $args['checked'] = 'checked';
+			'id' => 'scpt_meta_' . $field['meta_key']
+		), $html_attributes );
+		if ( '1' == $post_meta[$field['meta_key']][0] ) $args['checked'] = 'checked';
 		echo
-			SCPT_Markup::tag('input', array('type' => 'hidden', 'name' => $field['meta_key'], 'value' => '0' )),
-			SCPT_Markup::tag('label', array(
+			SCPT_Markup::tag( 'input', array( 'type' => 'hidden', 'name' => $field['meta_key'], 'value' => '0' ) ),
+			SCPT_Markup::tag( 'label', array(
 				'for' => $args['id'],
-				'class' => 'scpt-meta-label choice scpt-meta-checkbox label-'.$field['meta_key']
-			), SCPT_Markup::tag('input', $args) . ' ' . $field['label']);
+				'class' => 'scpt-meta-label choice scpt-meta-checkbox label-' . $field['meta_key']
+			), SCPT_Markup::tag( 'input', $args ) . ' ' . $field['label'] );
 	}
 
 
@@ -388,23 +388,23 @@ class Super_Custom_Post_Meta {
 	 * @return string HTML for an <input type="checkbox" /> element
 	 * @author Matthew Boynes
 	 */
-	public function add_checkbox_field($field, $post_meta, $html_attributes) {
+	public function add_checkbox_field( $field, $post_meta, $html_attributes ) {
 		# First see if this field has options. If not, we can do a boolean checkbox instead
-		if ( ! isset($field['options']) )
-			return $this->add_boolean_field($field, $post_meta, $html_attributes);
+		if ( ! isset( $field['options'] ) )
+			return $this->add_boolean_field( $field, $post_meta, $html_attributes );
 
-		$args = array_merge(array(
+		$args = array_merge( array(
 			'type' => 'checkbox',
-			'name' => $field['meta_key'].'[]',
+			'name' => $field['meta_key'] . '[]',
 			'class' => 'scpt-field choice',
-			'id' => 'scpt_meta_'.$field['meta_key']
-		), $html_attributes);
+			'id' => 'scpt_meta_' . $field['meta_key']
+		), $html_attributes );
 
-		if ($field['label'] !== false)
-			echo SCPT_Markup::tag('label', array(
-					'class' => 'scpt-meta-label scpt-meta-checkbox label-'.$field['meta_key']
-				), $field['label']);
-		echo '<span class="scpt-option">'.implode("</span>\n<span class=\"scpt-option\">", $this->prune_options($field['options'], $field['meta_key'], $post_meta, $args, 'input')).'</span>';
+		if ( false !== $field['label'] )
+			echo SCPT_Markup::tag( 'label', array(
+					'class' => 'scpt-meta-label scpt-meta-checkbox label-' . $field['meta_key']
+				), $field['label'] );
+		echo '<span class="scpt-option">' . implode( "</span>\n<span class=\"scpt-option\">", $this->prune_options( $field['options'], $field['meta_key'], $post_meta, $args, 'input' ) ) . '</span>';
 	}
 
 
@@ -420,23 +420,23 @@ class Super_Custom_Post_Meta {
 	 * @return string HTML for an <input type="radio" /> element
 	 * @author Matthew Boynes
 	 */
-	public function add_radio_field($field, $post_meta, $html_attributes) {
+	public function add_radio_field( $field, $post_meta, $html_attributes ) {
 		# First see if this field has multiple options. If not, you're an idiot and we should do a checkbox instead
-		if ( ! isset($field['options']) || count($field['options']) == 1 )
-			return $this->add_checkbox_field($field, $post_meta, $html_attributes);
+		if ( ! isset( $field['options'] ) || 1 == count( $field['options'] ) )
+			return $this->add_checkbox_field( $field, $post_meta, $html_attributes );
 
-		$args = array_merge(array(
+		$args = array_merge( array(
 			'type' => 'radio',
 			'name' => $field['meta_key'],
 			'class' => 'scpt-field choice',
-			'id' => 'scpt_meta_'.$field['meta_key']
-		), $html_attributes);
+			'id' => 'scpt_meta_' . $field['meta_key']
+		), $html_attributes );
 
-		if ($field['label'] !== false)
-			echo SCPT_Markup::tag('label', array(
-					'class' => 'scpt-meta-label scpt-meta-radio label-'.$field['meta_key']
-				), $field['label']);
-		echo '<span class="scpt-option">'.implode("</span>\n<span class=\"scpt-option\">", $this->prune_options($field['options'], $field['meta_key'], $post_meta, $args, 'input')).'</span>';
+		if ( false !== $field['label'] )
+			echo SCPT_Markup::tag( 'label', array(
+					'class' => 'scpt-meta-label scpt-meta-radio label-' . $field['meta_key']
+				), $field['label'] );
+		echo '<span class="scpt-option">' . implode( "</span>\n<span class=\"scpt-option\">", $this->prune_options( $field['options'], $field['meta_key'], $post_meta, $args, 'input' ) ) . '</span>';
 	}
 
 
@@ -452,20 +452,20 @@ class Super_Custom_Post_Meta {
 	 * @return string HTML for an <input type="select" /> element
 	 * @author Matthew Boynes
 	 */
-	public function add_select_field($field, $post_meta, $html_attributes) {
-		$options = implode("\n", $this->prune_options($field['options'], $field['meta_key'], $post_meta));
-		if ( !isset($html_attributes['multiple']) && !(isset($field['prompt']) && $field['prompt'] === false))
-			$options = '<option value="">'.(isset($field['prompt']) ? $field['prompt'] : 'Choose one').'</option>' . $options;
+	public function add_select_field( $field, $post_meta, $html_attributes ) {
+		$options = implode( "\n", $this->prune_options( $field['options'], $field['meta_key'], $post_meta ) );
+		if ( !isset( $html_attributes['multiple'] ) && !( isset( $field['prompt'] ) && false === $field['prompt'] ) )
+			$options = '<option value="">' . ( isset( $field['prompt'] ) ? $field['prompt'] : 'Choose one' ) . '</option>' . $options;
 
-		if ($field['label'] !== false)
-			echo SCPT_Markup::tag('label', array(
-					'class' => 'scpt-meta-label scpt-meta-select label-'.$field['meta_key']
-				), $field['label']);
-		echo SCPT_Markup::tag('select', array_merge(array(
-				'name' => $field['meta_key'] . (isset($html_attributes['multiple']) ? '[]' : ''),
+		if ( false !== $field['label'] )
+			echo SCPT_Markup::tag( 'label', array(
+					'class' => 'scpt-meta-label scpt-meta-select label-' . $field['meta_key']
+				), $field['label'] );
+		echo SCPT_Markup::tag( 'select', array_merge( array(
+				'name' => $field['meta_key'] . ( isset( $html_attributes['multiple'] ) ? '[]' : '' ),
 				'class' => 'scpt-field',
-				'id' => 'scpt_meta_'.$field['meta_key']
-			), $html_attributes), $options);
+				'id' => 'scpt_meta_' . $field['meta_key']
+			), $html_attributes ), $options );
 	}
 
 
@@ -477,19 +477,19 @@ class Super_Custom_Post_Meta {
 	 * @return array An associative array of post_id => post_title
 	 * @author Matthew Boynes
 	 */
-	public function get_external_data($post_type) {
+	public function get_external_data( $post_type ) {
 		$posts_array = get_posts(
-			apply_filters('scpt_plugin_meta_data_connect_'.$post_type, array(
+			apply_filters( 'scpt_plugin_meta_data_connect_' . $post_type, array(
 					'numberposts' => -1,
 					'orderby' => 'menu_order title',
 					'order' => 'ASC',
 					'post_type' => $post_type
-			))
+			) )
 		);
 
 		// The Loop, hah
-		$ret = apply_filters('scpt_plugin_meta_data_loop', array(), $posts_array);
-		if ( empty($ret) && !empty($posts_array) ) {
+		$ret = apply_filters( 'scpt_plugin_meta_data_loop', array( ), $posts_array );
+		if ( empty( $ret ) && !empty( $posts_array ) ) {
 			foreach ( $posts_array as $post ) {
 				$ret[$post->ID] = get_the_title( $post->ID );
 			}
@@ -510,34 +510,34 @@ class Super_Custom_Post_Meta {
 	 * @return array of HTML elements
 	 * @author Matthew Boynes
 	 */
-	public function prune_options($options, $meta_key, $post_meta, $default_args = array(), $tag='option') {
-		$has_values = $this->is_assoc($options) || !isset($options[0]);
+	public function prune_options( $options, $meta_key, $post_meta, $default_args = array( ), $tag='option' ) {
+		$has_values = $this->is_assoc( $options ) || !isset( $options[0] );
 
 		# Allow developers to hook into this before the HTML is generated to override it
-		$html = apply_filters('scpt_plugin_custom_meta_pre_'.$meta_key.'_options', array());
-		if (!empty($html)) return $html;
+			$html = apply_filters( 'scpt_plugin_custom_meta_pre_' . $meta_key . '_options', array( ) );
+		if ( !empty( $html ) ) return $html;
 
 		foreach ( $options as $key => $option ) {
 			$this_args = $default_args;
 			$this_args['value'] = $has_values ? $key : $option;
-			if (isset($this_args['id']))
+			if ( isset( $this_args['id'] ) )
 				$this_args['id'] .= "_$key";
 
-			if ($tag == 'input') {
-				if ( isset($post_meta[$meta_key]) && in_array($this_args['value'], $post_meta[$meta_key]) )
+			if ( 'input' == $tag ) {
+				if ( isset( $post_meta[$meta_key] ) && in_array( $this_args['value'], $post_meta[$meta_key] ) )
 					$this_args['checked'] = 'checked';
-				$html[] = SCPT_Markup::tag('label', array(
+				$html[] = SCPT_Markup::tag( 'label', array(
 					'for' => $this_args['id'],
-					'class' => 'scpt-meta-label choice scpt-meta-'.$this_args['type'].' label-'.$meta_key
-				), SCPT_Markup::tag('input', $this_args) . ' ' . $option);
+					'class' => 'scpt-meta-label choice scpt-meta-' . $this_args['type'] . ' label-' . $meta_key
+				), SCPT_Markup::tag( 'input', $this_args ) . ' ' . $option );
 			}
 			else {
-				if ( isset($post_meta[$meta_key]) && in_array($this_args['value'], $post_meta[$meta_key]) )
+				if ( isset( $post_meta[$meta_key] ) && in_array( $this_args['value'], $post_meta[$meta_key] ) )
 					$this_args['selected'] = 'selected';
-				$html[] = SCPT_Markup::tag('option', $this_args, $option);
+				$html[] = SCPT_Markup::tag( 'option', $this_args, $option );
 			}
 		}
-		return apply_filters('scpt_plugin_custom_meta_'.$meta_key.'_options', $html);
+		return apply_filters( 'scpt_plugin_custom_meta_' . $meta_key . '_options', $html );
 	}
 
 
@@ -548,7 +548,7 @@ class Super_Custom_Post_Meta {
 	 * @return array The array of will-be HTML attributes
 	 * @author Matthew Boynes
 	 */
-	public function parse_attributes($args) {
+	public function parse_attributes( $args ) {
 		return array_diff_key( $args, array(
 			'type' => true,
 			'meta_key' => true,
@@ -557,7 +557,7 @@ class Super_Custom_Post_Meta {
 			'data' => true,
 			'prompt' => true,
 			'column' => true
-		));
+		) );
 	}
 
 
@@ -576,7 +576,7 @@ class Super_Custom_Post_Meta {
 
 		# verify this came from the our screen and with proper authorization,
 		# because save_post can be triggered at other times
-		if ( !wp_verify_nonce( $_POST[sprintf($this->nonce_key, $this->type)], plugin_basename( __FILE__ ) ) )
+		if ( !wp_verify_nonce( $_POST[sprintf( $this->nonce_key, $this->type )], plugin_basename( __FILE__ ) ) )
 			return;
 
 		# Check permissions
@@ -589,14 +589,14 @@ class Super_Custom_Post_Meta {
 
 		# OK, we're authenticated: we need to find and save the data
 
-		foreach ($this->field_names as $field) {
-			if (is_array($_POST[$field])) {
-				delete_post_meta($post_id, $field);
-				foreach ($_POST[$field] as $meta_value)
-					add_post_meta($post_id, $field, apply_filters("scpt_plugin_{$this->type}_meta_save_{$field}", $meta_value));
+		foreach ( $this->field_names as $field ) {
+			if ( is_array( $_POST[$field] ) ) {
+				delete_post_meta( $post_id, $field );
+				foreach ( $_POST[$field] as $meta_value )
+					add_post_meta( $post_id, $field, apply_filters( "scpt_plugin_{$this->type}_meta_save_{$field}", $meta_value ) );
 			}
 			else
-				update_post_meta( $post_id, $field, apply_filters("scpt_plugin_{$this->type}_meta_save_{$field}", $_POST[$field]));
+				update_post_meta( $post_id, $field, apply_filters( "scpt_plugin_{$this->type}_meta_save_{$field}", $_POST[$field] ) );
 		}
 	}
 
@@ -607,12 +607,12 @@ class Super_Custom_Post_Meta {
 	 * @return void
 	 * @author Matthew Boynes
 	 */
-	public function register_datepicker() {
-		if (!$this->registered_datepicker) {
-			add_action( 'admin_print_styles-post-new.php', array(&$this, 'add_datepicker_css') );
-			add_action( 'admin_print_styles-post.php', array(&$this, 'add_datepicker_css') );
-			add_action( 'admin_print_scripts-post-new.php', array(&$this, 'add_datepicker_js') );
-			add_action( 'admin_print_scripts-post.php', array(&$this, 'add_datepicker_js') );
+	public function register_datepicker( ) {
+		if ( !$this->registered_datepicker ) {
+			add_action( 'admin_print_styles-post-new.php', array( &$this, 'add_datepicker_css' ) );
+			add_action( 'admin_print_styles-post.php', array( &$this, 'add_datepicker_css' ) );
+			add_action( 'admin_print_scripts-post-new.php', array( &$this, 'add_datepicker_js' ) );
+			add_action( 'admin_print_scripts-post.php', array( &$this, 'add_datepicker_js' ) );
 			$this->registered_datepicker = true;
 		}
 	}
@@ -624,7 +624,7 @@ class Super_Custom_Post_Meta {
 	 * @return void
 	 * @author Matthew Boynes
 	 */
-	public function add_datepicker_css() {
+	public function add_datepicker_css( ) {
 		wp_enqueue_style( 'smoothness', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.15/themes/smoothness/jquery-ui.css' );
 	}
 
@@ -635,7 +635,7 @@ class Super_Custom_Post_Meta {
 	 * @return void
 	 * @author Matthew Boynes
 	 */
-	public function add_datepicker_js() {
+	public function add_datepicker_js( ) {
 		wp_enqueue_script( 'jquery-ui-datepicker' );
 		wp_enqueue_script( 'supercpt.js' );
 	}
@@ -648,61 +648,61 @@ class Super_Custom_Post_Meta {
 	 * @return bool
 	 * @author Matthew Boynes
 	 */
-	public function is_assoc($arr) {
-		return (is_array($arr) && count(array_filter(array_keys($arr),'is_string')) == count($arr));
+	public function is_assoc( $arr ) {
+		return ( is_array( $arr ) && count( array_filter( array_keys( $arr ), 'is_string' ) ) == count( $arr ) );
 	}
 
 
 
 
-	protected function register_custom_columns($columns=array()) {
-		if (!$this->registered_custom_columns) {
-			add_action( 'manage_'.$this->type.'_posts_custom_column' , array(&$this, 'custom_column') );
-			add_filter( 'manage_edit-'.$this->type.'_columns', array(&$this, 'edit_columns') );
+	protected function register_custom_columns( $columns=array( ) ) {
+		if ( !$this->registered_custom_columns ) {
+			add_action( 'manage_' . $this->type . '_posts_custom_column' , array( &$this, 'custom_column' ) );
+			add_filter( 'manage_edit-' . $this->type . '_columns', array( &$this, 'edit_columns' ) );
 			$this->registered_custom_columns = true;
 		}
 	}
 
-	public function add_to_columns($column) {
-		if (is_array($column)) {
+	public function add_to_columns( $column ) {
+		if ( is_array( $column ) ) {
 			$this->columns = $this->columns + $column;
 		}
 		else {
-			$this->columns[$column] = SCPT_Markup::labelify($column);
+			$this->columns[$column] = SCPT_Markup::labelify( $column );
 		}
-		$this->register_custom_columns();
+		$this->register_custom_columns( );
 	}
 
 	public function custom_column( $column ) {
-		if ( isset($this->columns[$column]) ) {
-			add_filter('scpt_plugin_formatted_meta', array($this, 'format_meta_for_list'), 10, 2);
+		if ( isset( $this->columns[$column] ) ) {
+			add_filter( 'scpt_plugin_formatted_meta', array( $this, 'format_meta_for_list' ), 10, 2 );
 			the_scpt_formatted_meta( $column );
 		}
 
 		/* If listing a taxonomy...
-		$terms = get_the_term_list( $post->ID , 'location' , '' , ',' , '' );
+		$terms = get_the_term_list( $post->ID , 'location' , '' , ', ' , '' );
 		if ( is_string( $terms ) )
 			echo $terms;
 		*/
 	}
 
-	public function format_meta_for_list($data, $key) {
-		$field_info = get_known_field_info($key);
-		if (is_array($field_info)) {
+	public function format_meta_for_list( $data, $key ) {
+		$field_info = get_known_field_info( $key );
+		if ( is_array( $field_info ) ) {
 			# This is a cpt relationship
 		}
 		else {
-			switch ($field_info) {
+			switch ( $field_info ) {
 				case 'date':
-					return $data ? date('Y-m-d',$data) : '';
+					return $data ? date( 'Y-m-d', $data ) : '';
 				case 'boolean':
-					return $data === true ? '&#10004;' : '';
+					return true === $data ? '&#10004;' : '';
 			}
 		}
 		return $data;
 	}
 
-	public function edit_columns($columns) {
+	public function edit_columns( $columns ) {
 		return array(
 			"cb" => '<input type="checkbox" />',
 			"title" => 'Title'

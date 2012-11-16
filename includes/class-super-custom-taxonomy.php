@@ -45,7 +45,7 @@ class Super_Custom_Taxonomy {
 	 *
 	 * @var array
 	 */
-	var $objects = array();
+	var $objects = array( );
 
 
 	/**
@@ -53,7 +53,7 @@ class Super_Custom_Taxonomy {
 	 *
 	 * @var array See {@link http://codex.wordpress.org/Function_Reference/register_taxonomy the WordPress Codex}
 	 */
-	var $tax = array();
+	var $tax = array( );
 
 
 	/**
@@ -67,18 +67,18 @@ class Super_Custom_Taxonomy {
 	 * @param array|bool $register Optional. If false, the tax won't be automatically registered. If an array, can override any of the tax defaults. See {@link http://codex.wordpress.org/Function_Reference/register_taxonomy the WordPress Codex} for possible values.
 	 * @author Matthew Boynes
 	 */
-	function __construct($name, $singular=false, $plural=false, $acts_like = false, $register=array()) {
+	function __construct( $name, $singular=false, $plural=false, $acts_like = false, $register=array( ) ) {
 		$this->name = $name;
-		if (!$singular)
-			$singular = SCPT_Markup::labelify($this->name);
-		if (!$plural)
-			$plural = $singular.'s';
+		if ( !$singular )
+			$singular = SCPT_Markup::labelify( $this->name );
+		if ( !$plural )
+			$plural = $singular . 's';
 		$this->singular = $singular;
 		$this->plural = $plural;
-		$this->hierarchical = ($acts_like && strpos(strtolower($acts_like),'cat') !== false);
+		$this->hierarchical = ( $acts_like && false !== strpos( strtolower( $acts_like ), 'cat' ) );
 
-		if ($register !== false)
-			$this->register_taxonomy($register);
+		if ( false !== $register )
+			$this->register_taxonomy( $register );
 	}
 
 
@@ -90,25 +90,25 @@ class Super_Custom_Taxonomy {
 	 * @return void
 	 * @author Matthew Boynes
 	 */
-	public function register_taxonomy($customizations=array(), $hierarchical=false) {
+	public function register_taxonomy( $customizations=array( ), $hierarchical=false ) {
 		$this->tax = array_merge(
-			apply_filters('scpt_plugin_default_tax_options', array(
+			apply_filters( 'scpt_plugin_default_tax_options', array(
 				'label' => $this->plural,
 				'labels' => array(
 					'name' => _x( $this->plural, $this->name ),
 					'singular_name' => _x( $this->singular, $this->name ),
-					'search_items' => _x( 'Search '.$this->plural, $this->name ),
-					'popular_items' => _x( 'Popular '.$this->plural, $this->name ),
-					'all_items' => _x( 'All '.$this->plural, $this->name ),
-					'parent_item' => _x( 'Parent '.$this->singular, $this->name ),
-					'parent_item_colon' => _x( 'Parent '.$this->singular.':', $this->name ),
-					'edit_item' => _x( 'Edit '.$this->singular, $this->name ),
-					'update_item' => _x( 'Update '.$this->singular, $this->name ),
-					'add_new_item' => _x( 'Add New '.$this->singular, $this->name ),
-					'new_item_name' => _x( 'New '.$this->singular.' Name', $this->name ),
-					'separate_items_with_commas' => _x( 'Separate '.strtolower($this->plural).' with commas', $this->name ),
-					'add_or_remove_items' => _x( 'Add or remove '.strtolower($this->plural), $this->name ),
-					'choose_from_most_used' => _x( 'Choose from the most used '.strtolower($this->plural), $this->name ),
+					'search_items' => _x( 'Search ' . $this->plural, $this->name ),
+					'popular_items' => _x( 'Popular ' . $this->plural, $this->name ),
+					'all_items' => _x( 'All ' . $this->plural, $this->name ),
+					'parent_item' => _x( 'Parent ' . $this->singular, $this->name ),
+					'parent_item_colon' => _x( 'Parent ' . $this->singular . ':', $this->name ),
+					'edit_item' => _x( 'Edit ' . $this->singular, $this->name ),
+					'update_item' => _x( 'Update ' . $this->singular, $this->name ),
+					'add_new_item' => _x( 'Add New ' . $this->singular, $this->name ),
+					'new_item_name' => _x( 'New ' . $this->singular . ' Name', $this->name ),
+					'separate_items_with_commas' => _x( 'Separate ' . strtolower( $this->plural ) . ' with commas', $this->name ),
+					'add_or_remove_items' => _x( 'Add or remove ' . strtolower( $this->plural ), $this->name ),
+					'choose_from_most_used' => _x( 'Choose from the most used ' . strtolower( $this->plural ), $this->name ),
 					'menu_name' => _x( $this->plural, $this->name ),
 					),
 				'hierarchical' => $this->hierarchical,
@@ -120,12 +120,12 @@ class Super_Custom_Taxonomy {
 				# 'rewrite' => true,
 				# 'query_var' => true,
 				# 'update_count_callback' => false,
-				# 'capabilities' => array(),
-			)),
+				# 'capabilities' => array( ),
+			) ),
 			$customizations
 		);
 
-		$this->register_tax_action();
+		$this->register_tax_action( );
 	}
 
 
@@ -136,9 +136,9 @@ class Super_Custom_Taxonomy {
 	 * @return void
 	 * @author Matthew Boynes
 	 */
-	public function connect_post_types($objects) {
-		if (!is_array($objects)) $objects = array($objects);
-		$this->objects = array_merge($this->objects, $objects);
+	public function connect_post_types( $objects ) {
+		if ( !is_array( $objects ) ) $objects = array( $objects );
+		$this->objects = array_merge( $this->objects, $objects );
 	}
 
 
@@ -149,8 +149,8 @@ class Super_Custom_Taxonomy {
 	 * @return void
 	 * @author Matthew Boynes
 	 */
-	protected function register_tax_action() {
-		add_action( 'init', array(&$this,'register_tax') );
+	protected function register_tax_action( ) {
+		add_action( 'init', array( &$this, 'register_tax' ) );
 	}
 
 
@@ -161,7 +161,7 @@ class Super_Custom_Taxonomy {
 	 * @return void
 	 * @author Matthew Boynes
 	 */
-	public function register_tax() {
+	public function register_tax( ) {
 		register_taxonomy( $this->name, $this->objects, $this->tax );
 	}
 

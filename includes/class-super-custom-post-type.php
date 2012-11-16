@@ -41,7 +41,7 @@ class Super_Custom_Post_Type extends Super_Custom_Post_Meta {
 
 
 	/**
-	 * The path to the icon (intially becomes a template for the path)
+	 * The path to the icon ( intially becomes a template for the path)
 	 *
 	 * @var string
 	 */
@@ -66,19 +66,19 @@ class Super_Custom_Post_Type extends Super_Custom_Post_Meta {
 	 * @param array|bool $register Optional. If false, the CPT won't be automatically registered. If an array, can override any of the CPT defaults. See {@link http://codex.wordpress.org/Function_Reference/register_post_type the WordPress Codex} for possible values.
 	 * @author Matthew Boynes
 	 */
-	function __construct($type, $singular=false, $plural=false, $register=array()) {
+	function __construct( $type, $singular=false, $plural=false, $register=array( ) ) {
 		$this->type = $type;
-		if (!$singular)
-			$singular = SCPT_Markup::labelify($this->type);
-		if (!$plural)
-			$plural = $singular.'s';
+		if ( !$singular )
+			$singular = SCPT_Markup::labelify( $this->type );
+		if ( !$plural )
+			$plural = $singular . 's';
 		$this->singular = $singular;
 		$this->plural = $plural;
 
-		if ($register !== false)
-			$this->register_post_type($register);
+		if ( false !== $register )
+			$this->register_post_type( $register );
 
-		parent::__construct($type);
+		parent::__construct( $type );
 	}
 
 
@@ -90,27 +90,27 @@ class Super_Custom_Post_Type extends Super_Custom_Post_Meta {
 	 * @return void
 	 * @author Matthew Boynes
 	 */
-	public function register_post_type($customizations=array()) {
-		if (isset($customizations['menu_icon']) && strpos($customizations['menu_icon'], '.') === false) {
-			$this->set_icon($customizations['menu_icon']);
-			unset($customizations['menu_icon']); # here we unset it because it will get set properly in the default array
+	public function register_post_type( $customizations=array( ) ) {
+		if ( isset( $customizations['menu_icon'] ) && false === strpos( $customizations['menu_icon'], '.' ) ) {
+			$this->set_icon( $customizations['menu_icon'] );
+			unset( $customizations['menu_icon'] ); # here we unset it because it will get set properly in the default array
 		}
 
 		$this->cpt = array_merge(
-			apply_filters('scpt_plugin_default_cpt_options', array(
+			apply_filters( 'scpt_plugin_default_cpt_options', array(
 				'label' => $this->plural,
 				'labels' => array(
 					'name' => _x( $this->plural, $this->type ),
 					'singular_name' => _x( $this->singular, $this->type ),
-					'add_new' => _x( 'New '.$this->singular, $this->type ),
-					'add_new_item' => _x( 'Add New '.$this->singular, $this->type ),
-					'edit_item' => _x( 'Edit '.$this->singular, $this->type ),
-					'new_item' => _x( 'New '.$this->singular, $this->type ),
-					'view_item' => _x( 'View '.$this->singular, $this->type ),
-					'search_items' => _x( 'Search '.$this->plural, $this->type ),
-					'not_found' => _x( 'No '.$this->plural.' found', $this->type ),
-					'not_found_in_trash' => _x( 'No '.$this->plural.' found in Trash', $this->type ),
-					'parent_item_colon' => _x( 'Parent '.$this->singular.':', $this->type ),
+					'add_new' => _x( 'New ' . $this->singular, $this->type ),
+					'add_new_item' => _x( 'Add New ' . $this->singular, $this->type ),
+					'edit_item' => _x( 'Edit ' . $this->singular, $this->type ),
+					'new_item' => _x( 'New ' . $this->singular, $this->type ),
+					'view_item' => _x( 'View ' . $this->singular, $this->type ),
+					'search_items' => _x( 'Search ' . $this->plural, $this->type ),
+					'not_found' => _x( 'No ' . $this->plural . ' found', $this->type ),
+					'not_found_in_trash' => _x( 'No ' . $this->plural . ' found in Trash', $this->type ),
+					'parent_item_colon' => _x( 'Parent ' . $this->singular . ':', $this->type ),
 					'menu_name' => _x( $this->plural, $this->type ),
 					),
 				'description' => $this->plural,
@@ -125,17 +125,17 @@ class Super_Custom_Post_Type extends Super_Custom_Post_Meta {
 				'has_archive' => true,
 				'show_in_nav_menus' => true,
 				'taxonomies' => array( ),
-				'menu_icon' => $this->icon ? sprintf($this->icon, 16) : false,
+				'menu_icon' => $this->icon ? sprintf( $this->icon, 16 ) : false,
 				# These are other values mentioned for reference, but WP's defaults are sufficient
 				# 'hierarchical' => false,
 				# 'rewrite' => true,
 				# 'query_var' => true,
 				# 'can_export' => true,
-			)),
+			) ),
 			$customizations
 		);
 
-		$this->register_cpt_action();
+		$this->register_cpt_action( );
 	}
 
 
@@ -146,9 +146,9 @@ class Super_Custom_Post_Type extends Super_Custom_Post_Meta {
 	 * @return void
 	 * @author Matthew Boynes
 	 */
-	public function connect_taxes($taxes) {
-		if (!is_array($taxes)) $taxes = array($taxes);
-		$this->cpt['taxonomies'] = array_merge($this->cpt['taxonomies'], $taxes);
+	public function connect_taxes( $taxes ) {
+		if ( !is_array( $taxes ) ) $taxes = array( $taxes );
+		$this->cpt['taxonomies'] = array_merge( $this->cpt['taxonomies'], $taxes );
 	}
 
 
@@ -159,8 +159,8 @@ class Super_Custom_Post_Type extends Super_Custom_Post_Meta {
 	 * @return void
 	 * @author Matthew Boynes
 	 */
-	protected function register_cpt_action() {
-		add_action( 'init', array(&$this,'register_cpt') );
+	protected function register_cpt_action( ) {
+		add_action( 'init', array( &$this, 'register_cpt' ) );
 	}
 
 
@@ -171,7 +171,7 @@ class Super_Custom_Post_Type extends Super_Custom_Post_Meta {
 	 * @return void
 	 * @author Matthew Boynes
 	 */
-	public function register_cpt() {
+	public function register_cpt( ) {
 		register_post_type( $this->type, $this->cpt );
 	}
 
@@ -183,20 +183,20 @@ class Super_Custom_Post_Type extends Super_Custom_Post_Meta {
 	 * @return string
 	 * @author Matthew Boynes
 	 */
-	public function set_icon($name) {
+	public function set_icon( $name ) {
 		$this->icon_name = $name;
-		$this->icon = sprintf(SCPT_PLUGIN_URL . '/images/%%d/glyphicons_%s.png', $name);
-		if ($this->cpt) {
-			$this->cpt['menu_icon'] = sprintf($this->icon, 16);
+		$this->icon = sprintf( SCPT_PLUGIN_URL . '/images/%%d/glyphicons_%s.png', $name );
+		if ( $this->cpt ) {
+			$this->cpt['menu_icon'] = sprintf( $this->icon, 16 );
 		}
-		add_filter( 'sanitize_html_class', array(&$this, 'post_icon'), 10, 2 );
+		add_filter( 'sanitize_html_class', array( &$this, 'post_icon' ), 10, 2 );
 		return $this->icon;
 	}
 
 
-	public function post_icon($sanitized, $class) {
-		if ( $class == 'icon32-posts-'.$this->type ) {
-			$sanitized .= ' glyphicons_'.$this->icon_name;
+	public function post_icon( $sanitized, $class ) {
+		if ( 'icon32-posts-' . $this->type == $class ) {
+			$sanitized .= ' glyphicons_' . $this->icon_name;
 		}
 		return $sanitized;
 	}
