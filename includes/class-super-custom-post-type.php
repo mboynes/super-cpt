@@ -185,7 +185,7 @@ class Super_Custom_Post_Type extends Super_Custom_Post_Meta {
 	 */
 	public function set_icon( $name ) {
 		$this->icon_name = $name;
-		$this->icon = sprintf( SCPT_PLUGIN_URL . '/images/%%d/glyphicons_%s.png', $name );
+		$this->icon = SCPT_PLUGIN_URL . 'images/%d/' . $name . '.png';
 		if ( $this->cpt ) {
 			$this->cpt['menu_icon'] = sprintf( $this->icon, 16 );
 		}

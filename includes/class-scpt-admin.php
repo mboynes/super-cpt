@@ -38,7 +38,7 @@ class SCPT_Admin {
 
 			<div id="scpt_icons">
 				<div id="glyphicons">
-				<?php foreach ( $images as $image ) : preg_match( '#^.*glyphicons_(.*)\.png$#', $image, $path ); ?>
+				<?php foreach ( $images as $image ) : preg_match( '/^.*\/([^\/]+)\.png$/', $image, $path ); ?>
 					<dl class="glyphicon"><dt class="glyphicons_<?php echo $path[1] ?>"></dt><dd><?php echo $path[1] ?></dd></dl>
 				<?php endforeach; ?>
 				</div>
