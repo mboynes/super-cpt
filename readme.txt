@@ -154,3 +154,22 @@ You probably shouldn't. Check out [Custom Post Type UI](http://wordpress.org/ext
 = 0.1 =
 
 Beta release
+
+
+== To-Do ==
+
+1. Add better support for multiple fields for one meta key
+2. Add ability to easily include custom icons
+3. Add multiple featured images
+4. Add easy RSS feeds, e.g. in fields array, a parameter might be `'rss' => 'PubDate'` to prefer that field's data over the post's publication date.
+
+== Donate ==
+
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="hosted_button_id" value="22PRU6U4U78RC">
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+</form>
+
+https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=22PRU6U4U78RC
