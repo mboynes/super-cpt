@@ -149,11 +149,12 @@ class Super_Custom_Post_Meta {
 	 *
 	 * @uses add_meta_box
 	 * @see add_meta_box
-	 * @param array $boxes An array of arrays to be passed to add_meta_box
+	 * @param array Arrays to be passed to add_meta_box; you can pass unlimited params to this method
 	 * @return void
 	 * @author Matthew Boynes
 	 */
-	public function add_meta_boxes( $boxes ) {
+	public function add_meta_boxes( ) {
+		$boxes = func_get_args();
 		foreach ( $boxes as $box ) $this->add_meta_box( $box );
 	}
 
