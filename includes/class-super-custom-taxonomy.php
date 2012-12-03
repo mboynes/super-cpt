@@ -91,7 +91,7 @@ class Super_Custom_Taxonomy {
 	 * @author Matthew Boynes
 	 */
 	public function register_taxonomy( $customizations=array( ), $hierarchical=false ) {
-		$this->tax = array_merge(
+		$this->args = array_merge(
 			apply_filters( 'scpt_plugin_default_tax_options', array(
 				'label' => $this->plural,
 				'labels' => array(
@@ -162,9 +162,26 @@ class Super_Custom_Taxonomy {
 	 * @author Matthew Boynes
 	 */
 	public function register_tax( ) {
-		register_taxonomy( $this->name, $this->objects, $this->tax );
+		register_taxonomy( $this->name, $this->objects, $this->args );
 	}
 
+
+	/**
+	 * Override taxonomy options after construction
+	 *
+	 * @param string|array $overrides Either an associative array of options for register_taxonomy or
+	 *  a string, which is to be one of the array's keys. If string, $value must also be set
+	 * @param mixed $value The value pair to the key if $overrides is a string
+	 * @return void
+	 * @author Matthew Boynes
+	 */
+	public function args( $overrides, $value = null ) {
+		if ( is_string( $overrides ) && null !== $value )
+			$overrides = array( $overrides => $value );
+		elseif ( ! is_array( $overrides ) )
+			return;
+		$this->args = array_merge( $this->args, $overrides );
+	}
 
 }
 
