@@ -59,8 +59,6 @@ class Super_CPT {
 	 */
 	function admin_hooks( ) {
 		$scpt_admin = new SCPT_Admin;
-		wp_register_style( 'supercpt.css', SCPT_PLUGIN_URL . 'css/supercpt.css', array( ), '1.3' );
-		wp_register_script( 'supercpt.js', SCPT_PLUGIN_URL . 'js/supercpt.js', array( 'jquery', 'jquery-ui-core', 'jquery-ui-datepicker' ), '1.1' );
 
 		add_action( 'admin_enqueue_scripts', array( &$this, 'load_js_and_css' ) );
 	}
@@ -73,6 +71,8 @@ class Super_CPT {
 	 * @author Matthew Boynes
 	 */
 	function load_js_and_css( ) {
+		wp_register_style( 'supercpt.css', SCPT_PLUGIN_URL . 'css/supercpt.css', array( ), '1.3' );
+		wp_register_script( 'supercpt.js', SCPT_PLUGIN_URL . 'js/supercpt.js', array( 'jquery', 'jquery-ui-core', 'jquery-ui-datepicker' ), '1.1' );
 		wp_enqueue_style( 'supercpt.css' );
 	}
 
