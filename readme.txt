@@ -68,11 +68,12 @@ Long story short, using this class means you don't have to do any additional wor
 
 = Helper Functions =
 
-SuperCPT has a couple of helper functions for displaying your post meta. `get_scpt_formatted_meta` and `the_scpt_formatted_meta` 
+SuperCPT has a couple of helper functions for displaying your post meta. `get_scpt_formatted_meta` and `the_scpt_formatted_meta`
 
 
 == Demo Code ==
 
+Here is the full demo code:
 
 	function scpt_demo() {
 		if ( ! class_exists( 'Super_Custom_Post_Type' ) )
