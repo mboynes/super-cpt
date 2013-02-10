@@ -3,7 +3,7 @@ Contributors: mboynes, unionstreetmedia
 Tags: custom-post-types, custom-post-type, cms, custom-field, custom-fields, meta
 Requires at least: 3.0
 Tested up to: 3.5
-Stable tag: 0.1.1
+Stable tag: 0.1.2
 License: GPLv2 or later
 
 Insanely easy and attractive custom post types, custom post meta, and custom taxonomies
