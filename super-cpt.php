@@ -2,7 +2,7 @@
 
 /*
 	Plugin Name: SuperCPT
-	Plugin URI: 
+	Plugin URI: http://wordpress.org/extend/plugins/super-cpt/
 	Description: Insanely easy and attractive custom post types, custom post meta, and custom taxonomies
 	Version: 0.1.1
 	Author: Matthew Boynes, Union Street Media
