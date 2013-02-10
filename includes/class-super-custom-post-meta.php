@@ -110,17 +110,17 @@ class Super_Custom_Post_Meta {
 		if ( !$this->is_assoc( $attr['fields'] ) ) {
 			$new_fields = array( );
 			foreach ( $attr['fields'] as $field ) {
-				$new_fields[$field['meta_key']] = $field;
+				$new_fields[ $field['meta_key'] ] = $field;
 			}
 			$attr['fields'] = $new_fields;
 		}
 
 		foreach ( $attr['fields'] as $meta_key => $field ) {
-			$attr['fields'][$meta_key]['meta_key'] = $meta_key;
+			$attr['fields'][ $meta_key ]['meta_key'] = $meta_key;
 
 			$this->field_names[] = $meta_key;
 			if ( !isset( $field['type'] ) )
-				$attr['fields'][$meta_key]['type'] = $field['type'] = 'text';
+				$attr['fields'][ $meta_key ]['type'] = $field['type'] = 'text';
 
 			if ( isset( $field['column'] ) && true == $field['column'] ) {
 				$this->add_to_columns(
@@ -129,13 +129,13 @@ class Super_Custom_Post_Meta {
 			}
 
 			if ( 'date' == $field['type'] ) $this->register_datepicker( );
-			if ( 'wysiwyg' == $field['type'] ) $attr['fields'][$meta_key]['context'] = $attr['context'];
+			if ( 'wysiwyg' == $field['type'] ) $attr['fields'][ $meta_key ]['context'] = $attr['context'];
 			if ( isset( $field['data'] ) )
-				$known_custom_fields[$this->type][$meta_key] = array( 'data' => $field['data'] );
+				$known_custom_fields[ $this->type ][ $meta_key ] = array( 'data' => $field['data'] );
 			elseif ( 'select' == $field['type'] && isset( $field['multiple'] ) )
-				$known_custom_fields[$this->type][$meta_key] = 'multiple_select';
+				$known_custom_fields[ $this->type ][ $meta_key ] = 'multiple_select';
 			else
-				$known_custom_fields[$this->type][$meta_key] = $field['type'];
+				$known_custom_fields[ $this->type ][ $meta_key ] = $field['type'];
 		}
 
 		$this->boxes[] = $attr;
@@ -339,7 +339,7 @@ class Super_Custom_Post_Meta {
 	 * Filter function for editors in sidebars. This prunes down the toolbars so it fits nicely. See teeny_mce_before_init WP filter
 	 *
 	 * @param array $mceInit Array of TinyMCE Editor settings, which we manipulate
-	 * @param string $editor_id 
+	 * @param string $editor_id
 	 * @return void
 	 * @author Matthew Boynes
 	 */
@@ -492,7 +492,7 @@ class Super_Custom_Post_Meta {
 		$ret = apply_filters( 'scpt_plugin_meta_data_loop', array( ), $posts_array );
 		if ( empty( $ret ) && !empty( $posts_array ) ) {
 			foreach ( $posts_array as $post ) {
-				$ret[$post->ID] = get_the_title( $post->ID );
+				$ret[ $post->ID ] = get_the_title( $post->ID );
 			}
 		}
 		return $ret;
@@ -525,7 +525,7 @@ class Super_Custom_Post_Meta {
 				$this_args['id'] .= "_$key";
 
 			if ( 'input' == $tag ) {
-				if ( isset( $post_meta[$meta_key] ) && in_array( $this_args['value'], $post_meta[$meta_key] ) )
+				if ( isset( $post_meta[ $meta_key ] ) && in_array( $this_args['value'], $post_meta[ $meta_key ] ) )
 					$this_args['checked'] = 'checked';
 				$html[] = SCPT_Markup::tag( 'label', array(
 					'for' => $this_args['id'],
@@ -533,7 +533,7 @@ class Super_Custom_Post_Meta {
 				), SCPT_Markup::tag( 'input', $this_args ) . ' ' . $option );
 			}
 			else {
-				if ( isset( $post_meta[$meta_key] ) && in_array( $this_args['value'], $post_meta[$meta_key] ) )
+				if ( isset( $post_meta[ $meta_key ] ) && in_array( $this_args['value'], $post_meta[ $meta_key ] ) )
 					$this_args['selected'] = 'selected';
 				$html[] = SCPT_Markup::tag( 'option', $this_args, $option );
 			}
@@ -565,14 +565,14 @@ class Super_Custom_Post_Meta {
 	/**
 	 * Save values for custom meta boxes
 	 *
-	 * @param int $post_id 
+	 * @param int $post_id
 	 * @return void
 	 * @author Matthew Boynes
 	 */
 	public function save_meta( $post_id ) {
-		# verify if this is an auto save routine. 
+		# verify if this is an auto save routine.
 		# If it is our form has not been submitted, so we dont want to do anything
-		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) 
+		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
 			return;
 
 		# verify this came from the our screen and with proper authorization,
@@ -581,7 +581,7 @@ class Super_Custom_Post_Meta {
 			return;
 
 		# Check permissions
-		if ( 'page' == $_POST['post_type'] ) 
+		if ( 'page' == $_POST['post_type'] )
 			if ( !current_user_can( 'edit_page', $post_id ) )
 				return;
 		else
@@ -591,13 +591,13 @@ class Super_Custom_Post_Meta {
 		# OK, we're authenticated: we need to find and save the data
 
 		foreach ( $this->field_names as $field ) {
-			if ( is_array( $_POST[$field] ) ) {
+			if ( is_array( $_POST[ $field ] ) ) {
 				delete_post_meta( $post_id, $field );
-				foreach ( $_POST[$field] as $meta_value )
+				foreach ( $_POST[ $field ] as $meta_value )
 					add_post_meta( $post_id, $field, apply_filters( "scpt_plugin_{$this->type}_meta_save_{$field}", $meta_value ) );
 			}
 			else
-				update_post_meta( $post_id, $field, apply_filters( "scpt_plugin_{$this->type}_meta_save_{$field}", $_POST[$field] ) );
+				update_post_meta( $post_id, $field, apply_filters( "scpt_plugin_{$this->type}_meta_save_{$field}", $_POST[ $field ] ) );
 		}
 	}
 
@@ -645,7 +645,7 @@ class Super_Custom_Post_Meta {
 	/**
 	 * A handy dandy helper function for determining if an array is associative or not
 	 *
-	 * @param array $arr 
+	 * @param array $arr
 	 * @return bool
 	 * @author Matthew Boynes
 	 */
@@ -669,13 +669,13 @@ class Super_Custom_Post_Meta {
 			$this->columns = $this->columns + $column;
 		}
 		else {
-			$this->columns[$column] = SCPT_Markup::labelify( $column );
+			$this->columns[ $column ] = SCPT_Markup::labelify( $column );
 		}
 		$this->register_custom_columns( );
 	}
 
 	public function custom_column( $column ) {
-		if ( isset( $this->columns[$column] ) ) {
+		if ( isset( $this->columns[ $column ] ) ) {
 			add_filter( 'scpt_plugin_formatted_meta', array( $this, 'format_meta_for_list' ), 10, 2 );
 			the_scpt_formatted_meta( $column );
 		}
