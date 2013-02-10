@@ -274,7 +274,7 @@ class Super_Custom_Post_Meta {
 				), $field['label'] );
 		echo SCPT_Markup::tag( 'input', array_merge( array(
 				'type' => $field['type'],
-				'value' => ( isset( $post_meta[$field['meta_key']] ) ? $post_meta[$field['meta_key']][0] : '' ),
+				'value' => ( isset( $post_meta[ $field['meta_key'] ] ) ? $post_meta[ $field['meta_key'] ][0] : '' ),
 				'name' => $field['meta_key'],
 				'class' => 'scpt-field',
 				'id' => 'scpt_meta_' . $field['meta_key']
@@ -298,11 +298,15 @@ class Super_Custom_Post_Meta {
 					'for' => 'scpt_meta_' . $field['meta_key'],
 					'class' => 'scpt-meta-label scpt-meta-textarea label-' . $field['meta_key']
 				), $field['label'] );
-		echo SCPT_Markup::tag( 'textarea', array_merge( array(
+		echo SCPT_Markup::tag(
+			'textarea',
+			array_merge( array(
 				'name' => $field['meta_key'],
 				'class' => 'scpt-field',
 				'id' => 'scpt_meta_' . $field['meta_key']
-			), $html_attributes ), $post_meta[$field['meta_key']][0] );
+			), $html_attributes ),
+			( isset( $post_meta[ $field['meta_key'] ] ) ? $post_meta[ $field['meta_key'] ][0] : '' )
+		);
 	}
 
 
@@ -331,7 +335,11 @@ class Super_Custom_Post_Meta {
 					'for' => 'scpt_meta_' . $field['meta_key'],
 					'class' => 'scpt-meta-label scpt-meta-wysiwyg label-' . $field['meta_key']
 				), $field['label'] );
-		wp_editor( $post_meta[$field['meta_key']][0], $field['meta_key'], $editor_settings );
+		wp_editor(
+			( isset( $post_meta[ $field['meta_key'] ] ) ? $post_meta[ $field['meta_key'] ][0] : '' ),
+			$field['meta_key'],
+			$editor_settings
+		);
 	}
 
 
@@ -367,7 +375,8 @@ class Super_Custom_Post_Meta {
 			'class' => 'scpt-field',
 			'id' => 'scpt_meta_' . $field['meta_key']
 		), $html_attributes );
-		if ( '1' == $post_meta[$field['meta_key']][0] ) $args['checked'] = 'checked';
+		if ( isset( $post_meta[ $field['meta_key'] ] ) && '1' == $post_meta[ $field['meta_key'] ][0] )
+			$args['checked'] = 'checked';
 		echo
 			SCPT_Markup::tag( 'input', array( 'type' => 'hidden', 'name' => $field['meta_key'], 'value' => '0' ) ),
 			SCPT_Markup::tag( 'label', array(
