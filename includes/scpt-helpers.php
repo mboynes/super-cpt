@@ -14,70 +14,77 @@ if ( !function_exists( 'get_scpt_formatted_meta' ) ) {
 	 * @author Matthew Boynes
 	 */
 	function get_scpt_formatted_meta( $key ) {
-		global $known_meta, $known_custom_fields, $post;
-		if ( isset( $known_meta[$post->ID][$key] ) )
-			return $known_meta[$post->ID][$key];
+		if ( 2 == func_num_args() ) {
+			$post = func_get_arg( 0 );
+			$key = func_get_arg( 1 );
+		} else {
+			global $post;
+		}
+		global $scpt_known_meta, $scpt_known_custom_fields;
+		if ( isset( $scpt_known_meta[ $post->ID ][ $key ] ) )
+			return $scpt_known_meta[ $post->ID ][ $key ];
 
 		$value = get_post_meta( $post->ID, $key );
-		if ( !$value || !is_array( $value ) ) return set_known_scpt_meta( $key, $value );
+		if ( !$value || !is_array( $value ) ) return set_known_scpt_meta( $key, $value, $post->ID );
 
-		if ( ! $field_info = get_known_field_info( $key ) )
-			return set_known_scpt_meta( $key, $value[0] );
+		if ( ! $field_info = get_known_field_info( $key, $post ) )
+			return set_known_scpt_meta( $key, $value[0], $post->ID );
 
 		if ( is_array( $field_info ) ) {
 			if ( $field_info['data'] ) {
-				return set_known_scpt_meta( $key, get_posts( array( 'post_type' => $field_info['data'], 'include' => $value ) ) );
+				return set_known_scpt_meta( $key, get_posts( array( 'post_type' => $field_info['data'], 'include' => $value ) ), $post->ID );
 			}
 		}
 		else switch ( $field_info ) {
 			case 'boolean':
 			case 'checkbox':
 				if ( 1 == count( $value ) && '1' == $value[0] )
-					return set_known_scpt_meta( $key, true );
+					return set_known_scpt_meta( $key, true, $post->ID );
 				elseif ( 1 == count( $value ) )
-					return set_known_scpt_meta( $key, false );
+					return set_known_scpt_meta( $key, false, $post->ID );
 				# no break here
 			case 'checkbox':
 			case 'multiple_select':
-				return set_known_scpt_meta( $key, $value );
+				return set_known_scpt_meta( $key, $value, $post->ID );
 				break;
 			case 'radio':
-				return set_known_scpt_meta( $key, $value[0] );
+				return set_known_scpt_meta( $key, $value[0], $post->ID );
 				break;
 			case 'wysiwyg':
-				return set_known_scpt_meta( $key, wpautop( $value[0] ) );
+				return set_known_scpt_meta( $key, wpautop( $value[0] ), $post->ID );
 				break;
 			case 'date':
 			case 'datetime':
-				return set_known_scpt_meta( $key, strtotime( $value[0] ) );
+				return set_known_scpt_meta( $key, strtotime( $value[0] ), $post->ID );
 				break;
 		}
-		return set_known_scpt_meta( $key, $value[0] );
+		return set_known_scpt_meta( $key, $value[0], $post->ID );
 	}
 
-	function get_known_field_info( $key ) {
-		global $known_custom_fields, $post;
-		if ( !is_array( $known_custom_fields ) || !isset( $known_custom_fields[$post->post_type] ) || !isset( $known_custom_fields[$post->post_type][$key] ) || !$known_custom_fields[$post->post_type][$key] )
+	function get_known_field_info( $key, $post ) {
+		global $scpt_known_custom_fields;
+		if ( !is_array( $scpt_known_custom_fields ) || !isset( $scpt_known_custom_fields[ $post->post_type ] ) || !isset( $scpt_known_custom_fields[ $post->post_type ][ $key ] ) || !$scpt_known_custom_fields[ $post->post_type ][ $key ] )
 			return false;
-		return $known_custom_fields[$post->post_type][$key];
+		return $scpt_known_custom_fields[ $post->post_type ][ $key ];
 	}
 
 	/**
-	 * Pseudo meta caching function. Stores value in $known_meta so it doesn't have to get formatted repeatedly
+	 * Pseudo meta caching function. Stores value in $scpt_known_meta so it doesn't have to get formatted repeatedly
 	 *
-	 * @param string $key 
-	 * @param mixed $value 
+	 * @param string $key
+	 * @param mixed $value
 	 * @return $value
 	 * @author Matthew Boynes
 	 */
-	function set_known_scpt_meta( $key, $value ) {
-		global $known_meta, $post;
-		$known_meta[$post->ID][$key] = $value;
+	function set_known_scpt_meta( $key, $value, $post_id ) {
+		global $scpt_known_meta;
+		$scpt_known_meta[ $post_id ][ $key ] = $value;
 		return $value;
 	}
 
 	/**
-	 * Output results from get_scpt_formatted_meta; if the result is an array, implode it with an optional separator
+	 * Output results from get_scpt_formatted_meta; if the result is an array, implode it with an optional
+	 * separator. Must be used inside the loop.
 	 *
 	 * @see get_scpt_formatted_meta
 	 * @param string $key

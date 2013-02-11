@@ -91,8 +91,8 @@ class Super_Custom_Post_Meta {
 	 * @return void
 	 * @author Matthew Boynes
 	 */
-		global $known_custom_fields;
 	public function add_meta_box( $attr = array() ) {
+		global $scpt_known_custom_fields;
 
 		if ( empty( $attr ) || !isset( $attr['fields'] ) || !isset( $attr['id'] ) ) return;
 
@@ -131,11 +131,11 @@ class Super_Custom_Post_Meta {
 			if ( 'date' == $field['type'] ) $this->register_datepicker();
 			if ( 'wysiwyg' == $field['type'] ) $attr['fields'][ $meta_key ]['context'] = $attr['context'];
 			if ( isset( $field['data'] ) )
-				$known_custom_fields[ $this->type ][ $meta_key ] = array( 'data' => $field['data'] );
+				$scpt_known_custom_fields[ $this->type ][ $meta_key ] = array( 'data' => $field['data'] );
 			elseif ( 'select' == $field['type'] && isset( $field['multiple'] ) )
-				$known_custom_fields[ $this->type ][ $meta_key ] = 'multiple_select';
+				$scpt_known_custom_fields[ $this->type ][ $meta_key ] = 'multiple_select';
 			else
-				$known_custom_fields[ $this->type ][ $meta_key ] = $field['type'];
+				$scpt_known_custom_fields[ $this->type ][ $meta_key ] = $field['type'];
 		}
 
 		$this->boxes[] = $attr;
