@@ -1,9 +1,9 @@
 === SuperCPT ===
 Contributors: mboynes, unionstreetmedia
-Tags: custom-post-types, custom-post-type, cms, custom-field, custom-fields, meta
+Tags: custom-post-types, custom-post-type, cms, custom-field, custom-fields, meta, custom-taxonomy, custom-taxonomies
 Requires at least: 3.0
 Tested up to: 3.5
-Stable tag: 0.1.2
+Stable tag: 0.1.3
 License: GPLv2 or later
 
 Insanely easy and attractive custom post types, custom post meta, and custom taxonomies
@@ -16,6 +16,20 @@ SuperCPT is an object wrapper for Custom Post Types, Custom Taxonomies, and Cust
 * allows you to set default options for all your Custom Post Types and Taxonomies,
 * significantly simplifies the process of creating, saving, and displaying Custom Post Meta,
 * is sexy! Your custom fields are styled to look great and SuperCPT comes with 350 awesome icons courtesy of [glyphicons.com](http://glyphicons.com).
+
+= Demo Video =
+
+[vimeo http://vimeo.com/59368054]
+
+= TextMate/Sublime Text 2 Bundle =
+
+If you use TextMate, Sublime Text 2, or another editor which supports TextMate bundles, check out [this set of snippets](https://github.com/mboynes/super-cpt-bundle) to turbo-charge your development.
+
+= And more... =
+
+See the [Other Notes tab](http://wordpress.org/extend/plugins/super-cpt/other_notes/) for instructions and demo code. Find more demos and a full reference [at GitHub](https://github.com/mboynes/super-cpt/wiki).
+
+Since you're a hard-core coder, [check this out on GitHub](https://github.com/mboynes/super-cpt) if you want to contribute!
 
 
 == Installation ==
@@ -145,12 +159,13 @@ Negative.
 You probably shouldn't. Check out [Custom Post Type UI](http://wordpress.org/extend/plugins/custom-post-type-ui/), [More Fields](http://wordpress.org/extend/plugins/more-fields/), and [Types - Custom Fields and Custom Post Types Management](http://wordpress.org/extend/plugins/types/).
 
 
-== Screenshots ==
 
-1. A screenshot
-2. Another
 
 == Upgrade Notice ==
+
+= 0.1.3 =
+
+Adding scpt_ namespacing to global variables `$known_meta` and `$known_custom_fields` to avoid (albeit by long-odds) conflict with another plugin. If you're using these variables, please update your code to use `$scpt_known_meta` and `$scpt_known_custom_fields`.
 
 = 0.1 =
 
@@ -161,8 +176,9 @@ Beta release
 
 1. Add better support for multiple fields for one meta key
 2. Add ability to easily include custom icons
-3. Add multiple featured images
-4. Add easy RSS feeds, e.g. in fields array, a parameter might be `'rss' => 'PubDate'` to prefer that field's data over the post's publication date.
+3. Add easy RSS feeds, e.g. in fields array, a parameter might be `'rss' => 'PubDate'` to prefer that field's data over the post's publication date.
+4. I18n updates
+
 
 == Donate ==
 
