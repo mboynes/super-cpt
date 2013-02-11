@@ -13,56 +13,55 @@ if ( !function_exists( 'get_scpt_formatted_meta' ) ) {
 	 * @return mixed Depending on field type, will return either a string, a boolean value, or an array
 	 * @author Matthew Boynes
 	 */
-	function get_scpt_formatted_meta( $key ) {
-		if ( 2 == func_num_args() ) {
-			$post = func_get_arg( 0 );
-			$key = func_get_arg( 1 );
-		} else {
-			global $post;
-		}
+	function get_scpt_formatted_meta( $key, $post_id = false ) {
 		global $scpt_known_meta, $scpt_known_custom_fields;
-		if ( isset( $scpt_known_meta[ $post->ID ][ $key ] ) )
-			return $scpt_known_meta[ $post->ID ][ $key ];
 
-		$value = get_post_meta( $post->ID, $key );
-		if ( !$value || !is_array( $value ) ) return set_known_scpt_meta( $key, $value, $post->ID );
+		if ( false == $post_id )
+			$post_id = get_the_ID();
 
-		if ( ! $field_info = get_known_field_info( $key, $post ) )
-			return set_known_scpt_meta( $key, $value[0], $post->ID );
+		if ( isset( $scpt_known_meta[ $post_id ][ $key ] ) )
+			return $scpt_known_meta[ $post_id ][ $key ];
+
+		$value = get_post_meta( $post_id, $key );
+		if ( !$value || !is_array( $value ) ) return set_known_scpt_meta( $key, $value, $post_id );
+
+		if ( ! $field_info = get_known_field_info( $key, $post_id ) )
+			return set_known_scpt_meta( $key, $value[0], $post_id );
 
 		if ( is_array( $field_info ) ) {
 			if ( $field_info['data'] ) {
-				return set_known_scpt_meta( $key, get_posts( array( 'post_type' => $field_info['data'], 'include' => $value ) ), $post->ID );
+				return set_known_scpt_meta( $key, get_posts( array( 'post_type' => $field_info['data'], 'include' => $value ) ), $post_id );
 			}
 		}
 		else switch ( $field_info ) {
 			case 'boolean':
 			case 'checkbox':
 				if ( 1 == count( $value ) && '1' == $value[0] )
-					return set_known_scpt_meta( $key, true, $post->ID );
+					return set_known_scpt_meta( $key, true, $post_id );
 				elseif ( 1 == count( $value ) )
-					return set_known_scpt_meta( $key, false, $post->ID );
+					return set_known_scpt_meta( $key, false, $post_id );
 				# no break here
 			case 'checkbox':
 			case 'multiple_select':
-				return set_known_scpt_meta( $key, $value, $post->ID );
+				return set_known_scpt_meta( $key, $value, $post_id );
 				break;
 			case 'radio':
-				return set_known_scpt_meta( $key, $value[0], $post->ID );
+				return set_known_scpt_meta( $key, $value[0], $post_id );
 				break;
 			case 'wysiwyg':
-				return set_known_scpt_meta( $key, wpautop( $value[0] ), $post->ID );
+				return set_known_scpt_meta( $key, wpautop( $value[0] ), $post_id );
 				break;
 			case 'date':
 			case 'datetime':
-				return set_known_scpt_meta( $key, strtotime( $value[0] ), $post->ID );
+				return set_known_scpt_meta( $key, strtotime( $value[0] ), $post_id );
 				break;
 		}
-		return set_known_scpt_meta( $key, $value[0], $post->ID );
+		return set_known_scpt_meta( $key, $value[0], $post_id );
 	}
 
-	function get_known_field_info( $key, $post ) {
+	function get_known_field_info( $key, $post_id ) {
 		global $scpt_known_custom_fields;
+		$post =& get_post( $post_id );
 		if ( !is_array( $scpt_known_custom_fields ) || !isset( $scpt_known_custom_fields[ $post->post_type ] ) || !isset( $scpt_known_custom_fields[ $post->post_type ][ $key ] ) || !$scpt_known_custom_fields[ $post->post_type ][ $key ] )
 			return false;
 		return $scpt_known_custom_fields[ $post->post_type ][ $key ];
