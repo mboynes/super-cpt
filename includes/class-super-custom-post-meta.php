@@ -1,6 +1,6 @@
 <?php
 
-$known_custom_fields = array( );
+$scpt_known_custom_fields = array();
 
 
 /**
@@ -62,7 +62,7 @@ class Super_Custom_Post_Meta {
 	 *
 	 * @var array
 	 */
-	var $field_names = array( );
+	var $field_names = array();
 
 
 	var $columns;
@@ -91,8 +91,8 @@ class Super_Custom_Post_Meta {
 	 * @return void
 	 * @author Matthew Boynes
 	 */
-	public function add_meta_box( $attr = array( ) ) {
 		global $known_custom_fields;
+	public function add_meta_box( $attr = array() ) {
 
 		if ( empty( $attr ) || !isset( $attr['fields'] ) || !isset( $attr['id'] ) ) return;
 
@@ -108,7 +108,7 @@ class Super_Custom_Post_Meta {
 
 		# Fields can optionally be numerically indexed with the individual field arrays having the 'meta_key' array index set
 		if ( !$this->is_assoc( $attr['fields'] ) ) {
-			$new_fields = array( );
+			$new_fields = array();
 			foreach ( $attr['fields'] as $field ) {
 				$new_fields[ $field['meta_key'] ] = $field;
 			}
@@ -128,7 +128,7 @@ class Super_Custom_Post_Meta {
 				);
 			}
 
-			if ( 'date' == $field['type'] ) $this->register_datepicker( );
+			if ( 'date' == $field['type'] ) $this->register_datepicker();
 			if ( 'wysiwyg' == $field['type'] ) $attr['fields'][ $meta_key ]['context'] = $attr['context'];
 			if ( isset( $field['data'] ) )
 				$known_custom_fields[ $this->type ][ $meta_key ] = array( 'data' => $field['data'] );
@@ -140,7 +140,7 @@ class Super_Custom_Post_Meta {
 
 		$this->boxes[] = $attr;
 
-		$this->register_meta_boxes_action( );
+		$this->register_meta_boxes_action();
 	}
 
 
@@ -153,7 +153,7 @@ class Super_Custom_Post_Meta {
 	 * @return void
 	 * @author Matthew Boynes
 	 */
-	public function add_meta_boxes( ) {
+	public function add_meta_boxes() {
 		$boxes = func_get_args();
 		foreach ( $boxes as $box ) $this->add_meta_box( $box );
 	}
@@ -167,7 +167,7 @@ class Super_Custom_Post_Meta {
 	 * @return void
 	 * @author Matthew Boynes
 	 */
-	public function register_meta_boxes_action( ) {
+	public function register_meta_boxes_action() {
 		if ( !$this->registered_meta_boxes_action ) {
 			add_action( 'add_meta_boxes', array( &$this, 'register_meta_boxes' ) );
 			add_action( 'save_post', array( $this, 'save_meta' ) );
@@ -183,7 +183,7 @@ class Super_Custom_Post_Meta {
 	 * @return void
 	 * @author Matthew Boynes
 	 */
-	public function register_meta_boxes( ) {
+	public function register_meta_boxes() {
 		foreach ( $this->boxes as $box ) {
 			add_meta_box(
 				$box['id'],
@@ -498,7 +498,7 @@ class Super_Custom_Post_Meta {
 		);
 
 		// The Loop, hah
-		$ret = apply_filters( 'scpt_plugin_meta_data_loop', array( ), $posts_array );
+		$ret = apply_filters( 'scpt_plugin_meta_data_loop', array(), $posts_array );
 		if ( empty( $ret ) && !empty( $posts_array ) ) {
 			foreach ( $posts_array as $post ) {
 				$ret[ $post->ID ] = get_the_title( $post->ID );
@@ -520,11 +520,11 @@ class Super_Custom_Post_Meta {
 	 * @return array of HTML elements
 	 * @author Matthew Boynes
 	 */
-	public function prune_options( $options, $meta_key, $post_meta, $default_args = array( ), $tag='option' ) {
+	public function prune_options( $options, $meta_key, $post_meta, $default_args = array(), $tag = 'option' ) {
 		$has_values = $this->is_assoc( $options ) || !isset( $options[0] );
 
 		# Allow developers to hook into this before the HTML is generated to override it
-			$html = apply_filters( 'scpt_plugin_custom_meta_pre_' . $meta_key . '_options', array( ) );
+			$html = apply_filters( 'scpt_plugin_custom_meta_pre_' . $meta_key . '_options', array() );
 		if ( !empty( $html ) ) return $html;
 
 		foreach ( $options as $key => $option ) {
@@ -617,7 +617,7 @@ class Super_Custom_Post_Meta {
 	 * @return void
 	 * @author Matthew Boynes
 	 */
-	public function register_datepicker( ) {
+	public function register_datepicker() {
 		if ( !$this->registered_datepicker ) {
 			add_action( 'admin_print_styles-post-new.php', array( &$this, 'add_datepicker_css' ) );
 			add_action( 'admin_print_styles-post.php', array( &$this, 'add_datepicker_css' ) );
@@ -634,7 +634,7 @@ class Super_Custom_Post_Meta {
 	 * @return void
 	 * @author Matthew Boynes
 	 */
-	public function add_datepicker_css( ) {
+	public function add_datepicker_css() {
 		wp_enqueue_style( 'smoothness', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.15/themes/smoothness/jquery-ui.css' );
 	}
 
@@ -645,7 +645,7 @@ class Super_Custom_Post_Meta {
 	 * @return void
 	 * @author Matthew Boynes
 	 */
-	public function add_datepicker_js( ) {
+	public function add_datepicker_js() {
 		wp_enqueue_script( 'jquery-ui-datepicker' );
 		wp_enqueue_script( 'supercpt.js' );
 	}
@@ -665,7 +665,7 @@ class Super_Custom_Post_Meta {
 
 
 
-	protected function register_custom_columns( $columns=array( ) ) {
+	protected function register_custom_columns( $columns = array() ) {
 		if ( !$this->registered_custom_columns ) {
 			add_action( 'manage_' . $this->type . '_posts_custom_column' , array( &$this, 'custom_column' ) );
 			add_filter( 'manage_edit-' . $this->type . '_columns', array( &$this, 'edit_columns' ) );
@@ -680,7 +680,7 @@ class Super_Custom_Post_Meta {
 		else {
 			$this->columns[ $column ] = SCPT_Markup::labelify( $column );
 		}
-		$this->register_custom_columns( );
+		$this->register_custom_columns();
 	}
 
 	public function custom_column( $column ) {

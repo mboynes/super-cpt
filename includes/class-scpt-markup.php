@@ -2,11 +2,11 @@
 
 
 /**
-* 
+*
 */
 class SCPT_Markup {
-	function __construct( ) {
-		
+	function __construct() {
+
 	}
 
 	/**
@@ -20,7 +20,7 @@ class SCPT_Markup {
 	 * @return string
 	 * @author Matthew Boynes
 	 */
-	public static function tag( $name, $attr=array( ), $text=false ) {
+	public static function tag( $name, $attr = array(), $text = false ) {
 		if ( $attr )
 			$attr = SCPT_Markup::attributes( $attr );
 		else

@@ -2,7 +2,7 @@
 
 
 if ( !function_exists( 'get_scpt_formatted_meta' ) ) {
-	$known_meta = array( );
+	$scpt_known_meta = array();
 
 	/**
 	 * Get a formatted post_meta value for a given key.
@@ -85,7 +85,7 @@ if ( !function_exists( 'get_scpt_formatted_meta' ) ) {
 	 * @return void
 	 * @author Matthew Boynes
 	 */
-	function the_scpt_formatted_meta( $key, $sep=', ' ) {
+	function the_scpt_formatted_meta( $key, $sep = ', ' ) {
 		$val = apply_filters( 'scpt_plugin_formatted_meta', get_scpt_formatted_meta( $key ), $key );
 		if ( is_array( $val ) )
 			echo implode( $sep, $val );

@@ -45,7 +45,7 @@ class Super_Custom_Taxonomy {
 	 *
 	 * @var array
 	 */
-	var $objects = array( );
+	var $objects = array();
 
 
 	/**
@@ -53,7 +53,7 @@ class Super_Custom_Taxonomy {
 	 *
 	 * @var array See {@link http://codex.wordpress.org/Function_Reference/register_taxonomy the WordPress Codex}
 	 */
-	var $tax = array( );
+	var $tax = array();
 
 
 	/**
@@ -67,7 +67,7 @@ class Super_Custom_Taxonomy {
 	 * @param array|bool $register Optional. If false, the tax won't be automatically registered. If an array, can override any of the tax defaults. See {@link http://codex.wordpress.org/Function_Reference/register_taxonomy the WordPress Codex} for possible values.
 	 * @author Matthew Boynes
 	 */
-	function __construct( $name, $singular=false, $plural=false, $acts_like = false, $register=array( ) ) {
+	function __construct( $name, $singular = false, $plural = false, $acts_like = false, $register = array() ) {
 		$this->name = $name;
 		if ( !$singular )
 			$singular = SCPT_Markup::labelify( $this->name );
@@ -90,7 +90,7 @@ class Super_Custom_Taxonomy {
 	 * @return void
 	 * @author Matthew Boynes
 	 */
-	public function register_taxonomy( $customizations=array( ), $hierarchical=false ) {
+	public function register_taxonomy( $customizations = array(), $hierarchical = false ) {
 		$this->args = array_merge(
 			apply_filters( 'scpt_plugin_default_tax_options', array(
 				'label' => $this->plural,
@@ -120,12 +120,12 @@ class Super_Custom_Taxonomy {
 				# 'rewrite' => true,
 				# 'query_var' => true,
 				# 'update_count_callback' => false,
-				# 'capabilities' => array( ),
+				# 'capabilities' => array(),
 			) ),
 			$customizations
 		);
 
-		$this->register_tax_action( );
+		$this->register_tax_action();
 	}
 
 
@@ -149,7 +149,7 @@ class Super_Custom_Taxonomy {
 	 * @return void
 	 * @author Matthew Boynes
 	 */
-	protected function register_tax_action( ) {
+	protected function register_tax_action() {
 		add_action( 'init', array( &$this, 'register_tax' ) );
 	}
 
@@ -161,7 +161,7 @@ class Super_Custom_Taxonomy {
 	 * @return void
 	 * @author Matthew Boynes
 	 */
-	public function register_tax( ) {
+	public function register_tax() {
 		register_taxonomy( $this->name, $this->objects, $this->args );
 	}
 

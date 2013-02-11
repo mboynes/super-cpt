@@ -66,7 +66,7 @@ class Super_Custom_Post_Type extends Super_Custom_Post_Meta {
 	 * @param array|bool $register Optional. If false, the CPT won't be automatically registered. If an array, can override any of the CPT defaults. See {@link http://codex.wordpress.org/Function_Reference/register_post_type the WordPress Codex} for possible values.
 	 * @author Matthew Boynes
 	 */
-	function __construct( $type, $singular=false, $plural=false, $register=array( ) ) {
+	function __construct( $type, $singular = false, $plural = false, $register = array() ) {
 		$this->type = $type;
 		if ( !$singular )
 			$singular = SCPT_Markup::labelify( $this->type );
@@ -90,7 +90,7 @@ class Super_Custom_Post_Type extends Super_Custom_Post_Meta {
 	 * @return void
 	 * @author Matthew Boynes
 	 */
-	public function register_post_type( $customizations=array( ) ) {
+	public function register_post_type( $customizations = array() ) {
 		if ( isset( $customizations['menu_icon'] ) && false === strpos( $customizations['menu_icon'], '.' ) ) {
 			$this->set_icon( $customizations['menu_icon'] );
 			unset( $customizations['menu_icon'] ); # here we unset it because it will get set properly in the default array
@@ -124,7 +124,7 @@ class Super_Custom_Post_Type extends Super_Custom_Post_Meta {
 				'supports' => array( 'title', 'editor', 'thumbnail', 'revisions', 'excerpt', 'page-attributes' ),
 				'has_archive' => true,
 				'show_in_nav_menus' => true,
-				'taxonomies' => array( ),
+				'taxonomies' => array(),
 				'menu_icon' => $this->icon ? sprintf( $this->icon, 16 ) : false,
 				# These are other values mentioned for reference, but WP's defaults are sufficient
 				# 'hierarchical' => false,
@@ -135,7 +135,7 @@ class Super_Custom_Post_Type extends Super_Custom_Post_Meta {
 			$customizations
 		);
 
-		$this->register_cpt_action( );
+		$this->register_cpt_action();
 	}
 
 
@@ -159,7 +159,7 @@ class Super_Custom_Post_Type extends Super_Custom_Post_Meta {
 	 * @return void
 	 * @author Matthew Boynes
 	 */
-	protected function register_cpt_action( ) {
+	protected function register_cpt_action() {
 		add_action( 'init', array( &$this, 'register_cpt' ) );
 	}
 
@@ -171,7 +171,7 @@ class Super_Custom_Post_Type extends Super_Custom_Post_Meta {
 	 * @return void
 	 * @author Matthew Boynes
 	 */
-	public function register_cpt( ) {
+	public function register_cpt() {
 		register_post_type( $this->type, $this->cpt );
 	}
 
@@ -179,7 +179,7 @@ class Super_Custom_Post_Type extends Super_Custom_Post_Meta {
 	/**
 	 * Set an icon given an index and name, e.g. 078_warning_sign
 	 *
-	 * @param string $name 
+	 * @param string $name
 	 * @return string
 	 * @author Matthew Boynes
 	 */

@@ -98,7 +98,7 @@ Here is the full demo code:
 			'id' => 'demo-fields',
 			'context' => 'normal',
 			'fields' => array(
-				'textbox-demo' => array( ),
+				'textbox-demo' => array(),
 				'textarea-demo' => array( 'type' => 'textarea' ),
 				'wysiwyg-demo' => array( 'type' => 'wysiwyg' ),
 				'boolean-demo' => array( 'type' => 'boolean' ),
