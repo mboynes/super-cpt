@@ -98,6 +98,22 @@ if ( !function_exists( 'get_scpt_formatted_meta' ) ) {
 		else
 			echo $val;
 	}
+
+
+	/**
+	 * Get a list of meta fields for a given post type or the current post
+	 *
+	 * @param string $post_type Optional. If absent, uses the post type of the current post
+	 * @return array
+	 */
+	function get_scpt_meta_fields( $post_type = false ) {
+		global $scpt_known_custom_fields;
+		if ( false == $post_type ) {
+			global $post;
+			$post_type = $post->post_type;
+		}
+		return isset( $scpt_known_custom_fields[ $post_type ] ) ? $scpt_known_custom_fields[ $post_type ] : array();
+	}
 }
 
 
