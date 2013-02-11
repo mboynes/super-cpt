@@ -47,7 +47,8 @@ class Super_CPT {
 	 * @author Matthew Boynes
 	 */
 	function __construct() {
-		if ( is_admin() ) $this->admin_hooks();
+		if ( is_admin() )
+			add_action( 'init', array( &$this, 'admin_hooks' ) );
 	}
 
 	/**
@@ -58,7 +59,8 @@ class Super_CPT {
 	 * @author Matthew Boynes
 	 */
 	function admin_hooks() {
-		$scpt_admin = new SCPT_Admin;
+		if ( apply_filters( 'scpt_show_admin_menu', true ) )
+			$scpt_admin = new SCPT_Admin;
 
 		add_action( 'admin_enqueue_scripts', array( &$this, 'load_js_and_css' ) );
 	}
