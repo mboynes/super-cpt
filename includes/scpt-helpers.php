@@ -114,7 +114,32 @@ if ( !function_exists( 'get_scpt_formatted_meta' ) ) {
 		}
 		return isset( $scpt_known_custom_fields[ $post_type ] ) ? $scpt_known_custom_fields[ $post_type ] : array();
 	}
-}
+
+
+	/**
+	 * Get an array of meta fields for a given post type or the current post
+	 *
+	 * @param string $post_ID. If absent, uses the post ID of the current post
+	 * @param string $post_type Optional. If absent, uses the post type of the current post
+	 * @return array
+	 */
+	function get_scpt_meta_data( $post_ID = false, $post_type = false ) {
+		global $scpt_known_custom_fields;
+		if ( false == $post_type ) {
+			global $post;
+			$post_type = $post->post_type;
+		}
+		if ( false == $post_ID ) {
+			global $post;
+			$post_ID = $post->ID;
+		}
+		$meta_fields = get_scpt_meta_fields( $post_type );
+		$meta = array();
+		foreach ( $meta_fields as $k => $v ) {
+			$meta[$k] = get_post_meta( $post_ID, $k, true );
+		}
+		return $meta;
+	}
 
 
 if ( !function_exists( 'connect_types_and_taxes' ) ) {
