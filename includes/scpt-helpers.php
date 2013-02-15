@@ -109,37 +109,38 @@ if ( !function_exists( 'get_scpt_formatted_meta' ) ) {
 	function get_scpt_meta_fields( $post_type = false ) {
 		global $scpt_known_custom_fields;
 		if ( false == $post_type ) {
-			global $post;
-			$post_type = $post->post_type;
+			$post_type = $GLOBALS['post']->post_type;
 		}
 		return isset( $scpt_known_custom_fields[ $post_type ] ) ? $scpt_known_custom_fields[ $post_type ] : array();
 	}
 
 
 	/**
-	 * Get an array of meta fields for a given post type or the current post
+	 * Get an array of meta fields for a given post or the current one.
+	 * Thanks to Aaron Holbrook (aaronholbrook)
 	 *
-	 * @param string $post_ID. If absent, uses the post ID of the current post
-	 * @param string $post_type Optional. If absent, uses the post type of the current post
+	 * @param int $post_id Optional. If absent, uses the post ID of the current post
+	 * @param array|string $args Optional. Options are:
+	 * 		'single_only' => the $single param for get_post_meta. All or nothing!
 	 * @return array
 	 */
-	function get_scpt_meta_data( $post_ID = false, $post_type = false ) {
-		global $scpt_known_custom_fields;
-		if ( false == $post_type ) {
-			global $post;
-			$post_type = $post->post_type;
-		}
-		if ( false == $post_ID ) {
-			global $post;
-			$post_ID = $post->ID;
-		}
-		$meta_fields = get_scpt_meta_fields( $post_type );
+	function get_scpt_meta_data( $post_id = false, $args = array() ) {
+		$args = wp_parse_args( $args, array(
+			'single_only' => true
+		) );
 		$meta = array();
-		foreach ( $meta_fields as $k => $v ) {
-			$meta[$k] = get_post_meta( $post_ID, $k, true );
+		if ( false == $post_id ) {
+			$post_id = get_the_ID();
+		}
+		if ( $post_id ) {
+			$meta_fields = get_scpt_meta_fields( get_post_type( $post_id ) );
+			foreach ( $meta_fields as $key => $type ) {
+				$meta[ $key ] = get_post_meta( $post_id, $key, $args['single_only'] );
+			}
 		}
 		return $meta;
 	}
+}
 
 
 if ( !function_exists( 'connect_types_and_taxes' ) ) {
@@ -165,5 +166,3 @@ if ( !function_exists( 'connect_types_and_taxes' ) ) {
 	}
 }
 
-
-?>
