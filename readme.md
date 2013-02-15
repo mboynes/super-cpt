@@ -13,12 +13,13 @@ SuperCPT is an object wrapper for Custom Post Types, Custom Taxonomies, and Cust
 
 ### Demo Video ###
 
-<iframe src="http://player.vimeo.com/video/59368054?byline=0&amp;portrait=0" width="852" height="482" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+View a screencast with a [brief demonstration and walkthrough](http://vimeo.com/59368054).
+
 
 ### More ###
 
 * If you use TextMate, Sublime Text 2, or another editor which supports TextMate bundles, check out [this set of snippets](https://github.com/mboynes/super-cpt-bundle) to turbo-charge your development.
-* [Documentation](https://github.com/mboynes/super-cpt/wiki).
+* [Full documentation](https://github.com/mboynes/super-cpt/wiki).
 
 
 ## Instructions ##
@@ -71,7 +72,7 @@ SuperCPT has a number of [helper functions](https://github.com/mboynes/super-cpt
 
 ## Demo Code ##
 
-Here is the full demo code:
+Here is a full body of demo code:
 
 	function scpt_demo() {
 		if ( ! class_exists( 'Super_Custom_Post_Type' ) )
@@ -109,7 +110,7 @@ Here is the full demo code:
 			)
 		) );
 
-		# Add another CPT to test one-to-one (it could just as easily be one-to-many or many-to-many)
+		# Add another CPT to test one-to-one (it could just as easily be one-to-many or many-to-many) relationships
 		$linked_posts = new Super_Custom_Post_Type( 'linked-post', 'Other Post', 'Other Posts' );
 		$linked_posts->add_meta_box( array(
 			'id'      => 'one-to-one',
@@ -121,7 +122,6 @@ Here is the full demo code:
 			)
 		) );
 		$linked_posts->set_icon( 'cogwheels' );
-
 	}
 	add_action( 'after_setup_theme', 'scpt_demo' );
 
