@@ -4,6 +4,7 @@ Tags: custom-post-types, custom-post-type, cms, custom-field, custom-fields, met
 Requires at least: 3.0
 Tested up to: 3.5
 Stable tag: 0.1.3
+Donate Link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=22PRU6U4U78RC
 License: GPLv2 or later
 
 Insanely easy and attractive custom post types, custom post meta, and custom taxonomies
@@ -150,14 +151,17 @@ Beta Release. Everything is new!
 
 == Frequently Asked Questions ==
 
-= Have any of these questions actually ever been asked? =
+= What icons are available? =
 
-Negative.
+You'll find a full list in Tools > SuperCPT
+
+= I don't want my clients seeing the icon list, is there a way to hide it? =
+
+Yes. In your plugin or theme, add: `add_filter( 'scpt_show_admin_menu', '__return_false' );`
 
 = I'm not a programmer, can I/how do I use this plugin? =
 
 You probably shouldn't. Check out [Custom Post Type UI](http://wordpress.org/extend/plugins/custom-post-type-ui/), [More Fields](http://wordpress.org/extend/plugins/more-fields/), and [Types - Custom Fields and Custom Post Types Management](http://wordpress.org/extend/plugins/types/).
-
 
 
 
@@ -179,14 +183,3 @@ Beta release
 3. Add easy RSS feeds, e.g. in fields array, a parameter might be `'rss' => 'PubDate'` to prefer that field's data over the post's publication date.
 4. I18n updates
 
-
-== Donate ==
-
-<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
-<input type="hidden" name="cmd" value="_s-xclick">
-<input type="hidden" name="hosted_button_id" value="22PRU6U4U78RC">
-<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
-</form>
-
-https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=22PRU6U4U78RC
