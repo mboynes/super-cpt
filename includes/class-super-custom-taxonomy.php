@@ -45,7 +45,7 @@ class Super_Custom_Taxonomy {
 	 *
 	 * @var array
 	 */
-	var $objects = array();
+	var $objects = null;
 
 
 	/**
@@ -95,33 +95,35 @@ class Super_Custom_Taxonomy {
 			apply_filters( 'scpt_plugin_default_tax_options', array(
 				'label' => $this->plural,
 				'labels' => array(
-					'name' => _x( $this->plural, $this->name ),
-					'singular_name' => _x( $this->singular, $this->name ),
-					'search_items' => _x( 'Search ' . $this->plural, $this->name ),
-					'popular_items' => _x( 'Popular ' . $this->plural, $this->name ),
-					'all_items' => _x( 'All ' . $this->plural, $this->name ),
-					'parent_item' => _x( 'Parent ' . $this->singular, $this->name ),
-					'parent_item_colon' => _x( 'Parent ' . $this->singular . ':', $this->name ),
-					'edit_item' => _x( 'Edit ' . $this->singular, $this->name ),
-					'update_item' => _x( 'Update ' . $this->singular, $this->name ),
-					'add_new_item' => _x( 'Add New ' . $this->singular, $this->name ),
-					'new_item_name' => _x( 'New ' . $this->singular . ' Name', $this->name ),
+					'name'                       => _x( $this->plural, $this->name ),
+					'singular_name'              => _x( $this->singular, $this->name ),
+					'search_items'               => _x( 'Search ' . $this->plural, $this->name ),
+					'popular_items'              => _x( 'Popular ' . $this->plural, $this->name ),
+					'all_items'                  => _x( 'All ' . $this->plural, $this->name ),
+					'parent_item'                => _x( 'Parent ' . $this->singular, $this->name ),
+					'parent_item_colon'          => _x( 'Parent ' . $this->singular . ':', $this->name ),
+					'edit_item'                  => _x( 'Edit ' . $this->singular, $this->name ),
+					'update_item'                => _x( 'Update ' . $this->singular, $this->name ),
+					'add_new_item'               => _x( 'Add New ' . $this->singular, $this->name ),
+					'new_item_name'              => _x( 'New ' . $this->singular . ' Name', $this->name ),
 					'separate_items_with_commas' => _x( 'Separate ' . strtolower( $this->plural ) . ' with commas', $this->name ),
-					'add_or_remove_items' => _x( 'Add or remove ' . strtolower( $this->plural ), $this->name ),
-					'choose_from_most_used' => _x( 'Choose from the most used ' . strtolower( $this->plural ), $this->name ),
-					'menu_name' => _x( $this->plural, $this->name ),
-					),
+					'add_or_remove_items'        => _x( 'Add or remove ' . strtolower( $this->plural ), $this->name ),
+					'choose_from_most_used'      => _x( 'Choose from the most used ' . strtolower( $this->plural ), $this->name ),
+					'menu_name'                  => _x( $this->plural, $this->name ),
+				),
 				'hierarchical' => $this->hierarchical,
 				# These defaults don't need to be overridden:
-				# 'public' => true,
-				# 'show_in_nav_menus' => true,
-				# 'show_ui' => true,
-				# 'show_tagcloud' => true,
-				# 'rewrite' => true,
-				# 'query_var' => true,
+				# 'public'                => true,
+				# 'show_ui'               => {value of public},
+				# 'show_in_nav_menus'     => {value of public},
+				# 'show_tagcloud'         => {value of show_ui},
+				# 'show_admin_column'     => false,
 				# 'update_count_callback' => false,
-				# 'capabilities' => array(),
-			) ),
+				# 'query_var'             => $this->name,
+				# 'rewrite'               => true,
+				# 'capabilities'          => array(),
+				# 'sort'                  => false,
+			), $this->name ),
 			$customizations
 		);
 
