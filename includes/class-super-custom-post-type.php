@@ -148,6 +148,10 @@ class Super_Custom_Post_Type extends Super_Custom_Post_Meta {
 	 */
 	public function connect_taxes( $taxes ) {
 		if ( !is_array( $taxes ) ) $taxes = array( $taxes );
+		foreach ( $taxes as &$tax ) {
+			if ( $tax instanceof Super_Custom_Taxonomy )
+				$tax = $tax->name;
+		}
 		$this->cpt['taxonomies'] = array_merge( $this->cpt['taxonomies'], $taxes );
 	}
 

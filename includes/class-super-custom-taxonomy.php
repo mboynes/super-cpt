@@ -134,13 +134,17 @@ class Super_Custom_Taxonomy {
 	/**
 	 * Connect one or more post types to this tax
 	 *
-	 * @param string|array $object The post type(s) to connect
+	 * @param string|array $post_type The post type(s) to connect
 	 * @return void
 	 * @author Matthew Boynes
 	 */
-	public function connect_post_types( $objects ) {
-		if ( !is_array( $objects ) ) $objects = array( $objects );
-		$this->objects = array_merge( $this->objects, $objects );
+	public function connect_post_types( $post_types ) {
+		if ( !is_array( $post_types ) ) $post_types = array( $post_types );
+		foreach ( $post_types as &$post_type ) {
+			if ( $post_type instanceof Super_Custom_Post_Type )
+				$post_type = $post_type->type;
+		}
+		$this->objects = array_merge( $this->objects, $post_types );
 	}
 
 

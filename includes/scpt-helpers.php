@@ -155,14 +155,11 @@ if ( !function_exists( 'connect_types_and_taxes' ) ) {
 	 * @author Matthew Boynes
 	 */
 	function connect_types_and_taxes( $types, $taxes ) {
-		if ( !is_array( $types ) ) $types = array( $types );
-		if ( !is_array( $taxes ) ) $taxes = array( $taxes );
-		foreach ( $types as $type ) {
-			foreach ( $taxes as $tax ) {
-				$type->connect_taxes( $tax->name );
-				$tax->connect_post_types( $type->type );
-			}
-		}
+		foreach ( (array) $types as $type )
+			$type->connect_taxes( $taxes );
+
+		foreach ( (array) $taxes as $tax )
+			$tax->connect_post_types( $types );
 	}
 }
 
