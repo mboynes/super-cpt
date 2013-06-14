@@ -164,7 +164,7 @@ class Super_Custom_Post_Type extends Super_Custom_Post_Meta {
 	 * @author Matthew Boynes
 	 */
 	protected function register_cpt_action() {
-		add_action( 'init', array( &$this, 'register_cpt' ) );
+		add_action( 'init', array( $this, 'register_cpt' ) );
 	}
 
 

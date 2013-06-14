@@ -48,7 +48,7 @@ class Super_CPT {
 	 */
 	function __construct() {
 		if ( is_admin() )
-			add_action( 'init', array( &$this, 'admin_hooks' ) );
+			add_action( 'init', array( $this, 'admin_hooks' ) );
 	}
 
 	/**
@@ -62,7 +62,7 @@ class Super_CPT {
 		if ( apply_filters( 'scpt_show_admin_menu', true ) )
 			$scpt_admin = new SCPT_Admin;
 
-		add_action( 'admin_enqueue_scripts', array( &$this, 'load_js_and_css' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'load_js_and_css' ) );
 	}
 
 

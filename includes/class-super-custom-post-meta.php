@@ -100,7 +100,7 @@ class Super_Custom_Post_Meta {
 			$attr['title'] = SCPT_Markup::labelify( $attr['id'] );
 
 		$attr = array_merge( array(
-			'callback' => array( &$this, 'meta_html' ),
+			'callback' => array( $this, 'meta_html' ),
 			'page' => $this->type,
 			'context' => 'advanced',
 			'priority' => 'default'
@@ -169,7 +169,7 @@ class Super_Custom_Post_Meta {
 	 */
 	public function register_meta_boxes_action() {
 		if ( !$this->registered_meta_boxes_action ) {
-			add_action( 'add_meta_boxes', array( &$this, 'register_meta_boxes' ) );
+			add_action( 'add_meta_boxes', array( $this, 'register_meta_boxes' ) );
 			add_action( 'save_post', array( $this, 'save_meta' ) );
 			$this->registered_meta_boxes_action = true;
 		}
@@ -240,13 +240,13 @@ class Super_Custom_Post_Meta {
 		if ( isset( $field['data'] ) ) $field['options'] = $this->get_external_data( $field['data'] );
 
 		$html_attributes = apply_filters( 'scpt_plugin_meta_field_addt_html_attributes', $this->parse_attributes( $field ) );
-		$field_callback = apply_filters( 'scpt_plugin_meta_field_callback', array( &$this, "add_{$field['type']}_field" ), $field );
+		$field_callback = apply_filters( 'scpt_plugin_meta_field_callback', array( $this, "add_{$field['type']}_field" ), $field );
 
 		echo '<', $this->field_wrapper, ' class="', $field['meta_key'], '-wrap scpt-field-wrap">', "\n";
 		if ( ( is_array( $field_callback ) && method_exists( $field_callback[0], $field_callback[1] ) ) || ( !is_array( $field_callback ) && function_exists( $field_callback ) ) )
 			call_user_func( $field_callback, $field, $post_meta, $html_attributes );
 		else
-			call_user_func( array( &$this, "add_text_field" ), $field, $post_meta, $html_attributes );
+			call_user_func( array( $this, "add_text_field" ), $field, $post_meta, $html_attributes );
 		echo '</', $this->field_wrapper, '>';
 	}
 
@@ -328,7 +328,7 @@ class Super_Custom_Post_Meta {
 			'textarea_rows' => ( 'side' == $field['context'] ? '15' : '10' )
 		), $field );
 		if ( 'side' == $field['context'] )
-			add_filter( 'teeny_mce_before_init', array( &$this, 'teeny_mce_before_init' ), 10, 2 );
+			add_filter( 'teeny_mce_before_init', array( $this, 'teeny_mce_before_init' ), 10, 2 );
 
 		if ( false !== $field['label'] )
 			echo SCPT_Markup::tag( 'label', array(
@@ -619,10 +619,10 @@ class Super_Custom_Post_Meta {
 	 */
 	public function register_datepicker() {
 		if ( !$this->registered_datepicker ) {
-			add_action( 'admin_print_styles-post-new.php', array( &$this, 'add_datepicker_css' ) );
-			add_action( 'admin_print_styles-post.php', array( &$this, 'add_datepicker_css' ) );
-			add_action( 'admin_print_scripts-post-new.php', array( &$this, 'add_datepicker_js' ) );
-			add_action( 'admin_print_scripts-post.php', array( &$this, 'add_datepicker_js' ) );
+			add_action( 'admin_print_styles-post-new.php', array( $this, 'add_datepicker_css' ) );
+			add_action( 'admin_print_styles-post.php', array( $this, 'add_datepicker_css' ) );
+			add_action( 'admin_print_scripts-post-new.php', array( $this, 'add_datepicker_js' ) );
+			add_action( 'admin_print_scripts-post.php', array( $this, 'add_datepicker_js' ) );
 			$this->registered_datepicker = true;
 		}
 	}
@@ -667,8 +667,8 @@ class Super_Custom_Post_Meta {
 
 	protected function register_custom_columns( $columns = array() ) {
 		if ( !$this->registered_custom_columns ) {
-			add_action( 'manage_' . $this->type . '_posts_custom_column' , array( &$this, 'custom_column' ) );
-			add_filter( 'manage_edit-' . $this->type . '_columns', array( &$this, 'edit_columns' ) );
+			add_action( 'manage_' . $this->type . '_posts_custom_column' , array( $this, 'custom_column' ) );
+			add_filter( 'manage_edit-' . $this->type . '_columns', array( $this, 'edit_columns' ) );
 			$this->registered_custom_columns = true;
 		}
 	}

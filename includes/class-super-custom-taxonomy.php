@@ -13,7 +13,7 @@ class Super_Custom_Taxonomy {
 	 *
 	 * @var string
 	 */
-	var $name;
+	public $name;
 
 
 	/**
@@ -21,7 +21,7 @@ class Super_Custom_Taxonomy {
 	 *
 	 * @var string
 	 */
-	var $singular;
+	public $singular;
 
 
 	/**
@@ -29,7 +29,7 @@ class Super_Custom_Taxonomy {
 	 *
 	 * @var string
 	 */
-	var $plural;
+	public $plural;
 
 
 	/**
@@ -37,7 +37,7 @@ class Super_Custom_Taxonomy {
 	 *
 	 * @var bool
 	 */
-	var $hierarchical = false;
+	public $hierarchical = false;
 
 
 	/**
@@ -45,7 +45,7 @@ class Super_Custom_Taxonomy {
 	 *
 	 * @var array
 	 */
-	var $objects = null;
+	public $objects = null;
 
 
 	/**
@@ -53,7 +53,7 @@ class Super_Custom_Taxonomy {
 	 *
 	 * @var array See {@link http://codex.wordpress.org/Function_Reference/register_taxonomy the WordPress Codex}
 	 */
-	var $tax = array();
+	public $tax = array();
 
 
 	/**
@@ -67,7 +67,7 @@ class Super_Custom_Taxonomy {
 	 * @param array|bool $register Optional. If false, the tax won't be automatically registered. If an array, can override any of the tax defaults. See {@link http://codex.wordpress.org/Function_Reference/register_taxonomy the WordPress Codex} for possible values.
 	 * @author Matthew Boynes
 	 */
-	function __construct( $name, $singular = false, $plural = false, $acts_like = false, $register = array() ) {
+	public function __construct( $name, $singular = false, $plural = false, $acts_like = false, $register = array() ) {
 		$this->name = $name;
 		if ( !$singular )
 			$singular = SCPT_Markup::labelify( $this->name );
@@ -156,7 +156,7 @@ class Super_Custom_Taxonomy {
 	 * @author Matthew Boynes
 	 */
 	protected function register_tax_action() {
-		add_action( 'init', array( &$this, 'register_tax' ) );
+		add_action( 'init', array( $this, 'register_tax' ) );
 	}
 
 

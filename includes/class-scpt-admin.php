@@ -4,12 +4,12 @@ class SCPT_Admin {
 
 	function __construct() {
 		# Setup WordPress hooks
-		add_action( 'admin_menu', array( &$this, 'super_cpt_menu_menu' ) );
+		add_action( 'admin_menu', array( $this, 'super_cpt_menu_menu' ) );
 	}
 
 	function super_cpt_menu_menu() {
 		// Add new admin menu and save returned page hook
-		add_management_page( __( 'SuperCPT' ), __( 'SuperCPT' ), 'manage_options', 'super_cpt', array( &$this, 'scpt_site_settings_page' ) );
+		add_management_page( __( 'SuperCPT' ), __( 'SuperCPT' ), 'manage_options', 'super_cpt', array( $this, 'scpt_site_settings_page' ) );
 	}
 
 	function scpt_site_settings_page() {
