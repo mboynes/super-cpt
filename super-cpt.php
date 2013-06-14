@@ -25,9 +25,9 @@
 */
 
 if ( !defined( 'SCPT_PLUGIN_URL' ) )
-	define( 'SCPT_PLUGIN_URL', plugins_url( 'super-cpt' ) . '/' );
+	define( 'SCPT_PLUGIN_URL', plugins_url( '', __FILE__ ) . '/' );
 if ( !defined( 'SCPT_PLUGIN_DIR' ) )
-	define( 'SCPT_PLUGIN_DIR', dirname( __FILE__ ) );
+	define( 'SCPT_PLUGIN_DIR', __DIR__ );
 
 require_once SCPT_PLUGIN_DIR . '/includes/scpt-helpers.php';
 require_once SCPT_PLUGIN_DIR . '/includes/class-scpt-markup.php';
