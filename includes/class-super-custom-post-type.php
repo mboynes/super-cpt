@@ -91,7 +91,7 @@ class Super_Custom_Post_Type extends Super_Custom_Post_Meta {
 	 * @author Matthew Boynes
 	 */
 	public function register_post_type( $customizations = array() ) {
-		if ( isset( $customizations['menu_icon'] ) && false === strpos( $customizations['menu_icon'], '.' ) ) {
+		if ( isset( $customizations['menu_icon'] ) && ( is_array( $customizations['menu_icon'] ) || false === strpos( $customizations['menu_icon'], '.' ) ) ) {
 			$this->set_icon( $customizations['menu_icon'] );
 			unset( $customizations['menu_icon'] ); # here we unset it because it will get set properly in the default array
 		}
@@ -177,30 +177,22 @@ class Super_Custom_Post_Type extends Super_Custom_Post_Meta {
 
 
 	/**
-	 * Set an icon given an index and name, e.g. 078_warning_sign
+	 * Set an icon given an index and name, e.g. array( 'library' => 'font_awesome', 'name' => 'calendar' )
 	 *
-	 * @param string $name
-	 * @return string
+	 * @param string|array $name If string, it's assumed to be a part of the library 'font_awesome'
+	 * @return void
 	 * @author Matthew Boynes
 	 */
 	public function set_icon( $name ) {
-		$this->icon_name = $name;
-		$this->icon = SCPT_PLUGIN_URL . 'images/%d/' . $name . '.png';
-		if ( $this->cpt ) {
-			$this->cpt['menu_icon'] = sprintf( $this->icon, 16 );
+		if ( !is_array( $name ) )
+			$name = array( 'library' => 'font_awesome', 'name' => $name );
+
+		if ( isset( $name['library'] ) ) {
+			if ( 'font_awesome' == $name['library'] )
+				require_once SCPT_PLUGIN_DIR . '/includes/class-scpt-font-awesome.php';
+			$this->icon = apply_filters( 'scpt_plugin_icon_' . $name['library'], 'none', $name, $this->type );
 		}
-		add_filter( 'sanitize_html_class', array( &$this, 'post_icon' ), 10, 2 );
-		return $this->icon;
 	}
-
-
-	public function post_icon( $sanitized, $class ) {
-		if ( 'icon32-posts-' . $this->type == $class ) {
-			$sanitized .= ' glyphicons_' . $this->icon_name;
-		}
-		return $sanitized;
-	}
-
 
 }
 

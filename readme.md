@@ -9,7 +9,7 @@ SuperCPT is an object wrapper for Custom Post Types, Custom Taxonomies, and Cust
 * <acronym title="Don't Repeat Yourself">DRY</acronym>s up the Custom Post Type and Custom Taxonomy process (e.g. automatically adds the name to all the labels),
 * allows you to set default options for all your Custom Post Types and Taxonomies,
 * significantly simplifies the process of creating, saving, and displaying Custom Post Meta,
-* is sexy! Your custom fields are styled to look great and SuperCPT comes with 350 awesome icons courtesy of [glyphicons.com](http://glyphicons.com).
+* is sexy! Your custom fields are styled to look great and SuperCPT comes with 361 awesome icons courtesy of [Font Awesome](http://fontawesome.io/) (and support to add your own)
 
 ### Demo Video ###
 
@@ -35,7 +35,7 @@ To define a new Custom Post Type, instantiate the `Super_Custom_Post_Type` class
 
 It works very much like [`register_post_type`](http://codex.wordpress.org/Function_Reference/register_post_type). The first thing you gained by using this is that the labels all got setup with either 'Movie' or 'Movies'. If our post type were 'indie-film', the labels would have "Indie Film" and "Indie Films" as appropriate. Of course, you do have the ability to set the plural word in cases such as goose/geese. You also gained the ability to define your own custom post type defaults through a filter. Lastly, you gained access to `Super_Custom_Post_Type`'s parent class, `Super_Custom_Post_Meta`, for fast, clean, intuitive custom post meta, which we'll go into shortly.
 
-Lastly, if you've built a lot of custom post types, you're probably sick and tired of the pushpin icon. SuperCPT comes with 350 gorgeous icons courtesy of [glyphicons.com](http://glyphicons.com) that are extremely easy to implement. Here's what it looks like:
+Lastly, if you've built a lot of custom post types, you're probably sick and tired of the pushpin icon. SuperCPT comes with 361 gorgeous icons courtesy of [Font Awesome](http://fontawesome.io/) that are extremely easy to implement. Here's what it looks like:
 
 	$movies->set_icon( 'film' );
 
