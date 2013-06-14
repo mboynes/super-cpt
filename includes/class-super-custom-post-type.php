@@ -194,6 +194,47 @@ class Super_Custom_Post_Type extends Super_Custom_Post_Meta {
 		}
 	}
 
+
+	/**
+	 * Magic Method! Call this to get or set individual arguments for the custom post type. This is a shortcut for calling $object->cpt['argument'].
+	 * For instance:
+	 * 		$slide->hierarchical()       === $slide->cpt['hierarchical']
+	 * 		$slide->hierarchical( true ) === $slide->cpt['hierarchical'] = true;
+	 *
+	 * Furthermore, if you pass multiple arguments to the method, those will be interpreted as an array. For instance:
+	 * 		$slide->supports( 'title', 'editor' ) === $slide->cpt['supports'] = array( 'title', 'editor' )
+	 *
+	 * @param string $name The function call
+	 * @param array $arguments The arguments passed to the function
+	 * @return mixed
+	 */
+	public function __call( $name, $arguments ) {
+		$c = count( $arguments );
+		if ( 0 == $c ) {
+			if ( isset( $this->cpt[ $name ] ) )
+				return $this->cpt[ $name ];
+			switch ( $name ) {
+				case 'exclude_from_search' : return ! $this->cpt['public'];
+				case 'publicly_queryable'  : return $this->cpt['public'];
+				case 'show_ui'             : return $this->cpt['public'];
+				case 'show_in_nav_menus'   : return $this->cpt['public'];
+				case 'show_in_menu'        : return $this->show_ui();
+				case 'show_in_admin_bar'   : return $this->show_in_menu();
+				case 'capability_type'     : return 'post';
+				case 'hierarchical'        : return false;
+				case 'taxonomies'          : return array();
+				case 'rewrite'             : return true;
+				case 'query_var'           : return true;
+				case 'can_export'          : return true;
+			}
+			return null;
+		} elseif ( 1 == $c ) {
+			$this->cpt[ $name ] = $arguments[0];
+		} else {
+			$this->cpt[ $name ] = $arguments;
+		}
+	}
+
 }
 
 

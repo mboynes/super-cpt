@@ -183,6 +183,40 @@ class Super_Custom_Taxonomy {
 		$this->args = array_merge( $this->args, $overrides );
 	}
 
+
+	/**
+	 * Magic Method! Call this to get or set individual arguments for the custom taxonomy. This is a shortcut for calling $object->args['argument'].
+	 * For instance:
+	 * 		$slide->hierarchical()       === $slide->args['hierarchical']
+	 * 		$slide->hierarchical( true ) === $slide->args['hierarchical'] = true;
+	 *
+	 * @param string $name The function call
+	 * @param array $arguments The arguments passed to the function (there should only be one)
+	 * @return mixed
+	 */
+	public function __call( $name, $arguments ) {
+		if ( 0 == count( $arguments ) ) {
+			if ( isset( $this->args[ $name ] ) )
+				return $this->args[ $name ];
+
+			switch ( $name ) {
+				case 'public'                : return true;
+				case 'show_ui'               : return $this->public();
+				case 'show_in_nav_menus'     : return $this->public();
+				case 'show_tagcloud'         : return $this->show_ui();
+				case 'show_admin_column'     : return false;
+				case 'update_count_callback' : return false;
+				case 'query_var'             : return $this->name;
+				case 'rewrite'               : return true;
+				case 'capabilities'          : return array();
+				case 'sort'                  : return false;
+			}
+			return null;
+		} else {
+			$this->args[ $name ] = $arguments[0];
+		}
+	}
+
 }
 
 
