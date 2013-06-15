@@ -61,10 +61,15 @@ if ( !function_exists( 'get_scpt_formatted_meta' ) ) {
 
 	function get_known_field_info( $key, $post_id ) {
 		global $scpt_known_custom_fields;
-		$post =& get_post( $post_id );
-		if ( !is_array( $scpt_known_custom_fields ) || !isset( $scpt_known_custom_fields[ $post->post_type ] ) || !isset( $scpt_known_custom_fields[ $post->post_type ][ $key ] ) || !$scpt_known_custom_fields[ $post->post_type ][ $key ] )
+		if ( is_int( $post_id ) ) {
+			$post =& get_post( $post_id );
+			$post_type = $post->post_type;
+		} elseif ( is_string( $post_id ) ) {
+			$post_type = $post_id;
+		}
+		if ( !is_array( $scpt_known_custom_fields ) || !isset( $scpt_known_custom_fields[ $post_type ] ) || !isset( $scpt_known_custom_fields[ $post_type ][ $key ] ) || !$scpt_known_custom_fields[ $post_type ][ $key ] )
 			return false;
-		return $scpt_known_custom_fields[ $post->post_type ][ $key ];
+		return $scpt_known_custom_fields[ $post_type ][ $key ];
 	}
 
 	/**

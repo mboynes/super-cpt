@@ -761,7 +761,7 @@ class Super_Custom_Post_Meta {
 	}
 
 	public function format_meta_for_list( $data, $key ) {
-		$field_info = get_known_field_info( $key );
+		$field_info = get_known_field_info( $key, $this->type );
 		if ( is_array( $field_info ) ) {
 			# This is a cpt relationship
 		}
