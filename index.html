@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>SuperCPT by mboynes</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>SuperCPT</h1>
+        <h2>Insanely easy and attractive custom post types, post meta boxes, and custom taxonomies for WordPress</h2>
+        <a href="https://github.com/mboynes/super-cpt" class="button"><small>View project on</small>GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <p>SuperCPT is a WordPress Plugin that helps developers build insanely easy and attractive custom post types, custom post meta, and custom taxonomies. Install it from the <a href="http://wordpress.org/extend/plugins/super-cpt/">WordPress.org Plugin Repository</a>.</p>
+
+<h2>
+<a name="description" class="anchor" href="#description"><span class="octicon octicon-link"></span></a>Description</h2>
+
+<p>SuperCPT is an object wrapper for Custom Post Types, Custom Taxonomies, and Custom Post Meta "for coders, by coders." Simply put, SuperCPT:</p>
+
+<ul>
+<li>DRYs up the Custom Post Type and Custom Taxonomy process (e.g. automatically adds the name to all the labels),</li>
+<li>allows you to set default options for all your Custom Post Types and Taxonomies,</li>
+<li>significantly simplifies the process of creating, saving, and displaying Custom Post Meta,</li>
+<li>is sexy! Your custom fields are styled to look great and SuperCPT comes with 361 awesome icons courtesy of <a href="http://fontawesome.io/">Font Awesome</a> (and support to add your own)</li>
+</ul><h3>
+<a name="demo-video" class="anchor" href="#demo-video"><span class="octicon octicon-link"></span></a>Demo Video</h3>
+
+<p>View a screencast with a <a href="http://vimeo.com/59368054">brief demonstration and walkthrough</a>.</p>
+
+<h3>
+<a name="more" class="anchor" href="#more"><span class="octicon octicon-link"></span></a>More</h3>
+
+<ul>
+<li>If you use TextMate, Sublime Text 2, or another editor which supports TextMate bundles, check out <a href="https://github.com/mboynes/super-cpt-bundle">this set of snippets</a> to turbo-charge your development.</li>
+<li>
+<a href="https://github.com/mboynes/super-cpt/wiki">Full documentation</a>.</li>
+</ul><h2>
+<a name="instructions" class="anchor" href="#instructions"><span class="octicon octicon-link"></span></a>Instructions</h2>
+
+<p>Depending on when and where you're declaring your Custom Post Types and Taxonomies, you have different options for which action to hook onto. <code>after_setup_theme</code> is the safest bet, but if you're referencing this in another plugin, <code>plugins_loaded</code> is a good choice. To avoid a fatal error if something goes awry, you should check to see if the class <code>Super_Custom_Post_Type</code> exists before referencing it. Don't worry about keeping up, reference code is below.</p>
+
+<h3>
+<a name="custom-post-types" class="anchor" href="#custom-post-types"><span class="octicon octicon-link"></span></a>Custom Post Types</h3>
+
+<p>To define a new Custom Post Type, instantiate the <code>Super_Custom_Post_Type</code> class with a string for the post type. For example,</p>
+
+<pre><code>$movies = new Super_Custom_Post_Type( 'movie' );
+</code></pre>
+
+<p>It works very much like <a href="http://codex.wordpress.org/Function_Reference/register_post_type"><code>register_post_type</code></a>. The first thing you gained by using this is that the labels all got setup with either 'Movie' or 'Movies'. If our post type were 'indie-film', the labels would have "Indie Film" and "Indie Films" as appropriate. Of course, you do have the ability to set the plural word in cases such as goose/geese. You also gained the ability to define your own custom post type defaults through a filter. Lastly, you gained access to <code>Super_Custom_Post_Type</code>'s parent class, <code>Super_Custom_Post_Meta</code>, for fast, clean, intuitive custom post meta, which we'll go into shortly.</p>
+
+<p>Lastly, if you've built a lot of custom post types, you're probably sick and tired of the pushpin icon. SuperCPT comes with 361 gorgeous icons courtesy of <a href="http://fontawesome.io/">Font Awesome</a> that are extremely easy to implement. Here's what it looks like:</p>
+
+<pre><code>$movies-&gt;set_icon( 'film' );
+</code></pre>
+
+<h3>
+<a name="custom-taxonomies" class="anchor" href="#custom-taxonomies"><span class="octicon octicon-link"></span></a>Custom Taxonomies</h3>
+
+<p>To define a new Custom Taxonomy, much like with Custom Post Types, you instantiate <code>Super_Custom_Taxonomy</code> with a string for the term name. For example:</p>
+
+<pre><code>$actors = new Super_Custom_Taxonomy( 'actor' );
+</code></pre>
+
+<p>Again, we got free labels for doing this, using either 'Actor' or 'Actors' as appropriate, without needing to specify the 16 labels individually.</p>
+
+<h3>
+<a name="custom-post-meta" class="anchor" href="#custom-post-meta"><span class="octicon octicon-link"></span></a>Custom Post Meta</h3>
+
+<p>Custom Post Meta is where SuperCPT shines the brightest, because this process is typically the most time-consuming. <code>Super_Custom_Post_Meta</code> is a free-standing class that can be added to any post type, even built-in post types (posts and pages). This class has a method <code>add_meta_box</code> which does the bulk of the work, and somewhat mimics the WordPress function. Here's an example:</p>
+
+<pre><code>$movies-&gt;add_meta_box( array(
+    'id' =&gt; 'features',
+    'fields' =&gt; array(
+        'tagline' =&gt; array( 'type' =&gt; 'text' )
+    )
+) );
+</code></pre>
+
+<p>The method <code>add_meta_box</code> takes an array of parameters (unlike the core function which takes normal ordered arguments). <code>id</code> is the only required attribute, and that becomes the ID of the meta box as well as the title (this will get converted into "words" for the title, e.g. <code>"movie_details"</code> would become "Movie Details"). <code>fields</code> is an array of all the fields in the meta box. It's an associative array, where the keys in the array are the field names and the values are another associative array of attributes for the field. The keys closely reflect the HTML attributes in the resulting field, and any key not known by the plugin will in fact become an HTML attribute (e.g. passing <code>'data-src' =&gt; 'foo'</code> would become the HTML attribute <code>data-src="foo"</code> in the field). See the reference for the full gamut of options, both for the <code>add_meta_box</code> argument array and the fields array.</p>
+
+<p>Long story short, using this class means you don't have to do any additional work to store data, retrieve data, style the boxes, and so on.</p>
+
+<h3>
+<a name="helper-functions" class="anchor" href="#helper-functions"><span class="octicon octicon-link"></span></a>Helper Functions</h3>
+
+<p>SuperCPT has a number of <a href="https://github.com/mboynes/super-cpt/wiki/Helper-Functions">helper functions</a> for displaying and working with your post meta.</p>
+
+<h2>
+<a name="demo-code" class="anchor" href="#demo-code"><span class="octicon octicon-link"></span></a>Demo Code</h2>
+
+<p>Here is a full body of demo code:</p>
+
+<pre><code>function scpt_demo() {
+    if ( ! class_exists( 'Super_Custom_Post_Type' ) )
+        return;
+
+    $demo_posts = new Super_Custom_Post_Type( 'demo-post' );
+
+    # Test Icon. Should be a square grid.
+    $demo_posts-&gt;set_icon( 'th-large' );
+
+    # Taxonomy test, should be like tags
+    $tax_tags = new Super_Custom_Taxonomy( 'tax-tag' );
+
+    # Taxonomy test, should be like categories
+    $tax_cats = new Super_Custom_Taxonomy( 'tax-cat', 'Tax Cat', 'Tax Cats', 'category' );
+
+    # Connect both of the above taxonomies with the post type
+    connect_types_and_taxes( $demo_posts, array( $tax_tags, $tax_cats ) );
+
+    # Add a meta box with every field type
+    $demo_posts-&gt;add_meta_box( array(
+        'id'      =&gt; 'demo-fields',
+        'context' =&gt; 'normal',
+        'fields'  =&gt; array(
+            'textbox-demo'        =&gt; array(),
+            'textarea-demo'       =&gt; array( 'type' =&gt; 'textarea' ),
+            'wysiwyg-demo'        =&gt; array( 'type' =&gt; 'wysiwyg' ),
+            'boolean-demo'        =&gt; array( 'type' =&gt; 'boolean' ),
+            'checkboxes-demo'     =&gt; array( 'type' =&gt; 'checkbox', 'options' =&gt; array( 'one', 'two', 'three' ) ),
+            'radio-buttons-demo'  =&gt; array( 'type' =&gt; 'radio',    'options' =&gt; array( 'one', 'two', 'three' ) ),
+            'select-demo'         =&gt; array( 'type' =&gt; 'select',   'options' =&gt; array( 1 =&gt; 'one', 2 =&gt; 'two', 3 =&gt; 'three' ) ),
+            'multi-select-demo'   =&gt; array( 'type' =&gt; 'select',   'options' =&gt; array( 'one', 'two', 'three' ), 'multiple' =&gt; 'multiple' ),
+            'date-demo'           =&gt; array( 'type' =&gt; 'date' ),
+            'label-override-demo' =&gt; array( 'label' =&gt; 'Label Demo' )
+        )
+    ) );
+
+    # Add another CPT to test one-to-one (it could just as easily be one-to-many or many-to-many) relationships
+    $linked_posts = new Super_Custom_Post_Type( 'linked-post', 'Other Post', 'Other Posts' );
+    $linked_posts-&gt;add_meta_box( array(
+        'id'      =&gt; 'one-to-one',
+        'title'   =&gt; 'Testing One-to-One relationship',
+        'context' =&gt; 'side',
+        'fields'  =&gt; array(
+            'demo-posts'   =&gt; array( 'type' =&gt; 'select', 'data' =&gt; 'demo-post' ),
+            'side-wysiwyg' =&gt; array( 'type' =&gt; 'wysiwyg' )
+        )
+    ) );
+    $linked_posts-&gt;set_icon( 'cogs' );
+}
+add_action( 'after_setup_theme', 'scpt_demo' );
+</code></pre>
+
+<h2>
+<a name="author" class="anchor" href="#author"><span class="octicon octicon-link"></span></a>Author</h2>
+
+<p><strong>Matthew Boynes</strong></p>
+
+<ul>
+<li><a href="http://twitter.com/senyob">http://twitter.com/senyob</a></li>
+<li><a href="http://github.com/mboynes">http://github.com/mboynes</a></li>
+</ul><h2>
+<a name="copyright-and-license" class="anchor" href="#copyright-and-license"><span class="octicon octicon-link"></span></a>Copyright and license</h2>
+
+<p>Copyright 2012 Matthew Boynes</p>
+
+<p>Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this work except in compliance with the License.
+You may obtain a copy of the License in the LICENSE file, or at:</p>
+
+<pre><code> http://www.apache.org/licenses/LICENSE-2.0
+</code></pre>
+
+<p>Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.</p>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/mboynes/super-cpt/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/mboynes/super-cpt/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/mboynes/super-cpt"></a> is maintained by <a href="https://github.com/mboynes">mboynes</a>.</p>
+
+          <p>This page was generated by <a href="pages.github.com">GitHub Pages</a> using the Architect theme by <a href="http://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+  
+  </body>
+</html>
