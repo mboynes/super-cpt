@@ -14,7 +14,7 @@ class Super_Custom_Post_Meta {
 	 *
 	 * @var array
 	 */
-	var $boxes;
+	public $boxes;
 
 
 	/**
@@ -22,7 +22,7 @@ class Super_Custom_Post_Meta {
 	 *
 	 * @var bool
 	 */
-	var $registered_meta_boxes_action = false;
+	public $registered_meta_boxes_action = false;
 
 
 	/**
@@ -30,7 +30,7 @@ class Super_Custom_Post_Meta {
 	 *
 	 * @var bool
 	 */
-	var $registered_datepicker = false;
+	public $registered_datepicker = false;
 
 
 	/**
@@ -46,7 +46,7 @@ class Super_Custom_Post_Meta {
 	 *
 	 * @var bool
 	 */
-	var $printed_nonce = false;
+	public $printed_nonce = false;
 
 
 	/**
@@ -54,7 +54,7 @@ class Super_Custom_Post_Meta {
 	 *
 	 * @var string
 	 */
-	var $nonce_key = 'scpt_%s_custom_meta_nonce';
+	public $nonce_key = 'scpt_%s_custom_meta_nonce';
 
 
 	/**
@@ -62,7 +62,7 @@ class Super_Custom_Post_Meta {
 	 *
 	 * @var string
 	 */
-	var $field_wrapper = 'div';
+	public $field_wrapper = 'div';
 
 
 	/**
@@ -70,13 +70,13 @@ class Super_Custom_Post_Meta {
 	 *
 	 * @var array
 	 */
-	var $field_names = array();
+	public $field_names = array();
 
 
-	var $columns;
+	public $columns;
 
 
-	var $registered_custom_columns;
+	public $registered_custom_columns;
 
 	/**
 	 * Construct a new Super_Custom_Post_Meta object for the given post type
@@ -84,7 +84,7 @@ class Super_Custom_Post_Meta {
 	 * @param string $post_type The post type these boxes will apply to
 	 * @author Matthew Boynes
 	 */
-	function __construct( $post_type )
+	public function __construct( $post_type )
 	{
 		$this->type = $post_type;
 	}
@@ -239,7 +239,7 @@ class Super_Custom_Post_Meta {
 	 * @uses SCPT_Markup::labelify
 	 * @param array $field The field information
 	 * @param array $post_meta The post meta from the database
-	 * @return string HTML code with a wrapped element, whatever it may be
+	 * @return void
 	 * @author Matthew Boynes
 	 */
 	public function add_field( $field, $post_meta ) {
@@ -271,7 +271,7 @@ class Super_Custom_Post_Meta {
 	 * @param array $field The field information
 	 * @param array $post_meta The post meta from the database
 	 * @param array $html_attributes HTML attributes to be passed to element
-	 * @return string HTML for an <input type="text" /> element
+	 * @return void
 	 * @author Matthew Boynes
 	 */
 	public function add_text_field( $field, $post_meta, $html_attributes ) {
@@ -297,7 +297,7 @@ class Super_Custom_Post_Meta {
 	 * @param array $field The field information
 	 * @param array $post_meta The post meta from the database
 	 * @param array $html_attributes HTML attributes to be passed to element
-	 * @return string HTML for a <textarea></textarea> element
+	 * @return void
 	 * @author Matthew Boynes
 	 */
 	public function add_textarea_field( $field, $post_meta, $html_attributes ) {
@@ -325,7 +325,7 @@ class Super_Custom_Post_Meta {
 	 * @param array $field The field information
 	 * @param array $post_meta The post meta from the database
 	 * @param array $html_attributes HTML attributes to be passed to element
-	 * @return string HTML for a <textarea></textarea> element
+	 * @return void
 	 * @author Matthew Boynes
 	 */
 	public function add_wysiwyg_field( $field, $post_meta, $html_attributes ) {
@@ -372,7 +372,7 @@ class Super_Custom_Post_Meta {
 	 * @param array $field The field information
 	 * @param array $post_meta The post meta from the database
 	 * @param array $html_attributes HTML attributes to be passed to element
-	 * @return string HTML for an <input type="checkbox" /> element
+	 * @return void
 	 * @author Matthew Boynes
 	 */
 	public function add_boolean_field( $field, $post_meta, $html_attributes ) {
@@ -403,7 +403,7 @@ class Super_Custom_Post_Meta {
 	 * @param array $field The field information
 	 * @param array $post_meta The post meta from the database
 	 * @param array $html_attributes HTML attributes to be passed to element
-	 * @return string HTML for an <input type="checkbox" /> element
+	 * @return void
 	 * @author Matthew Boynes
 	 */
 	public function add_checkbox_field( $field, $post_meta, $html_attributes ) {
@@ -435,7 +435,7 @@ class Super_Custom_Post_Meta {
 	 * @param array $field The field information
 	 * @param array $post_meta The post meta from the database
 	 * @param array $html_attributes HTML attributes to be passed to element
-	 * @return string HTML for an <input type="radio" /> element
+	 * @return void
 	 * @author Matthew Boynes
 	 */
 	public function add_radio_field( $field, $post_meta, $html_attributes ) {
@@ -467,7 +467,7 @@ class Super_Custom_Post_Meta {
 	 * @param array $field The field information
 	 * @param array $post_meta The post meta from the database
 	 * @param array $html_attributes HTML attributes to be passed to element
-	 * @return string HTML for an <input type="select" /> element
+	 * @return void
 	 * @author Matthew Boynes
 	 */
 	public function add_select_field( $field, $post_meta, $html_attributes ) {

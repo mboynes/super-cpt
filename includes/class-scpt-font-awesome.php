@@ -84,8 +84,7 @@ class SCPT_Font_Awesome {
 			$this->styles['base'] = "
 			@font-face { font-family: 'FontAwesome'; src: url('{$this->font_dir}fontawesome-webfont.eot?v=3.1.0'); src: url('{$this->font_dir}fontawesome-webfont.eot?#iefix&v=3.1.0') format('embedded-opentype'), url('{$this->font_dir}fontawesome-webfont.woff?v=3.1.0') format('woff'), url('{$this->font_dir}fontawesome-webfont.ttf?v=3.1.0') format('truetype'), url('{$this->font_dir}fontawesome-webfont.svg#fontawesomeregular?v=3.1.0') format('svg'); font-weight: normal; font-style: normal; }
 			%s { font-family: FontAwesome !important; -webkit-font-smoothing: antialiased; background: none; *margin-right: .3em; }
-			%s { font-family: FontAwesome !important; }
-			";
+			%s { font-family: FontAwesome !important; }";
 			add_action( 'scpt_plugin_icon_css', array( $this, 'output_font_awesome' ) );
 		}
 	}
@@ -502,7 +501,7 @@ class SCPT_Font_Awesome {
 			case 'weibo' : return '\f18a';
 			case 'renren' : return '\f18b';
 		}
-		_deprecated_argument( 'Super_Custom_Post_Type::set_icon', '2.0', 'See the new icon list to find an adequate replacement.' );
+		_deprecated_argument( 'Super_Custom_Post_Type::set_icon', '2.0', "$icon is not a valid icon. See the icon list to find an adequate replacement." );
 		return '\f009';
 	}
 
