@@ -97,7 +97,7 @@ Here is the full demo code:
 		$demo_posts = new Super_Custom_Post_Type( 'demo-post' );
 
 		# Test Icon. Should be a square grid.
-		$demo_posts->set_icon( 'show_thumbnails' );
+		$demo_posts->set_icon( 'th-large' );
 
 		# Taxonomy test, should be like tags
 		$tax_tags = new Super_Custom_Taxonomy( 'tax-tag' );
@@ -137,7 +137,7 @@ Here is the full demo code:
 				'side-wysiwyg' => array( 'type' => 'wysiwyg' )
 			)
 		) );
-		$linked_posts->set_icon( 'cogwheels' );
+		$linked_posts->set_icon( 'cogs' );
 
 	}
 	add_action( 'after_setup_theme', 'scpt_demo' );

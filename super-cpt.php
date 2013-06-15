@@ -6,7 +6,7 @@
 	Description: Insanely easy and attractive custom post types, custom post meta, and custom taxonomies
 	Version: 0.2
 	Author: Matthew Boynes, Union Street Media
-	Copyright 2011-2012 Shared and distributed between Matthew Boynes and Union Street Media
+	Copyright 2011-2013 Shared and distributed between Matthew Boynes and Union Street Media
 
 	GNU General Public License, Free Software Foundation <http://creativecommons.org/licenses/GPL/2.0/>
 	This program is free software; you can redistribute it and/or modify
