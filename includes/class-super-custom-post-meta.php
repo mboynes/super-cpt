@@ -740,7 +740,7 @@ class Super_Custom_Post_Meta {
 		if ( !$this->registered_custom_columns ) {
 			add_action( 'manage_' . $this->type . '_posts_custom_column' , array( $this, 'custom_column' ) );
 			add_filter( 'manage_edit-' . $this->type . '_columns', array( $this, 'edit_columns' ) );
-			$this->column_thumbnail_size = apply_filters( 'scpt_plugin_column_thumbnail_size', array( 96, 96 ), $this->type )
+			$this->column_thumbnail_size = apply_filters( 'scpt_plugin_column_thumbnail_size', array( 60, 60 ), $this->type );
 			$this->registered_custom_columns = true;
 		}
 	}
