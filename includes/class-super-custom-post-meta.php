@@ -34,6 +34,14 @@ class Super_Custom_Post_Meta {
 
 
 	/**
+	 * Have we set the action yet to add our datepicker JS and CSS?
+	 *
+	 * @var bool
+	 */
+	public $registered_media = false;
+
+
+	/**
 	 * Has the nonce field been printed yet?
 	 *
 	 * @var bool
@@ -480,6 +488,59 @@ class Super_Custom_Post_Meta {
 
 
 	/**
+	 * Add media field to a meta box
+	 *
+	 * @uses SCPT_Markup::tag
+	 * @param array $field The field information
+	 * @param array $post_meta The post meta from the database
+	 * @param array $html_attributes HTML attributes to be passed to element
+	 * @return void
+	 * @author Matthew Boynes
+	 */
+	public function add_media_field( $field, $post_meta, $html_attributes ) {
+		if ( ! $this->registered_media ) {
+			add_action( 'admin_enqueue_scripts', array( $this, 'add_media_js' ) );
+			$this->registered_media = true;
+		}
+
+		$value = ( isset( $post_meta[ $field['meta_key'] ][0] ) ? $post_meta[ $field['meta_key'] ][0] : '' );
+		if ( $value ) {
+			$attachment = get_post( $value );
+			if ( strpos( $attachment->post_mime_type, 'image/' ) === 0 ) {
+				$preview = sprintf( '%s<br />', __( 'Uploaded image:', 'super-cpt' ) );
+				$preview .= wp_get_attachment_image( $value, 'thumbnail', false, array( 'class' => 'scpt-thumbnail' ) );
+			} else {
+				$preview = sprintf( '%s', __( 'Uploaded file:', 'super-cpt' ) ) . '&nbsp;';
+				$preview .= wp_get_attachment_link( $value, 'thumbnail', true, true, $attachment->post_title );
+			}
+			$preview .= sprintf( '<br /><a href="#" class="scpt-remove-thumbnail">%s</a>', __( 'Remove', 'super-cpt' ) );
+		} else {
+			$preview = '';
+		}
+
+		if ( false !== $field['label'] )
+			echo SCPT_Markup::tag( 'label', array(
+					'class' => 'scpt-meta-label scpt-meta-select label-' . $field['meta_key']
+				), $field['label'] );
+		echo SCPT_Markup::tag( 'div', array( 'class' => 'scpt-media-preview' ), $preview );
+		echo SCPT_Markup::tag( 'p', '',
+			SCPT_Markup::tag( 'a', array_merge( array(
+			'href'  => '#',
+			'class' => 'scpt-add-media',
+			'style' => ( $value ? 'display:none' : '' )
+			), $html_attributes ), sprintf( __( 'Set %s', 'super-cpt' ), $field['label'] ) )
+		);
+		echo SCPT_Markup::tag( 'input', array(
+			'type'  => 'hidden',
+			'value' => $value,
+			'name'  => $field['meta_key'],
+			'class' => 'scpt-media-id',
+			'id'    => 'scpt_meta_' . $field['meta_key']
+		) );
+	}
+
+
+	/**
 	 * Connect to another post type for one-to-one, one-to-many, or many-to-many relationships
 	 *
 	 * @todo Add in a QuickPress-like box to enter new objects
@@ -648,6 +709,12 @@ class Super_Custom_Post_Meta {
 	public function add_datepicker_js() {
 		wp_enqueue_script( 'jquery-ui-datepicker' );
 		wp_enqueue_script( 'supercpt.js' );
+	}
+
+
+	public function add_media_js() {
+		global $post;
+		wp_enqueue_media( array( 'post' => $post ) );
 	}
 
 
