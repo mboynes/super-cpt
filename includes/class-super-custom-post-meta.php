@@ -177,7 +177,7 @@ class Super_Custom_Post_Meta {
 	 */
 	public function register_meta_boxes_action() {
 		if ( !$this->registered_meta_boxes_action ) {
-			add_action( 'add_meta_boxes', array( $this, 'register_meta_boxes' ) );
+			add_action( 'add_meta_boxes_' . $this->type, array( $this, 'register_meta_boxes' ) );
 			add_action( 'save_post', array( $this, 'save_meta' ) );
 			$this->registered_meta_boxes_action = true;
 		}
