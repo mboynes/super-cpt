@@ -45,7 +45,7 @@ class Super_Custom_Taxonomy {
 	 *
 	 * @var array
 	 */
-	public $objects = null;
+	public $objects = array();
 
 
 	/**
