@@ -148,8 +148,10 @@ Here is the full demo code:
 = 0.2 =
 
 * Removed glyphicons in favor of the open-source Font Awesome
-* Fixed bug where CSS/JS doesn't load if plugin is in mu-plugins
+* Fixed bug where CSS/JS doesn't load if plugin is in mu-plugins (props to Aaron Holbrook)
 * Added magic methods for accessing and setting taxonomy and post type attributes after declaration
+* Added "media" field type
+
 
 = 0.1 =
 Beta Release. Everything is new!
@@ -175,7 +177,7 @@ You probably shouldn't. Check out [Custom Post Type UI](http://wordpress.org/ext
 
 = 0.2 =
 
-Removed glyphicons in favor of Font Awesome. If you're using a version of WordPress less than 3.6, you should use the MP6 plugin to update your dashboard design. Otherwise, you should either use SuperCPT 0.1.3 or not use the included icons.
+Removed glyphicons in favor of Font Awesome. If you're using a version of WordPress less than 3.7, you should use the MP6 plugin to update your dashboard design. Otherwise, you should either use SuperCPT 0.1.3 or not use the included icons.
 
 = 0.1.3 =
 

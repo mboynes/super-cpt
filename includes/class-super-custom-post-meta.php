@@ -651,14 +651,11 @@ class Super_Custom_Post_Meta {
 			return;
 
 		# Check permissions
-		if ( 'page' == $_POST['post_type'] )
-			if ( !current_user_can( 'edit_page', $post_id ) )
-				return;
-		else
-			if ( !current_user_can( 'edit_post', $post_id ) )
-				return;
+		$post_type_object = get_post_type_object( $this->type );
+		if ( !current_user_can( $post_type_object->cap->edit_post, $post_id ) )
+			return;
 
-		# OK, we're authenticated: we need to find and save the data
+		# We're authenticated: we need to find and save the data
 
 		foreach ( $this->field_names as $field ) {
 			if ( is_array( $_POST[ $field ] ) ) {
