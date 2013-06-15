@@ -78,14 +78,21 @@ class Super_Custom_Post_Meta {
 
 	public $registered_custom_columns;
 
+
+	/**
+	 * The size the thumbnail should be in the column view. This can be set with the filter 'scpt_plugin_column_thumbnail_size'
+	 *
+	 * @var mixed
+	 */
+	public $column_thumbnail_size;
+
 	/**
 	 * Construct a new Super_Custom_Post_Meta object for the given post type
 	 *
 	 * @param string $post_type The post type these boxes will apply to
 	 * @author Matthew Boynes
 	 */
-	public function __construct( $post_type )
-	{
+	public function __construct( $post_type ) {
 		$this->type = $post_type;
 	}
 
@@ -733,6 +740,7 @@ class Super_Custom_Post_Meta {
 		if ( !$this->registered_custom_columns ) {
 			add_action( 'manage_' . $this->type . '_posts_custom_column' , array( $this, 'custom_column' ) );
 			add_filter( 'manage_edit-' . $this->type . '_columns', array( $this, 'edit_columns' ) );
+			$this->column_thumbnail_size = apply_filters( 'scpt_plugin_column_thumbnail_size', array( 96, 96 ), $this->type )
 			$this->registered_custom_columns = true;
 		}
 	}
@@ -767,10 +775,12 @@ class Super_Custom_Post_Meta {
 		}
 		else {
 			switch ( $field_info ) {
-				case 'date':
+				case 'date' :
 					return $data ? date( 'Y-m-d', $data ) : '';
-				case 'boolean':
+				case 'boolean' :
 					return true === $data ? '&#10004;' : '';
+				case 'media' :
+					return $data ? wp_get_attachment_image( $data, $this->column_thumbnail_size, true ) : '';
 			}
 		}
 		return $data;
