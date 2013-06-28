@@ -781,10 +781,18 @@ class Super_Custom_Post_Meta {
 		*/
 	}
 
+	public function data_column( $post ) {
+		if ( $post instanceof WP_Post )
+			return '<a href="' . get_edit_post_link( $post->ID ) . '">' . esc_html( get_the_title( $post->ID ) ) . '</a>';
+	}
+
 	public function format_meta_for_list( $data, $key ) {
 		$field_info = get_known_field_info( $key, $this->type );
 		if ( is_array( $field_info ) ) {
 			# This is a cpt relationship
+			if ( is_array( $data ) ) {
+				return implode( '<br />', array_map( array( $this, 'data_column' ), $data ) );
+			}
 		}
 		else {
 			switch ( $field_info ) {
@@ -800,10 +808,11 @@ class Super_Custom_Post_Meta {
 	}
 
 	public function edit_columns( $columns ) {
+		unset( $columns['cb'], $columns['title'] );
 		return array(
 			"cb" => '<input type="checkbox" />',
 			"title" => 'Title'
-		) + $this->columns;
+		) + $this->columns + $columns;
 	}
 
 
