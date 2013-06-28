@@ -1,5 +1,6 @@
 jQuery( function( $ ){
-	$( "input[type='date'].scpt-field" ).datepicker( { dateFormat: 'yy-mm-dd', changeMonth: true, changeYear: true } );
+	if ( $( "input[type='date'].scpt-field" ).length )
+		$( "input[type='date'].scpt-field" ).datepicker( { dateFormat: 'yy-mm-dd', changeMonth: true, changeYear: true } );
 
 	$( '#post-body' ).on( 'click', '.scpt-remove-thumbnail', function(e) {
 		e.preventDefault();
@@ -9,6 +10,7 @@ jQuery( function( $ ){
 	});
 
 	$( '#post-body' ).on( 'click', '.scpt-add-media', function() {
+		console.log('here');
 		var old_send_to_editor = wp.media.editor.send.attachment;
 		var input = this;
 		wp.media.editor.send.attachment = function( props, attachment ) {

@@ -144,7 +144,9 @@ class Super_Custom_Post_Meta {
 			}
 
 			if ( 'date' == $field['type'] ) $this->register_datepicker();
-			if ( 'wysiwyg' == $field['type'] ) $attr['fields'][ $meta_key ]['context'] = $attr['context'];
+			elseif ( 'media' == $field['type'] ) $this->register_media();
+			elseif ( 'wysiwyg' == $field['type'] ) $attr['fields'][ $meta_key ]['context'] = $attr['context'];
+
 			if ( isset( $field['data'] ) )
 				$scpt_known_custom_fields[ $this->type ][ $meta_key ] = array( 'data' => $field['data'] );
 			elseif ( 'select' == $field['type'] && isset( $field['multiple'] ) )
@@ -505,11 +507,6 @@ class Super_Custom_Post_Meta {
 	 * @author Matthew Boynes
 	 */
 	public function add_media_field( $field, $post_meta, $html_attributes ) {
-		if ( ! $this->registered_media ) {
-			add_action( 'admin_enqueue_scripts', array( $this, 'add_media_js' ) );
-			$this->registered_media = true;
-		}
-
 		$value = ( isset( $post_meta[ $field['meta_key'] ][0] ) ? $post_meta[ $field['meta_key'] ][0] : '' );
 		if ( $value ) {
 			$attachment = get_post( $value );
@@ -694,6 +691,21 @@ class Super_Custom_Post_Meta {
 
 
 	/**
+	 * Register our media JS
+	 *
+	 * @return void
+	 * @author Matthew Boynes
+	 */
+	public function register_media() {
+		if ( !$this->registered_media ) {
+			add_action( 'admin_print_scripts-post-new.php', array( $this, 'add_media_js' ) );
+			add_action( 'admin_print_scripts-post.php', array( $this, 'add_media_js' ) );
+			$this->registered_media = true;
+		}
+	}
+
+
+	/**
 	 * Add the datepicker CSS to the doc head
 	 *
 	 * @return void
@@ -719,6 +731,7 @@ class Super_Custom_Post_Meta {
 	public function add_media_js() {
 		global $post;
 		wp_enqueue_media( array( 'post' => $post ) );
+		wp_enqueue_script( 'supercpt.js' );
 	}
 
 
