@@ -1,5 +1,7 @@
 # SuperCPT
 
+**Notice: master on this repo is a nightly build so use with care. Presently, it requires the [MP6 plugin](http://wordpress.org/plugins/mp6/) to properly leverage the icons.**
+
 WordPress Plugin to build insanely easy and attractive custom post types, custom post meta, and custom taxonomies. Install it from the [WordPress.org Plugin Repository](http://wordpress.org/extend/plugins/super-cpt/).
 
 ## Description ##
