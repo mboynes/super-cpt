@@ -73,7 +73,7 @@ class Super_Custom_Post_Meta {
 	public $field_names = array();
 
 
-	public $columns;
+	public $columns = array();
 
 
 	public $registered_custom_columns;
