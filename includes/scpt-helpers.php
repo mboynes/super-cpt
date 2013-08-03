@@ -59,11 +59,12 @@ if ( !function_exists( 'get_scpt_formatted_meta' ) ) {
 		return set_known_scpt_meta( $key, $value[0], $post_id );
 	}
 
-	function get_known_field_info( $key, $post_id ) {
+	function get_known_field_info( $key, $post_id = false ) {
 		global $scpt_known_custom_fields;
-		if ( is_int( $post_id ) ) {
-			$post =& get_post( $post_id );
-			$post_type = $post->post_type;
+		if ( false === $post_id ) {
+			$post_type = get_post_type();
+		} elseif ( intval( $post_id ) ) {
+			$post_type = get_post_type( $post_id );
 		} elseif ( is_string( $post_id ) ) {
 			$post_type = $post_id;
 		}
