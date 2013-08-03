@@ -143,6 +143,10 @@ class Super_Custom_Post_Meta {
 				);
 			}
 
+			if ( ! isset( $field['default'] ) ) {
+				$field['default'] = '';
+			}
+
 			if ( 'date' == $field['type'] ) $this->register_datepicker();
 			elseif ( 'media' == $field['type'] ) $this->register_media();
 			elseif ( 'wysiwyg' == $field['type'] ) $attr['fields'][ $meta_key ]['context'] = $attr['context'];
@@ -291,7 +295,7 @@ class Super_Custom_Post_Meta {
 				), $field['label'] );
 		echo SCPT_Markup::tag( 'input', array_merge( array(
 				'type' => $field['type'],
-				'value' => ( isset( $post_meta[ $field['meta_key'] ] ) ? $post_meta[ $field['meta_key'] ][0] : '' ),
+				'value' => ( isset( $post_meta[ $field['meta_key'] ] ) ? $post_meta[ $field['meta_key'] ][0] : $field['default'] ),
 				'name' => $field['meta_key'],
 				'class' => 'scpt-field',
 				'id' => 'scpt_meta_' . $field['meta_key']
@@ -322,7 +326,7 @@ class Super_Custom_Post_Meta {
 				'class' => 'scpt-field',
 				'id' => 'scpt_meta_' . $field['meta_key']
 			), $html_attributes ),
-			( isset( $post_meta[ $field['meta_key'] ] ) ? $post_meta[ $field['meta_key'] ][0] : '' )
+			( isset( $post_meta[ $field['meta_key'] ] ) ? $post_meta[ $field['meta_key'] ][0] : $field['default'] )
 		);
 	}
 
@@ -353,7 +357,7 @@ class Super_Custom_Post_Meta {
 					'class' => 'scpt-meta-label scpt-meta-wysiwyg label-' . $field['meta_key']
 				), $field['label'] );
 		wp_editor(
-			( isset( $post_meta[ $field['meta_key'] ] ) ? $post_meta[ $field['meta_key'] ][0] : '' ),
+			( isset( $post_meta[ $field['meta_key'] ] ) ? $post_meta[ $field['meta_key'] ][0] : $field['default'] ),
 			$field['meta_key'],
 			$editor_settings
 		);
@@ -392,7 +396,7 @@ class Super_Custom_Post_Meta {
 			'class' => 'scpt-field',
 			'id' => 'scpt_meta_' . $field['meta_key']
 		), $html_attributes );
-		if ( isset( $post_meta[ $field['meta_key'] ] ) && '1' == $post_meta[ $field['meta_key'] ][0] )
+		if ( ( isset( $post_meta[ $field['meta_key'] ] ) && '1' == $post_meta[ $field['meta_key'] ][0] ) || 'checked' == $field['default'] )
 			$args['checked'] = 'checked';
 		echo
 			SCPT_Markup::tag( 'input', array( 'type' => 'hidden', 'name' => $field['meta_key'], 'value' => '0' ) ),
@@ -431,7 +435,7 @@ class Super_Custom_Post_Meta {
 			echo SCPT_Markup::tag( 'label', array(
 					'class' => 'scpt-meta-label scpt-meta-checkbox label-' . $field['meta_key']
 				), $field['label'] );
-		echo '<span class="scpt-option">' . implode( "</span>\n<span class=\"scpt-option\">", $this->prune_options( $field['options'], $field['meta_key'], $post_meta, $args, 'input' ) ) . '</span>';
+		echo '<span class="scpt-option">' . implode( "</span>\n<span class=\"scpt-option\">", $this->prune_options( $field['options'], $field['meta_key'], $post_meta, $args, 'input', $field['default'] ) ) . '</span>';
 	}
 
 
@@ -463,7 +467,7 @@ class Super_Custom_Post_Meta {
 			echo SCPT_Markup::tag( 'label', array(
 					'class' => 'scpt-meta-label scpt-meta-radio label-' . $field['meta_key']
 				), $field['label'] );
-		echo '<span class="scpt-option">' . implode( "</span>\n<span class=\"scpt-option\">", $this->prune_options( $field['options'], $field['meta_key'], $post_meta, $args, 'input' ) ) . '</span>';
+		echo '<span class="scpt-option">' . implode( "</span>\n<span class=\"scpt-option\">", $this->prune_options( $field['options'], $field['meta_key'], $post_meta, $args, 'input', $field['default'] ) ) . '</span>';
 	}
 
 
@@ -480,7 +484,7 @@ class Super_Custom_Post_Meta {
 	 * @author Matthew Boynes
 	 */
 	public function add_select_field( $field, $post_meta, $html_attributes ) {
-		$options = implode( "\n", $this->prune_options( $field['options'], $field['meta_key'], $post_meta ) );
+		$options = implode( "\n", $this->prune_options( $field['options'], $field['meta_key'], $post_meta, array(), 'option', $field['default'] ) );
 		if ( !isset( $html_attributes['multiple'] ) && !( isset( $field['prompt'] ) && false === $field['prompt'] ) )
 			$options = '<option value="">' . ( isset( $field['prompt'] ) ? $field['prompt'] : 'Choose one' ) . '</option>' . $options;
 
@@ -585,7 +589,7 @@ class Super_Custom_Post_Meta {
 	 * @return array of HTML elements
 	 * @author Matthew Boynes
 	 */
-	public function prune_options( $options, $meta_key, $post_meta, $default_args = array(), $tag = 'option' ) {
+	public function prune_options( $options, $meta_key, $post_meta, $default_args = array(), $tag = 'option', $default = null ) {
 		$has_values = $this->is_assoc( $options ) || !isset( $options[0] );
 
 		# Allow developers to hook into this before the HTML is generated to override it
@@ -599,7 +603,7 @@ class Super_Custom_Post_Meta {
 				$this_args['id'] .= "_$key";
 
 			if ( 'input' == $tag ) {
-				if ( isset( $post_meta[ $meta_key ] ) && in_array( $this_args['value'], $post_meta[ $meta_key ] ) )
+				if ( ( isset( $post_meta[ $meta_key ] ) && in_array( $this_args['value'], $post_meta[ $meta_key ] ) ) || ( in_array( $this_args['value'], (array) $default ) ) )
 					$this_args['checked'] = 'checked';
 				$html[] = SCPT_Markup::tag( 'label', array(
 					'for' => $this_args['id'],
@@ -607,7 +611,7 @@ class Super_Custom_Post_Meta {
 				), SCPT_Markup::tag( 'input', $this_args ) . ' ' . $option );
 			}
 			else {
-				if ( isset( $post_meta[ $meta_key ] ) && in_array( $this_args['value'], $post_meta[ $meta_key ] ) )
+				if ( ( isset( $post_meta[ $meta_key ] ) && in_array( $this_args['value'], $post_meta[ $meta_key ] ) ) || ( in_array( $this_args['value'], (array) $default ) ) )
 					$this_args['selected'] = 'selected';
 				$html[] = SCPT_Markup::tag( 'option', $this_args, $option );
 			}
@@ -631,7 +635,8 @@ class Super_Custom_Post_Meta {
 			'options' => true,
 			'data' => true,
 			'prompt' => true,
-			'column' => true
+			'column' => true,
+			'default' => true
 		) );
 	}
 

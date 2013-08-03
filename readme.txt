@@ -147,11 +147,12 @@ Here is the full demo code:
 
 = 0.2 =
 
-* Removed glyphicons in favor of the open-source Font Awesome
+* Numerous bug fixes
+* Removed glyphicons in favor of the open-source GPL-compatible Font Awesome
 * Fixed bug where CSS/JS doesn't load if plugin is in mu-plugins (props to Aaron Holbrook)
 * Added magic methods for accessing and setting taxonomy and post type attributes after declaration
 * Added "media" field type
-* Numerous bug fixes
+* Added ability to have default values (props to github.com/Gyroscopic for the suggestion)
 
 
 = 0.1 =
