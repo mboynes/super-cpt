@@ -19,12 +19,9 @@ jQuery( function( $ ){
 			props.align = null;
 			$(input).parents( '.scpt-field-wrap' ).find( '.scpt-media-id' ).val( attachment.id );
 			if ( attachment.type == 'image' ) {
-				props.url = props.src;
-				var preview = 'Uploaded image:<br />';
-				preview += wp.media.string.image( props );
+				var preview = 'Uploaded image:<br /><img src="' + props.src + '" />';
 			} else {
-				var preview = 'Uploaded file:&nbsp;';
-				preview += wp.media.string.link( props );
+				var preview = 'Uploaded file:&nbsp;' + wp.media.string.link( props );
 			}
 			preview += '<br /><a class="scpt-remove-thumbnail" href="#">Remove</a>';
 			$( input ).parents( '.scpt-field-wrap' ).find( '.scpt-media-preview' ).html( preview );

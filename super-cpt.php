@@ -73,8 +73,8 @@ class Super_CPT {
 	 * @author Matthew Boynes
 	 */
 	function load_js_and_css() {
-		wp_register_style( 'supercpt.css', SCPT_PLUGIN_URL . 'css/supercpt.css', array(), '0.2' );
-		wp_register_script( 'supercpt.js', SCPT_PLUGIN_URL . 'js/supercpt.js', array( 'jquery', 'jquery-ui-core' ), '0.2' );
+		wp_register_style( 'supercpt.css', SCPT_PLUGIN_URL . 'css/supercpt.css', array(), '0.2.0' );
+		wp_register_script( 'supercpt.js', SCPT_PLUGIN_URL . 'js/supercpt.js', array( 'jquery', 'jquery-ui-core' ), '0.2.1' );
 		wp_enqueue_style( 'supercpt.css' );
 	}
 
