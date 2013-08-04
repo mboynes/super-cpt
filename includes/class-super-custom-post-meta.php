@@ -396,7 +396,7 @@ class Super_Custom_Post_Meta {
 			'class' => 'scpt-field',
 			'id' => 'scpt_meta_' . $field['meta_key']
 		), $html_attributes );
-		if ( ( isset( $post_meta[ $field['meta_key'] ] ) && '1' == $post_meta[ $field['meta_key'] ][0] ) || 'checked' == $field['default'] )
+		if ( ( isset( $post_meta[ $field['meta_key'] ] ) && '1' == $post_meta[ $field['meta_key'] ][0] ) || ( ! isset( $post_meta[ $field['meta_key'] ] ) && 'checked' == $field['default'] ) )
 			$args['checked'] = 'checked';
 		echo
 			SCPT_Markup::tag( 'input', array( 'type' => 'hidden', 'name' => $field['meta_key'], 'value' => '0' ) ),
@@ -603,7 +603,7 @@ class Super_Custom_Post_Meta {
 				$this_args['id'] .= "_$key";
 
 			if ( 'input' == $tag ) {
-				if ( ( isset( $post_meta[ $meta_key ] ) && in_array( $this_args['value'], $post_meta[ $meta_key ] ) ) || ( in_array( $this_args['value'], (array) $default ) ) )
+				if ( ( isset( $post_meta[ $meta_key ] ) && in_array( $this_args['value'], $post_meta[ $meta_key ] ) ) || ( ! isset( $post_meta[ $meta_key ] ) && in_array( $this_args['value'], (array) $default ) ) )
 					$this_args['checked'] = 'checked';
 				$html[] = SCPT_Markup::tag( 'label', array(
 					'for' => $this_args['id'],
@@ -611,7 +611,7 @@ class Super_Custom_Post_Meta {
 				), SCPT_Markup::tag( 'input', $this_args ) . ' ' . $option );
 			}
 			else {
-				if ( ( isset( $post_meta[ $meta_key ] ) && in_array( $this_args['value'], $post_meta[ $meta_key ] ) ) || ( in_array( $this_args['value'], (array) $default ) ) )
+				if ( ( isset( $post_meta[ $meta_key ] ) && in_array( $this_args['value'], $post_meta[ $meta_key ] ) ) || ( ! isset( $post_meta[ $meta_key ] ) && in_array( $this_args['value'], (array) $default ) ) )
 					$this_args['selected'] = 'selected';
 				$html[] = SCPT_Markup::tag( 'option', $this_args, $option );
 			}
