@@ -756,7 +756,7 @@ class Super_Custom_Post_Meta {
 
 	protected function register_custom_columns( $columns = array() ) {
 		if ( !$this->registered_custom_columns ) {
-			add_action( 'manage_' . $this->type . '_posts_custom_column' , array( $this, 'custom_column' ) );
+			add_action( 'manage_' . $this->type . '_posts_custom_column' , array( $this, 'custom_column' ), 10, 2 );
 			add_filter( 'manage_edit-' . $this->type . '_columns', array( $this, 'edit_columns' ) );
 			$this->column_thumbnail_size = apply_filters( 'scpt_plugin_column_thumbnail_size', array( 60, 60 ), $this->type );
 			$this->registered_custom_columns = true;
@@ -774,17 +774,19 @@ class Super_Custom_Post_Meta {
 		$this->register_custom_columns();
 	}
 
-	public function custom_column( $column ) {
+	public function custom_column( $column, $post_id ) {
 		if ( isset( $this->columns[ $column ] ) ) {
+			if ( ! in_array( $column, $this->field_names ) ) {
+				if ( taxonomy_exists( $column ) ) {
+					$terms = get_the_term_list( $post_id , $column , '' , ', ' , '' );
+					if ( is_string( $terms ) )
+						echo $terms;
+					return;
+				}
+			}
 			add_filter( 'scpt_plugin_formatted_meta', array( $this, 'format_meta_for_list' ), 10, 2 );
 			the_scpt_formatted_meta( $column );
 		}
-
-		/* If listing a taxonomy...
-		$terms = get_the_term_list( $post->ID , 'location' , '' , ', ' , '' );
-		if ( is_string( $terms ) )
-			echo $terms;
-		*/
 	}
 
 	public function data_column( $post ) {
