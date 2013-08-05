@@ -11,6 +11,12 @@ Insanely easy and attractive custom post types, custom post meta, and custom tax
 
 == Description ==
 
+= UPGRADE NOTICE =
+
+SuperCPT now uses Font Awesome instead of Glyphicons. Some icon names will carry over, but not all. If this is a considerable inconvenience for you for a project, simply do not update it. It's not a security release, so updating isn't necessary.
+
+= Overview =
+
 SuperCPT is an object wrapper for Custom Post Types, Custom Taxonomies, and Custom Post Meta "for coders, by coders." Simply put, SuperCPT:
 
 * <acronym title="Don't Repeat Yourself">DRY</acronym>s up the Custom Post Type and Custom Taxonomy process (e.g. automatically adds the name to all the labels),
