@@ -766,8 +766,9 @@ class Super_Custom_Post_Meta {
 	public function add_to_columns( $column ) {
 		if ( is_array( $column ) ) {
 			$this->columns = $this->columns + $column;
-		}
-		else {
+		} elseif ( '_thumbnail_id' == $column ) {
+			$this->columns[ $column ] = 'Thumbnail';
+		} else {
 			$this->columns[ $column ] = SCPT_Markup::labelify( $column );
 		}
 		$this->register_custom_columns();
@@ -793,13 +794,17 @@ class Super_Custom_Post_Meta {
 
 	public function format_meta_for_list( $data, $key ) {
 		$field_info = get_known_field_info( $key, $this->type );
-		if ( is_array( $field_info ) ) {
+		if ( false == $field_info ) {
+			switch ( $key ) {
+				case '_thumbnail_id' :
+					return wp_get_attachment_image( $data, $this->column_thumbnail_size, true );
+			}
+		} elseif ( is_array( $field_info ) ) {
 			# This is a cpt relationship
 			if ( is_array( $data ) ) {
 				return implode( '<br />', array_map( array( $this, 'data_column' ), $data ) );
 			}
-		}
-		else {
+		} else {
 			switch ( $field_info ) {
 				case 'date' :
 					return $data ? date( 'Y-m-d', $data ) : '';
