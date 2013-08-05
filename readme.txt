@@ -147,12 +147,14 @@ Here is the full demo code:
 
 = 0.2 =
 
-* Numerous bug fixes
+* Some bug fixes
 * Removed glyphicons in favor of the open-source GPL-compatible Font Awesome
 * Fixed bug where CSS/JS doesn't load if plugin is in mu-plugins (props to Aaron Holbrook)
 * Added magic methods for accessing and setting taxonomy and post type attributes after declaration
 * Added "media" field type
 * Added ability to have default values (props to github.com/Gyroscopic for the suggestion)
+* Added ability to add taxonomies to the manage posts columns (props to github.com/Gyroscopic for the suggestion)
+* Added ability to include the featured image in the manage posts columns (props to twitter.com/GreggFranklin for the suggestion)
 
 
 = 0.1 =
@@ -179,7 +181,7 @@ You probably shouldn't. Check out [Custom Post Type UI](http://wordpress.org/ext
 
 = 0.2 =
 
-Removed glyphicons in favor of Font Awesome. If you're using a version of WordPress less than 3.7, you should use the MP6 plugin to update your dashboard design for best results.
+Removed glyphicons in favor of Font Awesome. If you're using a version of WordPress less than 3.7, you should use the MP6 plugin to update your dashboard design for best results. It is still possible to use Glyphicons, but you need to purchase it to get the new font. I'll release an open-source add-on to use that font on my github account, https://github.com/mboynes
 
 = 0.1.3 =
 
@@ -194,4 +196,3 @@ Beta release
 
 1. Add better support for multiple fields for one meta key
 2. Add easy RSS feeds, e.g. in fields array, a parameter might be `'rss' => 'PubDate'` to prefer that field's data over the post's publication date.
-3. Add file field type

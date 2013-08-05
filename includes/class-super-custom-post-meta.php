@@ -751,9 +751,6 @@ class Super_Custom_Post_Meta {
 		return ( is_array( $arr ) && count( array_filter( array_keys( $arr ), 'is_string' ) ) == count( $arr ) );
 	}
 
-
-
-
 	protected function register_custom_columns( $columns = array() ) {
 		if ( !$this->registered_custom_columns ) {
 			add_action( 'manage_' . $this->type . '_posts_custom_column' , array( $this, 'custom_column' ), 10, 2 );
