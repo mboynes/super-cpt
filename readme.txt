@@ -3,7 +3,7 @@ Contributors: mboynes, unionstreetmedia
 Tags: custom-post-types, custom-post-type, cms, custom-field, custom-fields, meta, custom-taxonomy, custom-taxonomies
 Requires at least: 3.0
 Tested up to: 3.6
-Stable tag: 0.2
+Stable tag: 0.2.1
 Donate Link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=22PRU6U4U78RC
 License: GPLv2 or later
 
@@ -150,6 +150,11 @@ Here is the full demo code:
 
 
 == Changelog ==
+
+= 0.2.1 =
+
+* Improving PHP <5.3 support
+
 
 = 0.2 =
 
