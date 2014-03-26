@@ -83,7 +83,7 @@ class SCPT_Font_Awesome {
 		if ( ! isset( $this->styles['base'] ) ) {
 			$this->styles['base'] = "
 			@font-face { font-family: 'FontAwesome'; src: url('{$this->font_dir}fontawesome-webfont.eot?v=3.1.0'); src: url('{$this->font_dir}fontawesome-webfont.eot?#iefix&v=3.1.0') format('embedded-opentype'), url('{$this->font_dir}fontawesome-webfont.woff?v=3.1.0') format('woff'), url('{$this->font_dir}fontawesome-webfont.ttf?v=3.1.0') format('truetype'), url('{$this->font_dir}fontawesome-webfont.svg#fontawesomeregular?v=3.1.0') format('svg'); font-weight: normal; font-style: normal; }
-			%s { font-family: FontAwesome !important; -webkit-font-smoothing: antialiased; background: none; *margin-right: .3em; " . $this->pre_mp6_styles() . " }
+			%s { font-family: FontAwesome !important; -webkit-font-smoothing: antialiased; background: none; margin-right: .3em; " . $this->pre_mp6_styles() . " }
 			%s { font-family: FontAwesome !important; }
 			%s { " . $this->pre_mp6_styles( 'hover' ) . " }
 			%s { " . $this->pre_mp6_styles( 'open' ) . " }";
