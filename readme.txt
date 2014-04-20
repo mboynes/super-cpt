@@ -1,5 +1,5 @@
 === SuperCPT ===
-Contributors: mboynes, unionstreetmedia
+Contributors: mboynes
 Tags: custom-post-types, custom-post-type, cms, custom-field, custom-fields, meta, custom-taxonomy, custom-taxonomies
 Requires at least: 3.0
 Tested up to: 3.6
