@@ -21,17 +21,19 @@ class SCPT_Markup {
 	 * @author Matthew Boynes
 	 */
 	public static function tag( $name, $attr = array(), $text = false ) {
-		if ( $attr )
+		if ( $attr ) {
 			$attr = SCPT_Markup::attributes( $attr );
-		else
+		} else {
 			$attr = '';
+		}
 
-		if ( false !== $text )
-			$text = ">$text</$name>";
-		else
+		if ( false !== $text ) {
+			$text = '>' . $text . '</' . esc_attr( $name ) . '>';
+		} else {
 			$text = ' />';
+		}
 
-		return '<' . $name . $attr . $text;
+		return '<' . esc_attr( $name ) . $attr . $text;
 	}
 
 	/**
@@ -44,7 +46,9 @@ class SCPT_Markup {
 	 */
 	public static function attributes( $arr ) {
 		$ret = '';
-		foreach ( $arr as $key => $val ) $ret .= ' ' . $key . '="' . $val . '"';
+		foreach ( $arr as $key => $val ) {
+			$ret .= ' ' . esc_attr( $key ) . '="' . esc_attr( $val ) . '"';
+		}
 		return $ret;
 	}
 
