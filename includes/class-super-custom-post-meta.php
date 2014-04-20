@@ -667,13 +667,16 @@ class Super_Custom_Post_Meta {
 		# We're authenticated: we need to find and save the data
 
 		foreach ( $this->field_names as $field ) {
-			if ( is_array( $_POST[ $field ] ) ) {
+
+			$field_value = isset( $_POST[ $field ] ) ? $_POST[ $field ] : NULL;
+
+			if ( is_array( $field_value ) ) {
 				delete_post_meta( $post_id, $field );
 				foreach ( $_POST[ $field ] as $meta_value )
 					add_post_meta( $post_id, $field, apply_filters( "scpt_plugin_{$this->type}_meta_save_{$field}", $meta_value ) );
 			}
 			else
-				update_post_meta( $post_id, $field, apply_filters( "scpt_plugin_{$this->type}_meta_save_{$field}", $_POST[ $field ] ) );
+				update_post_meta( $post_id, $field, apply_filters( "scpt_plugin_{$this->type}_meta_save_{$field}", $field_value ) );
 		}
 	}
 
