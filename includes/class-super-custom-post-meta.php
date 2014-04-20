@@ -669,11 +669,14 @@ class Super_Custom_Post_Meta {
 		foreach ( $this->field_names as $field ) {
 			if ( is_array( $_POST[ $field ] ) ) {
 				delete_post_meta( $post_id, $field );
-				foreach ( $_POST[ $field ] as $meta_value )
+				foreach ( $_POST[ $field ] as $meta_value ) {
 					add_post_meta( $post_id, $field, apply_filters( "scpt_plugin_{$this->type}_meta_save_{$field}", $meta_value ) );
-			}
-			else
+				}
+			} elseif ( isset( $_POST[ $field ] ) ) {
 				update_post_meta( $post_id, $field, apply_filters( "scpt_plugin_{$this->type}_meta_save_{$field}", $_POST[ $field ] ) );
+			} else {
+				delete_post_meta( $post_id, $field );
+			}
 		}
 	}
 
