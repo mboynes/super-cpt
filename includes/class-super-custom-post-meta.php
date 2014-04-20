@@ -720,7 +720,7 @@ class Super_Custom_Post_Meta {
 	 * @author Matthew Boynes
 	 */
 	public function add_datepicker_css() {
-		wp_enqueue_style( 'smoothness', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.15/themes/smoothness/jquery-ui.css' );
+		wp_enqueue_style( 'scpt-smoothness', '//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css' );
 	}
 
 
