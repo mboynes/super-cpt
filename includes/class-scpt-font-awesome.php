@@ -95,7 +95,7 @@ class SCPT_Font_Awesome {
 	 */
 	public function output_font_awesome() {
 		$cache_key = 'scpt-fa403-' . md5( serialize( $this->styles ) );
-		if ( 1 || false === ( $content = get_transient( $cache_key ) ) ) {
+		if ( false === ( $content = get_transient( $cache_key ) ) ) {
 			$content = '';
 			foreach ( $this->styles['icons'] as $post_type => $icon ) {
 				$selectors[] = "#adminmenu #menu-posts-{$post_type} div.wp-menu-image";
