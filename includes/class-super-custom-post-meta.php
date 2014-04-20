@@ -114,12 +114,12 @@ class Super_Custom_Post_Meta {
 		if ( !isset( $attr['title'] ) )
 			$attr['title'] = SCPT_Markup::labelify( $attr['id'] );
 
-		$attr = array_merge( array(
+		$attr = wp_parse_args( $attr, array(
 			'callback' => array( $this, 'meta_html' ),
-			'page' => $this->type,
-			'context' => 'advanced',
+			'page'     => $this->type,
+			'context'  => 'advanced',
 			'priority' => 'default'
-		), $attr );
+		) );
 
 		# Fields can optionally be numerically indexed with the individual field arrays having the 'meta_key' array index set
 		if ( !$this->is_assoc( $attr['fields'] ) ) {
@@ -131,11 +131,13 @@ class Super_Custom_Post_Meta {
 		}
 
 		foreach ( $attr['fields'] as $meta_key => $field ) {
-			$attr['fields'][ $meta_key ]['meta_key'] = $meta_key;
+			$field = wp_parse_args( $field, array(
+				'default' => '',
+				'type' => 'text',
+				'meta_key' => $meta_key,
+			) );
 
 			$this->field_names[] = $meta_key;
-			if ( !isset( $field['type'] ) )
-				$attr['fields'][ $meta_key ]['type'] = $field['type'] = 'text';
 
 			if ( isset( $field['column'] ) && true == $field['column'] ) {
 				$this->add_to_columns(
@@ -143,20 +145,24 @@ class Super_Custom_Post_Meta {
 				);
 			}
 
-			if ( ! isset( $field['default'] ) ) {
-				$field['default'] = '';
+			if ( 'date' == $field['type'] ) {
+				$this->register_datepicker();
+			} elseif ( 'media' == $field['type'] ) {
+				$this->register_media();
+			} elseif ( 'wysiwyg' == $field['type'] ) {
+				$field['context'] = $attr['context'];
 			}
 
-			if ( 'date' == $field['type'] ) $this->register_datepicker();
-			elseif ( 'media' == $field['type'] ) $this->register_media();
-			elseif ( 'wysiwyg' == $field['type'] ) $attr['fields'][ $meta_key ]['context'] = $attr['context'];
-
-			if ( isset( $field['data'] ) )
+			if ( isset( $field['data'] ) ) {
 				$scpt_known_custom_fields[ $this->type ][ $meta_key ] = array( 'data' => $field['data'] );
-			elseif ( 'select' == $field['type'] && isset( $field['multiple'] ) )
+			} elseif ( 'select' == $field['type'] && isset( $field['multiple'] ) ) {
 				$scpt_known_custom_fields[ $this->type ][ $meta_key ] = 'multiple_select';
-			else
+			} else {
 				$scpt_known_custom_fields[ $this->type ][ $meta_key ] = $field['type'];
+			}
+
+			# Record any changes we've made
+			$attr['fields'][ $meta_key ] = $field;
 		}
 
 		$this->boxes[] = $attr;
