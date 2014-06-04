@@ -96,7 +96,7 @@ class Super_Custom_Post_Type extends Super_Custom_Post_Meta {
 			unset( $customizations['menu_icon'] ); # here we unset it because it will get set properly in the default array
 		}
 
-		$this->cpt = array_merge_recursive(
+		$this->cpt = array_replace_recursive(
 			apply_filters( 'scpt_plugin_default_cpt_options', array(
 				'label' => $this->plural,
 				'labels' => array(
