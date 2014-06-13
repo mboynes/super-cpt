@@ -96,8 +96,7 @@ class Super_Custom_Post_Type extends Super_Custom_Post_Meta {
 			unset( $customizations['menu_icon'] ); # here we unset it because it will get set properly in the default array
 		}
 
-		$this->cpt = array_merge_recursive(
-			apply_filters( 'scpt_plugin_default_cpt_options', array(
+		$defaults = apply_filters( 'scpt_plugin_default_cpt_options', array(
 				'label' => $this->plural,
 				'labels' => array(
 					'name'               => _x( $this->plural, $this->type ),
@@ -132,7 +131,10 @@ class Super_Custom_Post_Type extends Super_Custom_Post_Meta {
 				# 'query_var'           => true,
 				# 'can_export'          => true,
 			), $this->type ),
-			$customizations
+
+		$this->cpt = wp_parse_args(
+			$customizations,
+			$defaults
 		);
 
 		$this->register_cpt_action();
