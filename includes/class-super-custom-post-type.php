@@ -130,7 +130,7 @@ class Super_Custom_Post_Type extends Super_Custom_Post_Meta {
 				# 'rewrite'             => true,
 				# 'query_var'           => true,
 				# 'can_export'          => true,
-			), $this->type ),
+			), $this->type );
 
 		$this->cpt = wp_parse_args(
 			$customizations,
