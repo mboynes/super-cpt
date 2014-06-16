@@ -91,8 +91,7 @@ class Super_Custom_Taxonomy {
 	 * @author Matthew Boynes
 	 */
 	public function register_taxonomy( $customizations = array(), $hierarchical = false ) {
-		$this->args = array_merge(
-			apply_filters( 'scpt_plugin_default_tax_options', array(
+		$defaults = apply_filters( 'scpt_plugin_default_tax_options', array(
 				'label' => $this->plural,
 				'labels' => array(
 					'name'                       => _x( $this->plural, $this->name ),
@@ -123,8 +122,11 @@ class Super_Custom_Taxonomy {
 				# 'rewrite'               => true,
 				# 'capabilities'          => array(),
 				# 'sort'                  => false,
-			), $this->name ),
-			$customizations
+			), $this->name );
+
+		$this->args = wp_parse_args (
+			$customizations,
+			$defaults
 		);
 
 		$this->register_tax_action();
