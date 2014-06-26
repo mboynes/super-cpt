@@ -805,7 +805,12 @@ class Super_Custom_Post_Meta {
 		if ( false == $field_info ) {
 			switch ( $key ) {
 				case '_thumbnail_id' :
-					return wp_get_attachment_image( $data, $this->column_thumbnail_size, true );
+					if(!is_array($data)){
+						return wp_get_attachment_image( $data, $this->column_thumbnail_size, true );
+					}else{
+						return 'N/A';
+					}
+					return ;
 			}
 		} elseif ( is_array( $field_info ) ) {
 			# This is a cpt relationship
