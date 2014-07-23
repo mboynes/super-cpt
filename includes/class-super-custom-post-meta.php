@@ -275,6 +275,7 @@ class Super_Custom_Post_Meta {
 		else
 			call_user_func( array( $this, "add_text_field" ), $field, $post_meta, $html_attributes );
 		echo '</', $this->field_wrapper, '>';
+		echo '<div class="scpt-field-description">' , $field['field_description'] . '</div>';
 	}
 
 	/*
@@ -642,7 +643,9 @@ class Super_Custom_Post_Meta {
 			'data' => true,
 			'prompt' => true,
 			'column' => true,
-			'default' => true
+			'default' => true,
+			'desc' => true,
+			'field_description' => true
 		) );
 	}
 
