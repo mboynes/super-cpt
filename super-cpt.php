@@ -24,10 +24,16 @@
 	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-if ( !defined( 'SCPT_PLUGIN_URL' ) )
-	define( 'SCPT_PLUGIN_URL', plugins_url( '', __FILE__ ) . '/' );
-if ( !defined( 'SCPT_PLUGIN_DIR' ) )
-	define( 'SCPT_PLUGIN_DIR', dirname( __FILE__ ) );
+if ( !defined( 'SCPT_PLUGIN_DIR' ) ) {
+	define( 'SCPT_PLUGIN_DIR', __DIR__ );
+}
+if ( !defined( 'SCPT_PLUGIN_URL' ) ) {
+	if (strpos(SCPT_PLUGIN_DIR, get_template_directory()) !== -1) {
+		define( 'SCPT_PLUGIN_URL', str_replace(get_template_directory(), get_template_directory_uri(), SCPT_PLUGIN_DIR) . '/' );
+	} else {
+		define( 'SCPT_PLUGIN_URL', plugins_url( '', __FILE__ ) . '/' );
+	}
+}
 
 require_once SCPT_PLUGIN_DIR . '/includes/scpt-helpers.php';
 require_once SCPT_PLUGIN_DIR . '/includes/class-scpt-markup.php';
