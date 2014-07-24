@@ -18,5 +18,7 @@
         "name": "Matthew Boynes",
         "homepage": "https://github.com/mboynes"
     }],
-    "files": ["super-cpt-loader.php"]
+    "autoload": {
+        "files": ["super-cpt-loader.php"]
+    }
 }
