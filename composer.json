@@ -1,0 +1,24 @@
+{
+    "name": "potterywp/super-cpt",
+    "type": "library",
+    "description": "Insanely easy and attractive custom post types, custom post meta, and custom taxonomies for WordPress.",
+    "homepage": "https://github.com/mboynes/super-cpt",
+    "license": "GPL2.0",
+    "minimum-stability": "dev",
+    "version": "0.2.5-beta",
+    "keywords": [
+        "wordpress",
+        "wp-admin",
+        "meta-box",
+        "custom-post",
+        "taxonomy",
+        "ui"
+    ],
+    "authors": [{
+        "name": "Matthew Boynes",
+        "homepage": "https://github.com/mboynes"
+    }],
+    "autoload": {
+        "files": ["super-cpt-loader.php"]
+    }
+}
