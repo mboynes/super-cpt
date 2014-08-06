@@ -11,7 +11,7 @@
 	border:1px solid #ffe1e0 !important;
 }
 
-.scpt-field-wrap {
+.scpt-field-wrap, .scpt-meta-instructions {
 	margin: 10px 0;
 }
 label.scpt-meta-label {

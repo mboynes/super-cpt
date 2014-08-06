@@ -219,7 +219,7 @@ class Super_Custom_Post_Meta {
 				$box['page'],
 				$box['context'],
 				$box['priority'],
-				$box['fields']
+				$box
 			);
 		}
 	}
@@ -233,8 +233,14 @@ class Super_Custom_Post_Meta {
 	 * @return void
 	 * @author Matthew Boynes
 	 */
-	public function meta_html( $post, $fields ) {
-		$fields = $fields['args'];
+	public function meta_html( $post, $callback_args ) {
+		$box = $callback_args['args'];
+		
+		if ( $box['instructions_pre'] ) {
+			echo '<div class="scpt-meta-instructions">' . $box['instructions_pre'] . '</div>';	
+		}
+
+		$fields = $box['fields'];
 		// Use nonce for verification
 		if ( ! $this->printed_nonce ) {
 			wp_nonce_field( plugin_basename( __FILE__ ), sprintf( $this->nonce_key, $this->type ) );
@@ -247,6 +253,11 @@ class Super_Custom_Post_Meta {
 			// array( 'meta_key' => 'active', 'name' => 'Active', 'type' => 'checkbox' )
 			$this->add_field( $field, $post_meta );
 		}
+
+		if ( $box['instructions_post'] ) {
+			echo '<div class="scpt-meta-instructions">' . $box['instructions_post'] . '</div>';	
+		}
+
 	}
 
 
