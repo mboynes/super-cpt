@@ -25,7 +25,9 @@
 */
 
 if ( !defined( 'SCPT_PLUGIN_URL' ) )
-	define( 'SCPT_PLUGIN_URL', plugins_url( '', __FILE__ ) . '/' );
+	define( 'SCPT_PLUGIN_URL', defined( 'SCPT_THEME_MODE' ) ?
+		get_template_directory_uri() . '/' . basename(__DIR__) . '/' :
+		plugins_url( '', __FILE__ ) . '/' );
 if ( !defined( 'SCPT_PLUGIN_DIR' ) )
 	define( 'SCPT_PLUGIN_DIR', dirname( __FILE__ ) );
 
