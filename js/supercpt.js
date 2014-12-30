@@ -1,4 +1,5 @@
 jQuery( function( $ ){
+	$.datepicker.setDefaults( $.datepicker.regional[ "en-US" ] );
 	if ( $( "input[type='date'].scpt-field" ).length )
 		$( "input[type='date'].scpt-field" ).datepicker( { dateFormat: 'yy-mm-dd', changeMonth: true, changeYear: true } );
 
