@@ -1,5 +1,32 @@
+function getJqueryUserLanguage()
+{
+	if ((navigator.language || navigator.browserLanguage).toLowerCase() == 'en-us')
+	{
+		return '';
+	}
+	else
+	{
+		var l = (navigator.language || navigator.browserLanguage).toLowerCase().split('-');
+		if (l.length == 1)
+		{
+			if (jQuery.datepicker.regional[l[0]] != undefined) return l[0];
+			else return '';
+		}
+		else if (l.length > 1)
+		{
+			if (jQuery.datepicker.regional[l[0] + '-' + l[1].toUpperCase()] != undefined) return l[0] + '-' + l[1].toUpperCase();
+			else if (jQuery.datepicker.regional[l[0]] != undefined) return l[0];
+			else return '';
+		}
+		else
+		{
+			return '';
+		}
+	}
+}
+
 jQuery( function( $ ){
-	$.datepicker.setDefaults( $.datepicker.regional[ "en-US" ] );
+	$.datepicker.setDefaults($.datepicker.regional[getJqueryUserLanguage()]);
 	if ( $( "input[type='date'].scpt-field" ).length )
 		$( "input[type='date'].scpt-field" ).datepicker( { dateFormat: 'yy-mm-dd', changeMonth: true, changeYear: true } );
 
