@@ -127,7 +127,7 @@ class Super_Custom_Post_Type extends Super_Custom_Post_Meta {
 				# 'show_in_menu'        => {value of show_ui},
 				# 'show_in_admin_bar'   => {value of show_in_menu}
 				# 'capability_type'     => 'post',
-				# 'hierarchical'        => false,
+				'hierarchical'        => true,
 				# 'rewrite'             => true,
 				# 'query_var'           => true,
 				# 'can_export'          => true,
