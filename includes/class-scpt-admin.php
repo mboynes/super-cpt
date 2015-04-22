@@ -20,10 +20,10 @@ class SCPT_Admin {
 		?>
 		<div class="wrap">
 			<div id="icon-scpt" class="icon32"><br /></div>
-			<h2>SuperCPT Settings</h2>
+			<h2><?php _e('SuperCPT Settings'); ?></h2>
 
 			<h3 class="nav-tab-wrapper">
-				<a class="nav-tab nav-tab-active" href="#scpt_icons">Icons</a>
+				<a class="nav-tab nav-tab-active" href="#scpt_icons"><?php _e('Icons'); ?></a>
 			</h3>
 
 			<div id="scpt_icons">
