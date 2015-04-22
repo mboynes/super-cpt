@@ -102,7 +102,7 @@ class Super_Custom_Post_Type extends Super_Custom_Post_Meta {
 				'labels' => array(
 					'name'               => $this->plural,
 					'singular_name'      => $this->singular,
-					'add_new'            => sprintf( __( 'New  %s' ), $this->singular ),
+					'add_new'            => sprintf( __( 'New %s' ), $this->singular ),
 					'add_new_item'       => sprintf( __( 'Add New %s' ), $this->singular ),
 					'edit_item'          => sprintf( __( 'Edit %s' ), $this->singular ),
 					'new_item'           => sprintf( __( 'New %s' ), $this->singular ),
