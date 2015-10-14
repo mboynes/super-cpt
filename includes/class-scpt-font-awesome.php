@@ -94,7 +94,7 @@ class SCPT_Font_Awesome {
 	 * @return type
 	 */
 	public function output_font_awesome() {
-		$cache_key = 'scpt-fa403-' . md5( serialize( $this->styles ) );
+		$cache_key = 'scpt-fa440-' . md5( serialize( $this->styles ) );
 		if ( false === ( $content = get_transient( $cache_key ) ) ) {
 			$content = '';
 			$normal = $before = array();
@@ -531,6 +531,262 @@ class SCPT_Font_Awesome {
 			case 'turkish-lira' : return '\f195';
 			case 'try' : return '\f195';
 			case 'plus-square-o' : return '\f196';
+			case 'space-shuttle' : return '\f197';
+			case 'slack' : return '\f198';
+			case 'envelope-square' : return '\f199';
+			case 'wordpress' : return '\f19a';
+			case 'openid' : return '\f19b';
+			case 'institution' :
+			case 'bank' :
+			case 'university' : return '\f19c';
+			case 'mortar-board' :
+			case 'graduation-cap' : return '\f19d';
+			case 'yahoo' : return '\f19e';
+			case 'google' : return '\f1a0';
+			case 'reddit' : return '\f1a1';
+			case 'reddit-square' : return '\f1a2';
+			case 'stumbleupon-circle' : return '\f1a3';
+			case 'stumbleupon' : return '\f1a4';
+			case 'delicious' : return '\f1a5';
+			case 'digg' : return '\f1a6';
+			case 'pied-piper' : return '\f1a7';
+			case 'pied-piper-alt' : return '\f1a8';
+			case 'drupal' : return '\f1a9';
+			case 'joomla' : return '\f1aa';
+			case 'language' : return '\f1ab';
+			case 'fax' : return '\f1ac';
+			case 'building' : return '\f1ad';
+			case 'child' : return '\f1ae';
+			case 'paw' : return '\f1b0';
+			case 'spoon' : return '\f1b1';
+			case 'cube' : return '\f1b2';
+			case 'cubes' : return '\f1b3';
+			case 'behance' : return '\f1b4';
+			case 'behance-square' : return '\f1b5';
+			case 'steam' : return '\f1b6';
+			case 'steam-square' : return '\f1b7';
+			case 'recycle' : return '\f1b8';
+			case 'automobile' :
+			case 'car' : return '\f1b9';
+			case 'cab' :
+			case 'taxi' : return '\f1ba';
+			case 'tree' : return '\f1bb';
+			case 'spotify' : return '\f1bc';
+			case 'deviantart' : return '\f1bd';
+			case 'soundcloud' : return '\f1be';
+			case 'database' : return '\f1c0';
+			case 'file-pdf-o' : return '\f1c1';
+			case 'file-word-o' : return '\f1c2';
+			case 'file-excel-o' : return '\f1c3';
+			case 'file-powerpoint-o' : return '\f1c4';
+			case 'file-photo-o' :
+			case 'file-picture-o' :
+			case 'file-image-o' : return '\f1c5';
+			case 'file-zip-o' :
+			case 'file-archive-o' : return '\f1c6';
+			case 'file-sound-o' :
+			case 'file-audio-o' : return '\f1c7';
+			case 'file-movie-o' :
+			case 'file-video-o' : return '\f1c8';
+			case 'file-code-o' : return '\f1c9';
+			case 'vine' : return '\f1ca';
+			case 'codepen' : return '\f1cb';
+			case 'jsfiddle' : return '\f1cc';
+			case 'life-bouy' :
+			case 'life-buoy' :
+			case 'life-saver' :
+			case 'support' :
+			case 'life-ring' : return '\f1cd';
+			case 'circle-o-notch' : return '\f1ce';
+			case 'ra' :
+			case 'rebel' : return '\f1d0';
+			case 'ge' :
+			case 'empire' : return '\f1d1';
+			case 'git-square' : return '\f1d2';
+			case 'git' : return '\f1d3';
+			case 'y-combinator-square' :
+			case 'yc-square' :
+			case 'hacker-news' : return '\f1d4';
+			case 'tencent-weibo' : return '\f1d5';
+			case 'qq' : return '\f1d6';
+			case 'wechat' :
+			case 'weixin' : return '\f1d7';
+			case 'send' :
+			case 'paper-plane' : return '\f1d8';
+			case 'send-o' :
+			case 'paper-plane-o' : return '\f1d9';
+			case 'history' : return '\f1da';
+			case 'circle-thin' : return '\f1db';
+			case 'header' : return '\f1dc';
+			case 'paragraph' : return '\f1dd';
+			case 'sliders' : return '\f1de';
+			case 'share-alt' : return '\f1e0';
+			case 'share-alt-square' : return '\f1e1';
+			case 'bomb' : return '\f1e2';
+			case 'soccer-ball-o' :
+			case 'futbol-o' : return '\f1e3';
+			case 'tty' : return '\f1e4';
+			case 'binoculars' : return '\f1e5';
+			case 'plug' : return '\f1e6';
+			case 'slideshare' : return '\f1e7';
+			case 'twitch' : return '\f1e8';
+			case 'yelp' : return '\f1e9';
+			case 'newspaper-o' : return '\f1ea';
+			case 'wifi' : return '\f1eb';
+			case 'calculator' : return '\f1ec';
+			case 'paypal' : return '\f1ed';
+			case 'google-wallet' : return '\f1ee';
+			case 'cc-visa' : return '\f1f0';
+			case 'cc-mastercard' : return '\f1f1';
+			case 'cc-discover' : return '\f1f2';
+			case 'cc-amex' : return '\f1f3';
+			case 'cc-paypal' : return '\f1f4';
+			case 'cc-stripe' : return '\f1f5';
+			case 'bell-slash' : return '\f1f6';
+			case 'bell-slash-o' : return '\f1f7';
+			case 'trash' : return '\f1f8';
+			case 'copyright' : return '\f1f9';
+			case 'at' : return '\f1fa';
+			case 'eyedropper' : return '\f1fb';
+			case 'paint-brush' : return '\f1fc';
+			case 'birthday-cake' : return '\f1fd';
+			case 'area-chart' : return '\f1fe';
+			case 'pie-chart' : return '\f200';
+			case 'line-chart' : return '\f201';
+			case 'lastfm' : return '\f202';
+			case 'lastfm-square' : return '\f203';
+			case 'toggle-off' : return '\f204';
+			case 'toggle-on' : return '\f205';
+			case 'bicycle' : return '\f206';
+			case 'bus' : return '\f207';
+			case 'ioxhost' : return '\f208';
+			case 'angellist' : return '\f209';
+			case 'cc' : return '\f20a';
+			case 'shekel' :
+			case 'sheqel' :
+			case 'ils' : return '\f20b';
+			case 'meanpath' : return '\f20c';
+			case 'buysellads' : return '\f20d';
+			case 'connectdevelop' : return '\f20e';
+			case 'dashcube' : return '\f210';
+			case 'forumbee' : return '\f211';
+			case 'leanpub' : return '\f212';
+			case 'sellsy' : return '\f213';
+			case 'shirtsinbulk' : return '\f214';
+			case 'simplybuilt' : return '\f215';
+			case 'skyatlas' : return '\f216';
+			case 'cart-plus' : return '\f217';
+			case 'cart-arrow-down' : return '\f218';
+			case 'diamond' : return '\f219';
+			case 'ship' : return '\f21a';
+			case 'user-secret' : return '\f21b';
+			case 'motorcycle' : return '\f21c';
+			case 'street-view' : return '\f21d';
+			case 'heartbeat' : return '\f21e';
+			case 'venus' : return '\f221';
+			case 'mars' : return '\f222';
+			case 'mercury' : return '\f223';
+			case 'intersex' :
+			case 'transgender' : return '\f224';
+			case 'transgender-alt' : return '\f225';
+			case 'venus-double' : return '\f226';
+			case 'mars-double' : return '\f227';
+			case 'venus-mars' : return '\f228';
+			case 'mars-stroke' : return '\f229';
+			case 'mars-stroke-v' : return '\f22a';
+			case 'mars-stroke-h' : return '\f22b';
+			case 'neuter' : return '\f22c';
+			case 'genderless' : return '\f22d';
+			case 'facebook-official' : return '\f230';
+			case 'pinterest-p' : return '\f231';
+			case 'whatsapp' : return '\f232';
+			case 'server' : return '\f233';
+			case 'user-plus' : return '\f234';
+			case 'user-times' : return '\f235';
+			case 'hotel' :
+			case 'bed' : return '\f236';
+			case 'viacoin' : return '\f237';
+			case 'train' : return '\f238';
+			case 'subway' : return '\f239';
+			case 'medium' : return '\f23a';
+			case 'yc' :
+			case 'y-combinator' : return '\f23b';
+			case 'optin-monster' : return '\f23c';
+			case 'opencart' : return '\f23d';
+			case 'expeditedssl' : return '\f23e';
+			case 'battery-4' :
+			case 'battery-full' : return '\f240';
+			case 'battery-3' :
+			case 'battery-three-quarters' : return '\f241';
+			case 'battery-2' :
+			case 'battery-half' : return '\f242';
+			case 'battery-1' :
+			case 'battery-quarter' : return '\f243';
+			case 'battery-0' :
+			case 'battery-empty' : return '\f244';
+			case 'mouse-pointer' : return '\f245';
+			case 'i-cursor' : return '\f246';
+			case 'object-group' : return '\f247';
+			case 'object-ungroup' : return '\f248';
+			case 'sticky-note' : return '\f249';
+			case 'sticky-note-o' : return '\f24a';
+			case 'cc-jcb' : return '\f24b';
+			case 'cc-diners-club' : return '\f24c';
+			case 'clone' : return '\f24d';
+			case 'balance-scale' : return '\f24e';
+			case 'hourglass-o' : return '\f250';
+			case 'hourglass-1' :
+			case 'hourglass-start' : return '\f251';
+			case 'hourglass-2' :
+			case 'hourglass-half' : return '\f252';
+			case 'hourglass-3' :
+			case 'hourglass-end' : return '\f253';
+			case 'hourglass' : return '\f254';
+			case 'hand-grab-o' :
+			case 'hand-rock-o' : return '\f255';
+			case 'hand-stop-o' :
+			case 'hand-paper-o' : return '\f256';
+			case 'hand-scissors-o' : return '\f257';
+			case 'hand-lizard-o' : return '\f258';
+			case 'hand-spock-o' : return '\f259';
+			case 'hand-pointer-o' : return '\f25a';
+			case 'hand-peace-o' : return '\f25b';
+			case 'trademark' : return '\f25c';
+			case 'registered' : return '\f25d';
+			case 'creative-commons' : return '\f25e';
+			case 'gg' : return '\f260';
+			case 'gg-circle' : return '\f261';
+			case 'tripadvisor' : return '\f262';
+			case 'odnoklassniki' : return '\f263';
+			case 'odnoklassniki-square' : return '\f264';
+			case 'get-pocket' : return '\f265';
+			case 'wikipedia-w' : return '\f266';
+			case 'safari' : return '\f267';
+			case 'chrome' : return '\f268';
+			case 'firefox' : return '\f269';
+			case 'opera' : return '\f26a';
+			case 'internet-explorer' : return '\f26b';
+			case 'tv' :
+			case 'television' : return '\f26c';
+			case 'contao' : return '\f26d';
+			case '500px' : return '\f26e';
+			case 'amazon' : return '\f270';
+			case 'calendar-plus-o' : return '\f271';
+			case 'calendar-minus-o' : return '\f272';
+			case 'calendar-times-o' : return '\f273';
+			case 'calendar-check-o' : return '\f274';
+			case 'industry' : return '\f275';
+			case 'map-pin' : return '\f276';
+			case 'map-signs' : return '\f277';
+			case 'map-o' : return '\f278';
+			case 'map' : return '\f279';
+			case 'commenting' : return '\f27a';
+			case 'commenting-o' : return '\f27b';
+			case 'houzz' : return '\f27c';
+			case 'vimeo' : return '\f27d';
+			case 'black-tie' : return '\f27e';
+			case 'fonticons' : return '\f280';
+
 		}
 		_deprecated_argument( 'Super_Custom_Post_Type::set_icon', '2.0', "$icon is not a valid icon. See the icon list to find an adequate replacement." );
 		return '\f009';
@@ -953,6 +1209,261 @@ class SCPT_Font_Awesome {
 			'turkish-lira',
 			'try',
 			'plus-square-o',
+			'space-shuttle',
+			'slack',
+			'envelope-square',
+			'wordpress',
+			'openid',
+			'institution',
+			'bank',
+			'university',
+			'mortar-board',
+			'graduation-cap',
+			'yahoo',
+			'google',
+			'reddit',
+			'reddit-square',
+			'stumbleupon-circle',
+			'stumbleupon',
+			'delicious',
+			'digg',
+			'pied-piper',
+			'pied-piper-alt',
+			'drupal',
+			'joomla',
+			'language',
+			'fax',
+			'building',
+			'child',
+			'paw',
+			'spoon',
+			'cube',
+			'cubes',
+			'behance',
+			'behance-square',
+			'steam',
+			'steam-square',
+			'recycle',
+			'automobile',
+			'car',
+			'cab',
+			'taxi',
+			'tree',
+			'spotify',
+			'deviantart',
+			'soundcloud',
+			'database',
+			'file-pdf-o',
+			'file-word-o',
+			'file-excel-o',
+			'file-powerpoint-o',
+			'file-photo-o',
+			'file-picture-o',
+			'file-image-o',
+			'file-zip-o',
+			'file-archive-o',
+			'file-sound-o',
+			'file-audio-o',
+			'file-movie-o',
+			'file-video-o',
+			'file-code-o',
+			'vine',
+			'codepen',
+			'jsfiddle',
+			'life-bouy',
+			'life-buoy',
+			'life-saver',
+			'support',
+			'life-ring',
+			'circle-o-notch',
+			'ra',
+			'rebel',
+			'ge',
+			'empire',
+			'git-square',
+			'git',
+			'y-combinator-square',
+			'yc-square',
+			'hacker-news',
+			'tencent-weibo',
+			'qq',
+			'wechat',
+			'weixin',
+			'send',
+			'paper-plane',
+			'send-o',
+			'paper-plane-o',
+			'history',
+			'circle-thin',
+			'header',
+			'paragraph',
+			'sliders',
+			'share-alt',
+			'share-alt-square',
+			'bomb',
+			'soccer-ball-o',
+			'futbol-o',
+			'tty',
+			'binoculars',
+			'plug',
+			'slideshare',
+			'twitch',
+			'yelp',
+			'newspaper-o',
+			'wifi',
+			'calculator',
+			'paypal',
+			'google-wallet',
+			'cc-visa',
+			'cc-mastercard',
+			'cc-discover',
+			'cc-amex',
+			'cc-paypal',
+			'cc-stripe',
+			'bell-slash',
+			'bell-slash-o',
+			'trash',
+			'copyright',
+			'at',
+			'eyedropper',
+			'paint-brush',
+			'birthday-cake',
+			'area-chart',
+			'pie-chart',
+			'line-chart',
+			'lastfm',
+			'lastfm-square',
+			'toggle-off',
+			'toggle-on',
+			'bicycle',
+			'bus',
+			'ioxhost',
+			'angellist',
+			'cc',
+			'shekel',
+			'sheqel',
+			'ils',
+			'meanpath',
+			'buysellads',
+			'connectdevelop',
+			'dashcube',
+			'forumbee',
+			'leanpub',
+			'sellsy',
+			'shirtsinbulk',
+			'simplybuilt',
+			'skyatlas',
+			'cart-plus',
+			'cart-arrow-down',
+			'diamond',
+			'ship',
+			'user-secret',
+			'motorcycle',
+			'street-view',
+			'heartbeat',
+			'venus',
+			'mars',
+			'mercury',
+			'intersex',
+			'transgender',
+			'transgender-alt',
+			'venus-double',
+			'mars-double',
+			'venus-mars',
+			'mars-stroke',
+			'mars-stroke-v',
+			'mars-stroke-h',
+			'neuter',
+			'genderless',
+			'facebook-official',
+			'pinterest-p',
+			'whatsapp',
+			'server',
+			'user-plus',
+			'user-times',
+			'hotel',
+			'bed',
+			'viacoin',
+			'train',
+			'subway',
+			'medium',
+			'yc',
+			'y-combinator',
+			'optin-monster',
+			'opencart',
+			'expeditedssl',
+			'battery-4',
+			'battery-full',
+			'battery-3',
+			'battery-three-quarters',
+			'battery-2',
+			'battery-half',
+			'battery-1',
+			'battery-quarter',
+			'battery-0',
+			'battery-empty',
+			'mouse-pointer',
+			'i-cursor',
+			'object-group',
+			'object-ungroup',
+			'sticky-note',
+			'sticky-note-o',
+			'cc-jcb',
+			'cc-diners-club',
+			'clone',
+			'balance-scale',
+			'hourglass-o',
+			'hourglass-1',
+			'hourglass-start',
+			'hourglass-2',
+			'hourglass-half',
+			'hourglass-3',
+			'hourglass-end',
+			'hourglass',
+			'hand-grab-o',
+			'hand-rock-o',
+			'hand-stop-o',
+			'hand-paper-o',
+			'hand-scissors-o',
+			'hand-lizard-o',
+			'hand-spock-o',
+			'hand-pointer-o',
+			'hand-peace-o',
+			'trademark',
+			'registered',
+			'creative-commons',
+			'gg',
+			'gg-circle',
+			'tripadvisor',
+			'odnoklassniki',
+			'odnoklassniki-square',
+			'get-pocket',
+			'wikipedia-w',
+			'safari',
+			'chrome',
+			'firefox',
+			'opera',
+			'internet-explorer',
+			'tv',
+			'television',
+			'contao',
+			'500px',
+			'amazon',
+			'calendar-plus-o',
+			'calendar-minus-o',
+			'calendar-times-o',
+			'calendar-check-o',
+			'industry',
+			'map-pin',
+			'map-signs',
+			'map-o',
+			'map',
+			'commenting',
+			'commenting-o',
+			'houzz',
+			'vimeo',
+			'black-tie',
+			'fonticons'
 		);
 		?>
 		<style type="text/css">
