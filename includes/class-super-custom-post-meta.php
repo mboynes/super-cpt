@@ -609,7 +609,7 @@ class Super_Custom_Post_Meta {
 				$this_args['id'] .= "_$key";
 
 			if ( 'input' == $tag ) {
-				if ( ( isset( $post_meta[ $meta_key ] ) && in_array( $this_args['value'], $post_meta[ $meta_key ] ) ) || ( ! isset( $post_meta[ $meta_key ] ) && in_array( $this_args['value'], (array) $default ) ) )
+				if ( ( isset( $post_meta[ $meta_key ] ) && in_array( strval($this_args['value']), $post_meta[ $meta_key ],true ) ) || ( ! isset( $post_meta[ $meta_key ] ) && in_array( $this_args['value'], (array) $default ) ) )
 					$this_args['checked'] = 'checked';
 				$html[] = SCPT_Markup::tag( 'label', array(
 					'for' => $this_args['id'],
@@ -805,7 +805,12 @@ class Super_Custom_Post_Meta {
 		if ( false == $field_info ) {
 			switch ( $key ) {
 				case '_thumbnail_id' :
-					return wp_get_attachment_image( $data, $this->column_thumbnail_size, true );
+					if(!is_array($data)){
+						return wp_get_attachment_image( $data, $this->column_thumbnail_size, true );
+					}else{
+						return 'N/A';
+					}
+					return ;
 			}
 		} elseif ( is_array( $field_info ) ) {
 			# This is a cpt relationship
